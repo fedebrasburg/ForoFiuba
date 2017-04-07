@@ -1,9 +1,7 @@
 package forofiuba
 
-class Usuario {
+class Catedra {
 
     static constraints = {
-
-
     }
 }
