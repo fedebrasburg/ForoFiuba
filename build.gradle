@@ -22,6 +22,8 @@ apply plugin:"asset-pipeline"
 
 repositories {
     mavenLocal()
+    mavenCentral()
+
     maven { url "https://repo.grails.org/grails/core" }
 }
 
@@ -42,6 +44,7 @@ dependencies {
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
     runtime "com.h2database:h2"
+    runtime "org.postgresql:postgresql:9.4.1208.jre7"
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
