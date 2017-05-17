@@ -2,8 +2,15 @@ package forofiuba
 
 class Departamento {
     String nombre;
-    Facultad facultad;
-    static hasMany = [Materias: Materia]
+    static belongsTo = [facultad: Facultad]
+    static hasMany = [materias: Materia]
+    String email;
+    String telefono;
     static constraints = {
+        nombre nullable: false,blank:false
+        facultad nullable: false
+        materias nullable:  false
+        email email:true , nullable: true
+        telefono nullable: true
     }
 }
