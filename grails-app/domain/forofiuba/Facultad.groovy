@@ -2,7 +2,7 @@ package forofiuba
 
 class Facultad {
     String nombre,descripcion, email;
-    static hasMany = [Departamentos: Departamento , carreras: Carrera , direcciones: String,telefonos: String]
+    static hasMany = [deṕartamentos: Departamento , carreras: Carrera , direcciones: String,telefonos: String]
     static constraints = {
         nombre nullable: false,blank:false ,unique:true
         telefonos nullable: false

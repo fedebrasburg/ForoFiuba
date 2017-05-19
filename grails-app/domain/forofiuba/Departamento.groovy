@@ -2,7 +2,8 @@ package forofiuba
 
 class Departamento {
     String nombre;
-    static belongsTo = [facultad: Facultad]
+    Facultad facultad;
+    static belongsTo = Facultad;
     static hasMany = [materias: Materia]
     String email;
     String telefono;

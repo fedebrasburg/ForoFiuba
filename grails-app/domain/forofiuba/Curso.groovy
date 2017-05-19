@@ -2,7 +2,8 @@ package forofiuba
 
 class Curso {
     String nombre,email;
-    static belongsTo = [catedra: Catedra]
+    Catedra catedra;
+    static belongsTo = Catedra
     static hasMany = [opiniones: Opinion]
     static constraints = {
         catedra nullable:false

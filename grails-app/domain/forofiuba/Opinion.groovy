@@ -2,7 +2,9 @@ package forofiuba
 
 class Opinion {
     String opinion;
-    static belongsTo = [curso: Curso,usuario:Usuario]
+    Curso curso;
+    Usuario usuario;
+    static belongsTo = [Curso,Usuario]
 
     static constraints = {
         opinion nullable: false,blank: false
