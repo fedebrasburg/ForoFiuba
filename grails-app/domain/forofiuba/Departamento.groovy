@@ -10,7 +10,6 @@ class Departamento {
     static constraints = {
         nombre nullable: false,blank:false
         facultad nullable: false
-        materias nullable:  false
         email email:true , nullable: true
         telefono nullable: true
     }

@@ -11,6 +11,5 @@ class Catedra {
         materia nullable: false
         email email:true , nullable: true
 
-        cursos nullable: false
     }
 }
