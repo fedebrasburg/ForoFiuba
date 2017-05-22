@@ -1,0 +1,6 @@
+#Fri, 19 May 2017 00:38:57 -0300
+
+grails.env=development
+info.app.version=0.1
+info.app.grailsVersion=3.2.7
+info.app.name=ForoFiuba

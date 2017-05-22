@@ -10,7 +10,8 @@ class Usuario {
     String email;
     String telefono;
     Date fechaDeNacimiento;
-    String passwordHash
+    String passwordHash;
+    UsuarioLogin usuarioLogin;
 
     static hasMany = [opiniones: Opinion,carreras:Carrera]
     def constraints = {
@@ -22,6 +23,7 @@ class Usuario {
         email email:true , nullable: false, unique:true
         passwordHash blank: false, nullable: false
         telefono nullable: true
+        usuarioLogin nullable: false;
     }
 
 }
