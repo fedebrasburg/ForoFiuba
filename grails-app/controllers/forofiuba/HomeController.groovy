@@ -15,6 +15,11 @@ class HomeController {
 
     def h = new Hilo()
 
+    def createOpinion(){
+        Opinion.createOpinion(params.cursoId,params.usuarioId, params.opinion)
+        opiniones()
+    }
+
     @Secured('ROLE_USER')
     def index() {
         render(view:"Materias", model: [Materias: getMaterias()])
