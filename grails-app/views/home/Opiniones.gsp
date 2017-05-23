@@ -13,5 +13,12 @@ ${hilo.cursoNombre}
 <g:each var="opinion" in="${Opiniones}">
     ${opinion.opinion}
 </g:each>
+
+<g:form name="myForm" action="createOpinion">
+    Opinion<g:field type="text" name="Opinion"/>
+    <br/>
+    <br/>
+    <g:submitButton name="botonAgregar" value="Crear Opinion"/>
+</g:form>
 </body>
 </html>

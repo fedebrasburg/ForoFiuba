@@ -15,6 +15,11 @@ class HomeController {
 
     def h = new Hilo()
 
+    def createOpinion(){
+        Opinion.createOpinion(params.cursoId,params.usuarioId, params.opinion)
+        opiniones()
+    }
+
     def index() {
         render(view:"Materias", model: [Materias: getMaterias()])
     }
@@ -35,6 +40,7 @@ class HomeController {
         h.cursoNombre = params.cursoNombre
         render(view:"opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:h])
     }
+
     def getMaterias(){
         Materia.getAll()
     }
