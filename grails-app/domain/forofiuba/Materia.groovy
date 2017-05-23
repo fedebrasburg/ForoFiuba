@@ -11,4 +11,6 @@ class Materia {
         departamento nullable: false
         catedras nullable: true
     }
+
+
 }

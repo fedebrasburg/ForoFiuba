@@ -12,4 +12,12 @@ class Opinion {
         usuario nullable: false
     }
 
+    def static createOpinion(String cursoId, String usuarioId, String opinion){
+        def o = new Opinion()
+        o.opinion = opinion
+        o.curso = Curso.get(cursoId)
+        o.usuario = Usuario.get(usuarioId)
+        o.save()
+    }
+
 }

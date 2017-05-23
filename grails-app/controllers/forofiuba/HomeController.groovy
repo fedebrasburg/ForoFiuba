@@ -35,6 +35,10 @@ class HomeController {
         render(view:"opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:h])
     }
 
+    def createOpinion(){
+        Opinion.createOpinion(params.cursoId,params.usuarioId, params.opinion)
+        opiniones()
+    }
 
     def getMaterias(){
         Materia.getAll()
