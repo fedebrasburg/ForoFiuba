@@ -1,9 +1,9 @@
 
 
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'forofiuba.UsuarioLogin'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'forofiuba.UsuarioLoginRol'
-grails.plugin.springsecurity.authority.className = 'forofiuba.Rol'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'forofiuba.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'forofiuba.UserRole'
+grails.plugin.springsecurity.authority.className = 'forofiuba.Role'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],
@@ -14,13 +14,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/**/js/**',       access: ['permitAll']],
 	[pattern: '/**/css/**',      access: ['permitAll']],
 	[pattern: '/**/images/**',   access: ['permitAll']],
-	[pattern: '/**/favicon.ico', access: ['permitAll']],
-	[pattern: '/login',          access: ['permitAll']],
-	[pattern: '/login/**',       access: ['permitAll']],
-	[pattern: '/logout',         access: ['permitAll']],
-	[pattern: '/logout/**',      access: ['permitAll']]
-
-
+	[pattern: '/**/favicon.ico', access: ['permitAll']]
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [
