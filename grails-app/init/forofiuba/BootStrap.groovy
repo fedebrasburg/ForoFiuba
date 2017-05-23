@@ -3,16 +3,15 @@ package forofiuba
 class BootStrap {
 
     def init = { servletContext ->
-        def userRole = new Role(authority:'ROLE_USER').save()
+        def roleAdmin = new Role(authority: 'ADMIN').save()
+        def roleUser = new Role(authority: 'USER').save()
 
-        def me = new User(username:'a@a.com', password:'a').save()
+        def user = new User(username: 'user', password: 'password', enabled: true).save()
+        def admin = new User(username: 'admin', password: 'password', enabled: true).save()
 
-        UserRole.create me, userRole
-
-        UserRole.withSession {
-            it.flush()
-            it.clear()
-        }
+        new UserRole( user: user, role: roleUser)
+        UserRole.create admin, roleUser
+        UserRole.create admin, roleAdmin
     }
     def destroy = {
     }

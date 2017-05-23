@@ -30,11 +30,15 @@ endpoints:
 grails:
     plugin:
       springsecurity:
-        securityConfigType: "Annotation"
         password:
           algorithm: 'SHA-256'
         logout:
           postOnly: false
+        userLookup:
+          userDomainClassName: 'forofiuba.User'
+          authorityJoinClassName : 'grails.test.security.UserRole'
+        authority:
+          className: 'grails.test.security.Role'
 
     mime:
         disable:
