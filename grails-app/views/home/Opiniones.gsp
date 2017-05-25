@@ -1,5 +1,6 @@
 <html>
 <head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <style>
     table, th, td {
         border: 1px solid black;
@@ -8,8 +9,10 @@
     </style>
 </head>
 <body>
+<g:render template="partials/Nav"/>
 <h1> ForosFiuba - Opiniones</h1>
-<g:link action="index">Materias  </g:link> >
+<g:link action="index">Departamentos  </g:link> >
+<g:link action="materias"  params="${[departamentoId:hilo.departamentoId, departamentoNombre:hilo.departamentoNombre]}"> ${hilo.departamentoNombre} </g:link> >
 <g:link action="catedras"  params="${[materiaId:hilo.materiaId, materiaNombre:hilo.materiaNombre]}">${hilo.materiaNombre} </g:link>
 >
 <g:link action="cursos"  params="${[catedraId:hilo.catedraId, catedraNombre:hilo.catedraNombre]}"> ${hilo.catedraNombre}</g:link>
@@ -17,7 +20,11 @@
 ${hilo.cursoNombre}
 <h2> Opiniones</h2>
 <g:each var="opinion" in="${Opiniones}">
-    <table style="width:100%">
+    <table style="width:100%" lass="table">
+        <tr>
+            <td> Usuario</td>
+            <td> ${opinion.usuario.nombre}</td>
+        </tr>
         <g:if test="${opinion.profesores != null}">
             <tr>
                 <td> Profesores</td>
@@ -82,7 +89,7 @@ ${hilo.cursoNombre}
     <br/>
 </g:each>
 
-<g:form name="myForm" action="createOpinion" style="width:100%" params="${[cursoId:hilo.cursoId,usuarioId:1]}">
+<g:form name="myForm" action="createOpinion"  params="${[cursoId:hilo.cursoId,usuarioId:1]}">
     <fieldset>
         <legend>Crear Opinion</legend>
         <label>Profesores: </label>
@@ -125,7 +132,7 @@ ${hilo.cursoNombre}
         <g:field type="number"  min="1" max="10"  name="puntuacion"/>
         <br/>
         <br/>
-        <g:submitButton name="botonAgregar" value="Crear Opinion"/>
+        <g:submitButton class="btn btn-default" name="botonAgregar" value="Crear Opinion"/>
     </fieldset>
 </g:form>
 </body>

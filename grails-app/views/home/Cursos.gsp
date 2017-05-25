@@ -1,9 +1,12 @@
 <html>
 <head>
-    <h1> ForosFiuba - Cursos</h1>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
-<g:link action="index">Materias  </g:link> >
+<g:render template="partials/Nav"/>
+<h1> ForosFiuba - Cursos</h1>
+<g:link action="index">Departamentos  </g:link> >
+<g:link action="materias"  params="${[departamentoId:hilo.departamentoId, departamentoNombre:hilo.departamentoNombre]}"> ${hilo.departamentoNombre} </g:link> >
 <g:link action="catedras"  params="${[materiaId:hilo.materiaId, materiaNombre:hilo.materiaNombre]}">${hilo.materiaNombre} </g:link>
     > ${hilo.catedraNombre}
 <h2> Cursos</h2>
