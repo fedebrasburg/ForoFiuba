@@ -1,23 +1,53 @@
 package forofiuba
 
 class Opinion {
-    String opinion;
-    Curso curso;
-    Usuario usuario;
+    Curso curso
+    Usuario usuario
+    String horarios
+    String opinionTp
+    String opinionParcial
+    String opinionFinal
+    String opinionTeorica
+    String opinionProfesores
+    String opinionPractica
+    String modalidad
+    String profesores
+    Integer puntuacion
+
     static belongsTo = [Curso,Usuario]
 
     static constraints = {
-        opinion nullable: false,blank: false
         curso nullable: false
         usuario nullable: false
+        puntuacion size: 1..5, nullable: true
+        opinionTp nullable: true
+        opinionFinal nullable: true
+        opinionTeorica nullable: true
+        horarios nullable: true
+        opinionParcial nullable: true
+        opinionPractica nullable: true
+        opinionProfesores nullable: true
+        modalidad nullable: true
+        profesores nullable: true
+
     }
 
-    def static createOpinion(String cursoId, String usuarioId, String opinion){
+    def static createOpinion(String cursoId, String usuarioId, String horarios = null, String opinionTp  = null, String opinionParcial  = null, String opinionFinal  = null, String opinionTeorica  = null, String opinionProfesores  = null ,String opinionPractica  = null,String modalidad  = null,String profesores  = null, Integer puntuacion  = null){
         def o = new Opinion()
-        o.opinion = opinion
+        o.horarios = horarios
+        o.opinionFinal = opinionFinal
+        o.opinionParcial = opinionParcial
+        o.opinionTeorica = opinionTeorica
+        o.opinionTp = opinionTp
+        o.opinionProfesores = opinionProfesores
+        o.opinionPractica = opinionPractica
+        o.modalidad = modalidad
+        o.profesores = profesores
+        o.puntuacion = puntuacion
         o.curso = Curso.get(cursoId)
         o.usuario = Usuario.get(usuarioId)
-        o.save()
+        o.save(flush: true, failOnError: true)
     }
+
 
 }

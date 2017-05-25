@@ -11,11 +11,12 @@
 ${hilo.cursoNombre}
 <h2> Opiniones</h2>
 <g:each var="opinion" in="${Opiniones}">
-    ${opinion.opinion}
+    <br/>
+    ${opinion.profesores}
 </g:each>
 
-<g:form name="myForm" action="createOpinion">
-    Opinion<g:field type="text" name="Opinion"/>
+<g:form name="myForm" action="createOpinion" params="${[cursoId:hilo.cursoId,usuarioId:1]}">
+    Profesores:<g:field type="text" name="profesores"/>
     <br/>
     <br/>
     <g:submitButton name="botonAgregar" value="Crear Opinion"/>

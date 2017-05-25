@@ -2,6 +2,7 @@ package forofiuba
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification
+import sun.font.TrueTypeFont
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
@@ -15,8 +16,10 @@ class OpinionSpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "Creo una opinion"() {
+        when:
+            def a = 3
+        expect:
+            a == 3
     }
 }

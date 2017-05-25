@@ -16,7 +16,7 @@ class HomeController {
     def h = new Hilo()
 
     def createOpinion(){
-        Opinion.createOpinion(params.cursoId,params.usuarioId, params.opinion)
+        Opinion.createOpinion( params.cursoId, params.usuarioId, params.horarios,params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion)
         opiniones()
     }
 
@@ -36,8 +36,10 @@ class HomeController {
         render(view:"cursos", model: [Cursos: getCursos(params.catedraId), hilo:h])
     }
     def opiniones(){
-        h.cursoId = params.cursoId
-        h.cursoNombre = params.cursoNombre
+        if (params.action != 'createOpinion') {
+            h.cursoId = params.cursoId
+            h.cursoNombre = params.cursoNombre
+        }
         render(view:"opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:h])
     }
 
@@ -45,13 +47,13 @@ class HomeController {
         Materia.getAll()
     }
     def getCatedras(String materiaId){
-        Catedra.findByMateria(Materia.get(materiaId))
+        Catedra.findAllByMateria(Materia.get(materiaId))
     }
     def getOpiniones(String cursoId){
-        Opinion.findByCurso(Curso.get(cursoId))
+        Opinion.findAllByCurso(Curso.get(cursoId))
     }
     def getCursos(String catedraId){
-        Curso.findByCatedra(Catedra.get(catedraId))
+        Curso.findAllByCatedra(Catedra.get(catedraId))
     }
 }
 
