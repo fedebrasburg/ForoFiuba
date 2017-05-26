@@ -1,5 +1,6 @@
 <html>
 <head>
+
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <style>
     table, th, td {
@@ -10,6 +11,7 @@
 </head>
 <body>
 <g:render template="partials/Nav"/>
+<div class="body">
 <h1> ForosFiuba - Opiniones</h1>
 <g:link action="index">Departamentos  </g:link> >
 <g:link action="materias"  params="${[departamentoId:hilo.departamentoId, departamentoNombre:hilo.departamentoNombre]}"> ${hilo.departamentoNombre} </g:link> >
@@ -20,14 +22,14 @@
 ${hilo.cursoNombre}
 <h2> Opiniones</h2>
 <g:each var="opinion" in="${Opiniones}">
-    <table style="width:100%" lass="table">
+    <table style="width:90%" class="table" lass="table">
         <tr>
             <td> Usuario</td>
             <td> ${opinion.usuario.nombre}</td>
         </tr>
         <g:if test="${opinion.profesores != null}">
             <tr>
-                <td> Profesores</td>
+                <td> Profesores </td>
                 <td> ${opinion.profesores}</td>
             </tr>
         </g:if>
@@ -135,5 +137,6 @@ ${hilo.cursoNombre}
         <g:submitButton class="btn btn-default" name="botonAgregar" value="Crear Opinion"/>
     </fieldset>
 </g:form>
+</div>
 </body>
 </html>

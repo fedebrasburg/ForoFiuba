@@ -1,3 +1,13 @@
+<style>
+.body {
+    background-color: white;
+    margin-left: 20px;
+}
+.table{
+    font-size: small;
+}
+</style>
+<title> ForosFiuba</title>
 <nav class="navbar navbar-default navbar-static-top navbar-inverse">
     <div class="container">
         <ul class="nav navbar-nav">
@@ -8,10 +18,10 @@
                 <g:link action="index"><span class="glyphicon glyphicon-home"></span> Home</g:link>
             </li>
             <li >
-                <g:link action="index"><span class="glyphicon glyphicon-user"></span>Ingresar</g:link>
+                <g:link action="index"><span class="glyphicon glyphicon-user"></span> Ingresar</g:link>
             </li>
             <li >
-                <g:link action="index"><span class="glyphicon glyphicon-user"></span>Registrarse</g:link>
+                <g:link action="index"><span class="glyphicon glyphicon-check"></span> Registrarse</g:link>
             </li>
         </ul>
     </div>
