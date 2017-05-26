@@ -8,4 +8,5 @@ class Carrera {
         nombre  nullable: false
         facultad nullable:false ,unique:true
     }
+
 }

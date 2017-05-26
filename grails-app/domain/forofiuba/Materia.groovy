@@ -12,5 +12,13 @@ class Materia {
         catedras nullable: true
     }
 
+    def static createMateria(String nombre, String descripcion, String departamentoId){
+        def m = new Materia()
+        m.nombre = nombre
+        m.descripcion = descripcion
+        m.departamento = Departamento.get(departamentoId)
+        m.save(flush: true, failOnError: true)
+    }
+
 
 }

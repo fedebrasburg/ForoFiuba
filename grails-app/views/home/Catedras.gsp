@@ -12,7 +12,23 @@
     <h2> Catedras</h2>
     <g:each var="catedra" in="${Catedras}">
         <g:link action="cursos"  params="${[catedraId:catedra.id, catedraNombre:catedra.nombre]}"> ${catedra.nombre}</g:link>
+        <br/>
     </g:each>
+    <br/>
+    <g:form name="myForm" action="createCatedra"  params="${[materiaId : hilo.materiaId ]}">
+        <fieldset>
+            <legend>Crear Catedra</legend>
+            <label>Nombre Catedra: </label>
+            <g:field type="text" required="true" name="catedraNombre"/>
+            <br/>
+            <br/>
+            <label>Mail: </label>
+            <g:field type="text"  name="catedraEmail"/>
+            <br/>
+            <br/>
+            <g:submitButton class="btn btn-default" name="botonAgregarMateria" value="Crear Catedra"/>
+        </fieldset>
+    </g:form>
 </div>
 </body>
 </html>

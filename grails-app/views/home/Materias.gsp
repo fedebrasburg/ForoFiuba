@@ -12,6 +12,21 @@
         <g:link action="catedras"  params="${[materiaId:materia.id, materiaNombre:materia.nombre]}"> ${materia.nombre}</g:link>
         <br/>
     </g:each>
+    <br/>
+    <g:form name="myForm" action="createMateria"  params="${[departamentoId : hilo.departamentoId ]}">
+        <fieldset>
+            <legend>Crear Materia</legend>
+            <label>Nombre Materia: </label>
+            <g:field type="text" required="true" name="materiaNombre"/>
+            <br/>
+            <br/>
+            <label>Descripcion: </label>
+            <g:field type="text"  name="materiaDescripcion"/>
+            <br/>
+            <br/>
+            <g:submitButton class="btn btn-default" name="botonAgregarMateria" value="Crear Materia"/>
+        </fieldset>
+    </g:form>
 </div>
 </body>
 </html>
