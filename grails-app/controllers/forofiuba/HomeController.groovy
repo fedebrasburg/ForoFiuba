@@ -95,5 +95,10 @@ class HomeController {
         Catedra.createCatedra(params.catedraNombre, params.catedraEmail,params.materiaId)
         catedras()
     }
+
+    def createCurso(){
+        Curso.createCurso(params.cursoNombre, params.cursoEmail,params.catedraId)
+        cursos()
+    }
 }
 
