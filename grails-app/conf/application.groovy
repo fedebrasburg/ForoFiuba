@@ -4,7 +4,10 @@
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'forofiuba.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'forofiuba.UserRole'
 grails.plugin.springsecurity.authority.className = 'forofiuba.Role'
-grails.plugin.springsecurity.securityConfigType = "Annotation"
+grails.plugin.springsecurity.roleHierarchy = '''
+  ROLE_ADMIN > ROLE_USER
+'''
+
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	[pattern: '/',               access: ['permitAll']],
 	[pattern: '/error',          access: ['permitAll']],

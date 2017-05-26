@@ -17,9 +17,6 @@ class OpinionSpec extends Specification {
     }
 
     void "Creo una opinion"() {
-        when:
-            def a = 3
-        expect:
-            a == 3
+
     }
 }

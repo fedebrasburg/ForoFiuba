@@ -19,7 +19,6 @@ class HomeController {
         Opinion.createOpinion( params.cursoId, params.usuarioId, params.horarios,params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion)
         opiniones()
     }
-
     def index() {
         render(view:"Materias", model: [Materias: getMaterias()])
     }
