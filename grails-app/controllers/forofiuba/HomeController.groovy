@@ -15,36 +15,53 @@ class HomeController {
         String departamentoId
     }
 
-    def h = new Hilo()
-
     def index() {
         render(view:"Departamentos", model: [Departamentos: getDepartamentos()])
     }
 
     def materias(){
-        h.departamentoId = params.departamentoId
-        h.departamentoNombre = params.departamentoNombre
-        render(view:"materias", model: [Materias: getMaterias(params.departamentoId), hilo:h])
+        render(view:"materias", model: [Materias: getMaterias(params.departamentoId), hilo:calcularHiloMaterias(params.departamentoId)])
     }
 
     def catedras(){
-        h.materiaNombre = params.materiaNombre
-        h.materiaId = params.materiaId
-        render(view:"Catedras", model: [Catedras: getCatedras(params.materiaId), hilo:h])
+        render(view:"Catedras", model: [Catedras: getCatedras(params.materiaId), hilo:calcularHiloCatedras(params.materiaId)])
     }
 
     def cursos(){
-        h.catedraNombre = params.catedraNombre
-        h.catedraId = params.catedraId
-        render(view:"cursos", model: [Cursos: getCursos(params.catedraId), hilo:h])
+        render(view:"cursos", model: [Cursos: getCursos(params.catedraId), hilo:calcularHiloCursos(params.catedraId)])
     }
     def opiniones(){
-        if (params.action != 'createOpinion') {
-            h.cursoId = params.cursoId
-            h.cursoNombre = params.cursoNombre
-        }
-        render(view:"opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:h])
+        render(view:"opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId)])
     }
+
+    def calcularHiloMaterias(String departamentoId){
+        def hilo = new Hilo()
+        hilo.departamentoNombre = Departamento.get(departamentoId).nombre
+        hilo.departamentoId = departamentoId
+        hilo
+    }
+
+    def calcularHiloCatedras(String materiaId){
+        def hilo = calcularHiloMaterias(Materia.get(materiaId).departamento.id.toString())
+        hilo.materiaId = materiaId
+        hilo.materiaNombre = Materia.get(materiaId).nombre
+        hilo
+    }
+
+    def calcularHiloCursos(String catedraId){
+        def hilo = calcularHiloCatedras(Catedra.get(catedraId).materia.id.toString())
+        hilo.catedraId = catedraId
+        hilo.catedraNombre = Catedra.get(catedraId).nombre
+        hilo
+    }
+
+    def calcularHiloOpiniones(String cursoId){
+        def hilo = calcularHiloCursos(Curso.get(cursoId).catedra.id.toString())
+        hilo.cursoId = cursoId
+        hilo.cursoNombre = Curso.get(cursoId).nombre
+        hilo
+    }
+
 
     def getDepartamentos(){
         Departamento.getAll()
