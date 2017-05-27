@@ -14,6 +14,22 @@
     <g:each var="curso" in="${Cursos}">
         <g:link action="opiniones"  params="${[cursoId:curso.id, cursoNombre:curso.nombre]}"> ${curso.nombre}</g:link>
     </g:each>
+    <br/>
+    <br/>
+    <g:form name="myForm" action="createCurso"  params="${[catedraId : hilo.catedraId ]}">
+        <fieldset>
+            <legend>Crear Curso</legend>
+            <label>Nombre Curso: </label>
+            <g:field type="text" required="true" name="cursoNombre"/>
+            <br/>
+            <br/>
+            <label>Mail: </label>
+            <g:field type="text"  name="cursoEmail"/>
+            <br/>
+            <br/>
+            <g:submitButton class="btn btn-default" name="botonAgregarCurso" value="Crear Curso"/>
+        </fieldset>
+    </g:form>
 </div>
 </body>
 </html>

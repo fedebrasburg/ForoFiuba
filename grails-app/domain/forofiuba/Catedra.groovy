@@ -12,4 +12,12 @@ class Catedra {
         email email:true , nullable: true
 
     }
+
+    def static createCatedra(String nombre, String email, String materiaId){
+        def c = new Catedra()
+        c.nombre = nombre
+        c.email = email
+        c.materia = Materia.get(materiaId)
+        c.save(flush: true, failOnError: true)
+    }
 }
