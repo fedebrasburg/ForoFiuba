@@ -14,13 +14,13 @@
             <li>
                 <g:link action="index"><img height="22" width="22" src="http://www.foros-fiuba.com.ar/templates/fisubsilversh/images/phpbb2_logo.gif"></g:link>
             </li>
-            <li class="active">
+            <li >
                 <g:link action="index"><span class="glyphicon glyphicon-home"></span> Home</g:link>
             </li>
             <li >
                 <g:link action="login"><span class="glyphicon glyphicon-user"></span> Ingresar</g:link>
             </li>
-            <li >
+            <li class="active">
                 <g:link action="registrar"><span class="glyphicon glyphicon-check"></span> Registrarse</g:link>
             </li>
             <li >

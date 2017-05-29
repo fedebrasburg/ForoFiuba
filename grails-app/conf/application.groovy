@@ -1,6 +1,7 @@
-
-
-// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.logout.afterLogoutUrl='/home/index'
+grails.plugin.springsecurity.logout.postOnly = false
+grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/home/index'
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'forofiuba.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'forofiuba.UserRole'
 grails.plugin.springsecurity.authority.className = 'forofiuba.Role'

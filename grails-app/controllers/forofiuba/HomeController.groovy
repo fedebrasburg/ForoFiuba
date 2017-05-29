@@ -20,8 +20,15 @@ class HomeController {
     }
 
     def materias(){
-        render(view:"materias", model: [Materias: getMaterias(params.departamentoId), hilo:calcularHiloMaterias(params.departamentoId)])
+        render(view:"Materias", model: [Materias: getMaterias(params.departamentoId), hilo:calcularHiloMaterias(params.departamentoId)])
 
+    }
+
+    def login(){
+        redirect(controller: 'login', action:'index')
+    }
+    def registrar(){
+        redirect(controller: 'registro' , action: 'index')
     }
 
     def catedras(){
@@ -29,10 +36,10 @@ class HomeController {
     }
 
     def cursos(){
-        render(view:"cursos", model: [Cursos: getCursos(params.catedraId), hilo:calcularHiloCursos(params.catedraId)])
+        render(view:"Cursos", model: [Cursos: getCursos(params.catedraId), hilo:calcularHiloCursos(params.catedraId)])
     }
     def opiniones(){
-        render(view:"opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId)])
+        render(view:"Opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId)])
     }
 
     def calcularHiloMaterias(String departamentoId){
@@ -81,22 +88,22 @@ class HomeController {
         Curso.findAllByCatedra(Catedra.get(catedraId))
     }
 
-
+    @Secured(['ROLE_USER'])
     def createOpinion(){
         Opinion.createOpinion( params.cursoId, params.usuarioId, params.horarios,params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion)
         opiniones()
     }
-
+    @Secured(['ROLE_ADMIN'])
     def createMateria(){
         Materia.createMateria(params.materiaNombre, params.materiaDescripcion,params.departamentoId)
         materias()
     }
-
+    @Secured(['ROLE_ADMIN'])
     def createCatedra(){
         Catedra.createCatedra(params.catedraNombre, params.catedraEmail,params.materiaId)
         catedras()
     }
-
+    @Secured(['ROLE_ADMIN'])
     def createCurso(){
         Curso.createCurso(params.cursoNombre, params.cursoEmail,params.catedraId)
         cursos()

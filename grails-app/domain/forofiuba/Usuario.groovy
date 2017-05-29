@@ -10,18 +10,28 @@ class Usuario {
     String email
     String telefono
     Date fechaDeNacimiento
-    String passwordHash
+    User user
 
     static hasMany = [opiniones: Opinion,carreras:Carrera]
     static constraints = {
         genero( inList: ["H", "M", "U"], nullable:true)
         nombre nullable: false,blank:false
-        fechaDeNacimiento nullable: true ,min:MIN_DATE ,max:MAX_DATE
+        fechaDeNacimiento nullable: true
         opiniones nullable: true
         carreras nullable: true
         email email:true , nullable: false, unique:true
-        passwordHash blank: false, nullable: false
         telefono nullable: true
+        user nullable: false, unique:  true
+    }
+    def static createUsuario(String nombre,String genero,String email, String telefono,Date fechaDeNacimiento,User user){
+        def usuario = new Usuario()
+        usuario.nombre=nombre
+        usuario.genero=genero
+        usuario.email=email
+        usuario.telefono=telefono
+        usuario.fechaDeNacimiento=fechaDeNacimiento
+        usuario.user=user
+        usuario.save(flush: true, failOnError: true)
     }
 
 }

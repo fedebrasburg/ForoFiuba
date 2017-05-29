@@ -47,4 +47,10 @@ class User implements Serializable {
 		table '`User`'
 		password column: '`password`'
 	}
+	def static createUser(String nombre,String password){
+		def user = new User()
+		user.username=nombre
+		user.password=password
+		user.save(flush: true, failOnError: true)
+	}
 }

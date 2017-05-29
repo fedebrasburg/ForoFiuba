@@ -1,7 +1,7 @@
 package forofiuba
 
 class MateriaController {
-    static scaffold = Usuario
+    static scaffold = Materia
 
 
 }
