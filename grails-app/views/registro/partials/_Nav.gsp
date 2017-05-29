@@ -1,10 +1,30 @@
 <style>
+body{
+    background-color: #E3E5F2;
+}
 .body {
-    background-color: white;
     margin-left: 20px;
 }
 .table{
     font-size: small;
+}
+.texto-cuerpo{
+    font-size: large;
+    font-weight: bold;
+}
+.titulo{
+    font-size: xx-large;
+}
+.listado{
+    font-size: x-large;
+}
+.hilo{
+    font-size: medium;
+}
+form{
+    border: double;
+    margin-right: 20px;
+
 }
 </style>
 <title> ForosFiuba</title>
