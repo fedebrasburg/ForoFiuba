@@ -30,55 +30,55 @@
                     <td> Usuario</td>
                     <td> ${opinion.usuario.nombre}</td>
                 </tr>
-                <g:if test="${opinion.profesores != null}">
+                <g:if test="${opinion.profesores != ""}">
                     <tr>
                         <td> Profesores </td>
                         <td> ${opinion.profesores}</td>
                     </tr>
                 </g:if>
-                <g:if test="${opinion.modalidad != null}">
+                <g:if test="${opinion.modalidad != ""}">
                     <tr>
                         <td> Modalidad</td>
                         <td> ${opinion.modalidad}</td>
                     </tr>
                 </g:if>
-                <g:if test="${opinion.horarios != null}">
+                <g:if test="${opinion.horarios != ""}">
                     <tr>
                         <td> Horarios</td>
                         <td> ${opinion.horarios}</td>
                     </tr>
                 </g:if>
-                <g:if test="${opinion.opinionTeorica != null}">
+                <g:if test="${opinion.opinionTeorica != ""}">
                     <tr>
                         <td> Opinion Teorica</td>
                         <td> ${opinion.opinionTeorica}</td>
                     </tr>
                 </g:if>
-                <g:if test="${opinion.opinionPractica != null}">
+                <g:if test="${opinion.opinionPractica != ""}">
                     <tr>
                         <td> Opinion Practica</td>
                         <td> ${opinion.opinionPractica}</td>
                     </tr>
                 </g:if>
-                <g:if test="${opinion.opinionProfesores != null}">
+                <g:if test="${opinion.opinionProfesores != ""}">
                 <tr>
                     <td> Opinion Profesores</td>
                     <td> ${opinion.opinionProfesores}</td>
                 </tr>
                 </g:if>
-                <g:if test="${opinion.opinionTp != null}">
+                <g:if test="${opinion.opinionTp != ""}">
                     <tr>
                         <td> Opinion Tp</td>
                         <td> ${opinion.opinionTp}</td>
                     </tr>
                 </g:if>
-                <g:if test="${opinion.opinionParcial != null}">
+                <g:if test="${opinion.opinionParcial != ""}">
                     <tr>
                         <td> Opinion Parcial</td>
                         <td> ${opinion.opinionParcial}</td>
                     </tr>
                 </g:if>
-                <g:if test="${opinion.opinionFinal != null}">
+                <g:if test="${opinion.opinionFinal != ""}">
                     <tr>
                         <td> Opinion Final</td>
                         <td> ${opinion.opinionFinal}</td>
@@ -94,7 +94,7 @@
             <br/>
         </g:each>
     </div>
-<g:form name="myForm" action="createOpinion"  params="${[cursoId:hilo.cursoId,usuarioId:1]}">
+<g:form name="myForm" action="createOpinion"  params="${[cursoId:hilo.cursoId,usuarioId:15]}">
     <fieldset>
         <legend>Crear Opinion</legend>
         <div class="form-group">

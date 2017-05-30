@@ -18,7 +18,6 @@ class Curso {
         c.email = email
         c.catedra = Catedra.get(catedraId)
         c.save(flush: true, failOnError: true)
-
     }
 
     static boolean deleteCurso(String cursoId){
