@@ -20,4 +20,13 @@ class Curso {
         c.save(flush: true, failOnError: true)
 
     }
+
+    static boolean deleteCurso(String cursoId){
+        if (!Opinion.findAllByCurso(Curso.get(cursoId)).isEmpty()){
+            return false
+        }
+        def c = Curso.get(cursoId)
+        c.delete(flush: true,failOnError: true)
+        true
+    }
 }

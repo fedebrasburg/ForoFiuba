@@ -32,10 +32,10 @@ form{
     <div class="container">
         <ul class="nav navbar-nav">
             <li>
-                <g:link action="index"><img height="22" width="22" src="http://www.foros-fiuba.com.ar/templates/fisubsilversh/images/phpbb2_logo.gif"></g:link>
+                <g:link action="backhome"><img height="22" width="22" src="http://www.foros-fiuba.com.ar/templates/fisubsilversh/images/phpbb2_logo.gif"></g:link>
             </li>
             <li >
-                <g:link action="index"><span class="glyphicon glyphicon-home"></span> Home</g:link>
+                <g:link action="backhome"><span class="glyphicon glyphicon-home"></span> Home</g:link>
             </li>
             <li >
                 <g:link action="login"><span class="glyphicon glyphicon-user"></span> Ingresar</g:link>

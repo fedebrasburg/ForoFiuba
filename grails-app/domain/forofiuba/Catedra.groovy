@@ -20,4 +20,13 @@ class Catedra {
         c.materia = Materia.get(materiaId)
         c.save(flush: true, failOnError: true)
     }
+
+    static boolean deleteCatedra(String catedraId){
+        if (!Curso.findAllByCatedra(Catedra.get(catedraId)).isEmpty()){
+            return false
+        }
+        def c = Catedra.get(catedraId)
+        c.delete(flush: true,failOnError: true)
+        true
+    }
 }

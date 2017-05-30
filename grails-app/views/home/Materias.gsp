@@ -13,6 +13,7 @@
         <h2>Materias</h2>
         <g:each var="materia" in="${Materias}">
             <g:link action="catedras" class="listado" params="${[materiaId:materia.id, materiaNombre:materia.nombre]}"> ${materia.nombre}</g:link>
+            <g:link action="deleteMateria" class="listado" params="${[materiaId:materia.id, departamentoId : hilo.departamentoId]}"> <span class="glyphicon glyphicon-remove"></span> </g:link>
             <br/>
         </g:each>
     </div>

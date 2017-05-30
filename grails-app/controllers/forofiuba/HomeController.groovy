@@ -21,7 +21,6 @@ class HomeController {
 
     def materias(){
         render(view:"Materias", model: [Materias: getMaterias(params.departamentoId), hilo:calcularHiloMaterias(params.departamentoId)])
-
     }
 
     def login(){
@@ -41,6 +40,7 @@ class HomeController {
     def opiniones(){
         render(view:"Opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId)])
     }
+
 
     def calcularHiloMaterias(String departamentoId){
         def hilo = new Hilo()
@@ -106,6 +106,30 @@ class HomeController {
     @Secured(['ROLE_ADMIN'])
     def createCurso(){
         Curso.createCurso(params.cursoNombre, params.cursoEmail,params.catedraId)
+        cursos()
+    }
+
+    def deleteMateria(){
+        def rta = Materia.deleteMateria(params.materiaId)
+        if (!rta){
+            println("No lo borre")
+        }
+        materias()
+    }
+
+    def deleteCatedra(){
+        def rta = Catedra.deleteCatedra(params.catedraId)
+        if (!rta){
+            println("No lo borre")
+        }
+        catedras()
+    }
+
+    def deleteCurso(){
+        def rta = Curso.deleteCurso(params.cursoId)
+        if (!rta){
+            println("No lo borre")
+        }
         cursos()
     }
 }

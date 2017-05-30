@@ -15,6 +15,7 @@
         <h2> Catedras</h2>
         <g:each var="catedra" in="${Catedras}">
             <g:link action="cursos" class="listado"  params="${[catedraId:catedra.id, catedraNombre:catedra.nombre]}"> ${catedra.nombre}</g:link>
+            <g:link action="deleteCatedra" class="listado"  params="${[catedraId:catedra.id, materiaId:hilo.materiaId]}"><span class="glyphicon glyphicon-remove"></span> </g:link>
             <br/>
         </g:each>
     </div>
