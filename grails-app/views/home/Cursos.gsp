@@ -17,6 +17,7 @@
         <g:each var="curso" in="${Cursos}">
             <g:link action="opiniones" class="listado" params="${[cursoId:curso.id, cursoNombre:curso.nombre]}"> ${curso.nombre}</g:link>
             <g:link action="deleteCurso" class="listado" params="${[cursoId:curso.id, catedraId: hilo.catedraId]}"> <span class="glyphicon glyphicon-remove"></span> </g:link>
+            <br/>
         </g:each>
     </div>
     <br/>

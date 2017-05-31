@@ -93,8 +93,13 @@
             </table>
             <br/>
         </g:each>
+        <h2 class="titulo">Los que cursaron este curso tambien cursaron...</h2>
+        <g:each var="parecido" in="${materiasParecidas}">
+            Materia: ${parecido.materiaNombre} Curso: ${parecido.cursoNombre}
+            <br/>
+        </g:each>
     </div>
-<g:form name="myForm" action="createOpinion"  params="${[cursoId:hilo.cursoId,usuarioId:15]}">
+<g:form name="myForm" action="createOpinion"  params="${[cursoId:hilo.cursoId,usuarioId:11]}">
     <fieldset>
         <legend>Crear Opinion</legend>
         <div class="form-group">

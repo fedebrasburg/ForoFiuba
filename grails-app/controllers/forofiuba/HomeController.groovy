@@ -38,7 +38,8 @@ class HomeController {
         render(view:"Cursos", model: [Cursos: getCursos(params.catedraId), hilo:calcularHiloCursos(params.catedraId)])
     }
     def opiniones(){
-        render(view:"Opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId)])
+
+        render(view:"Opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
     }
 
 
@@ -131,6 +132,46 @@ class HomeController {
             println("No lo borre")
         }
         cursos()
+    }
+
+    def obtenerMateriasParecidas(String cursoId){
+        def usuarios = []
+        Opinion.findAllByCurso(Curso.get(cursoId)).each{
+            usuarios << it.usuario
+        }
+        usuarios = usuarios.unique { a, b -> a <=> b }
+        def pare = []
+        usuarios.each { usu ->
+            Opinion.findAllByUsuario(usu).unique { a, b -> a.curso.id <=> b.curso.id }.each{ op ->
+                if(op.curso.id != cursoId) {
+                    boolean entro = false
+                    pare.each{
+                        if (it.cursoNombre  == op.curso.nombre){
+                            it.contador += 1
+                            entro = true
+                        }
+                    }
+                    if (!entro) {
+                        def p = new parecido()
+                        p.cursoNombre = op.curso.nombre
+                        p.materiaNombre = Materia.get(Catedra.get(Curso.get(op.curso.id).catedra.id).materia.id).nombre
+                        p.contador = 1
+                        pare << p
+                    }
+                }
+            }
+        }
+        pare.each{
+            print(it.cursoNombre)
+            println(it.contador)
+        }
+        pare.findAll{it -> it.cursoNombre != Curso.get(cursoId).nombre}.sort{it.contador}
+    }
+
+    class parecido{
+        String cursoNombre
+        String materiaNombre
+        Integer contador
     }
 }
 
