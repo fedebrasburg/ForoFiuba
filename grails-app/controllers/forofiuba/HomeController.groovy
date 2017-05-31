@@ -45,6 +45,10 @@ class HomeController {
         render(view:"Opiniones", model: [Opiniones: Opinion.getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
     }
 
+    def busqueda(){
+        render(view:"Busqueda", model: [Parecidos:obtenerMateriasSegunNombre(params.nombre)] )
+    }
+
 
     def calcularHiloMaterias(String departamentoId) {
         def hilo = new Hilo()
@@ -152,6 +156,20 @@ class HomeController {
             }
         }
         pare.findAll{it -> it.cursoId != cursoId}.sort{it.contador}
+    }
+
+    def obtenerMateriasSegunNombre(String nombre){
+        def listaCursos = []
+        Curso.getAll().each{curso ->
+            if (curso.nombre.toLowerCase().contains(nombre.toLowerCase())){
+                def p = new parecido()
+                p.cursoNombre = curso.nombre
+                p.materiaNombre = Materia.get(Catedra.get(Curso.get(curso.id).catedra.id).materia.id).nombre
+                p.cursoId = curso.id
+                listaCursos << p
+            }
+        }
+        return listaCursos
     }
 
     class parecido{
