@@ -16,11 +16,11 @@ class HomeController {
     }
 
     def index() {
-        render(view: "Departamentos", model: [Departamentos: getDepartamentos()])
+        render(view: "Departamentos", model: [Departamentos: Departamento.getDepartamentos()])
     }
 
     def materias() {
-        render(view: "Materias", model: [Materias: getMaterias(params.departamentoId), hilo: calcularHiloMaterias(params.departamentoId)])
+        render(view: "Materias", model: [Materias: Materia.getMaterias(params.departamentoId), hilo: calcularHiloMaterias(params.departamentoId)])
     }
 
     def login() {
@@ -32,17 +32,17 @@ class HomeController {
     }
 
     def catedras() {
-        render(view: "Catedras", model: [Catedras: getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId)])
+        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId)])
     }
 
 
     def cursos() {
-        render(view: "Cursos", model: [Cursos: getCursos(params.catedraId), hilo: calcularHiloCursos(params.catedraId)])
+        render(view: "Cursos", model: [Cursos: Curso.getCursos(params.catedraId), hilo: calcularHiloCursos(params.catedraId)])
     }
 
     def opiniones(){
 
-        render(view:"Opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
+        render(view:"Opiniones", model: [Opiniones: Opinion.getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
     }
 
 
@@ -74,26 +74,6 @@ class HomeController {
         hilo
     }
 
-
-    def getDepartamentos() {
-        Departamento.getAll()
-    }
-
-    def getMaterias(String departamentoId) {
-        Materia.findAllByDepartamento(Departamento.get(departamentoId))
-    }
-
-    def getCatedras(String materiaId) {
-        Catedra.findAllByMateria(Materia.get(materiaId))
-    }
-
-    def getOpiniones(String cursoId) {
-        Opinion.findAllByCurso(Curso.get(cursoId))
-    }
-
-    def getCursos(String catedraId) {
-        Curso.findAllByCatedra(Catedra.get(catedraId))
-    }
 
     @Secured(['ROLE_USER'])
     def createOpinion() {

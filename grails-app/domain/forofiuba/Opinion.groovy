@@ -32,8 +32,7 @@ class Opinion {
 
     }
 
-    def
-    static createOpinion(String cursoId, String usuarioId, String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, String puntuacion = null) {
+    def static createOpinion(String cursoId, String usuarioId, String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, String puntuacion = null) {
         def o = new Opinion()
         o.horarios = horarios
         o.opinionFinal = opinionFinal
@@ -54,5 +53,8 @@ class Opinion {
         o.save(flush: true, failOnError: true)
     }
 
+    def static getOpiniones(String cursoId) {
+        Opinion.findAllByCurso(Curso.get(cursoId))
+    }
 
 }

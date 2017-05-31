@@ -29,5 +29,9 @@ class Materia {
         true
     }
 
+    def static getMaterias(String departamentoId) {
+        Materia.findAllByDepartamento(Departamento.get(departamentoId))
+    }
+
 
 }

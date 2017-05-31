@@ -29,4 +29,8 @@ class Catedra {
         c.delete(flush: true, failOnError: true)
         true
     }
+
+    def static getCatedras(String materiaId) {
+        Catedra.findAllByMateria(Materia.get(materiaId))
+    }
 }

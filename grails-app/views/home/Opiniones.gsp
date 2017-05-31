@@ -33,69 +33,94 @@
         <g:each var="opinion" in="${Opiniones}">
             <table style="width:90%" class="table" lass="table">
                 <tr>
-                    <td>Usuario</td>
-                    <td>${opinion.usuario.nombre}</td>
-                </tr>
+                    <td width="100px">
+                        <strong>Usuario</strong>
+                        <br/>
+                        ${opinion.usuario.nombre}
+                    </td>
+                <td>
                 <g:if test="${opinion.profesores != ""}">
-                    <tr>
-                        <td>Profesores</td>
-                        <td>${opinion.profesores}</td>
-                    </tr>
+                    <strong> Profesores </strong>
+                    <br/>
+                    <div align="right">
+                    ${opinion.profesores}
+                    </div>
+                    <br/>
                 </g:if>
                 <g:if test="${opinion.modalidad != ""}">
-                    <tr>
-                        <td>Modalidad</td>
-                        <td>${opinion.modalidad}</td>
-                    </tr>
+                    <strong> Modalidad </strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.modalidad}
+                    </div>
+                    <br/>
                 </g:if>
                 <g:if test="${opinion.horarios != ""}">
-                    <tr>
-                        <td>Horarios</td>
-                        <td>${opinion.horarios}</td>
-                    </tr>
+                    <strong> Horarios</strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.horarios}
+                    </div>
+                    <br/>
                 </g:if>
                 <g:if test="${opinion.opinionTeorica != ""}">
-                    <tr>
-                        <td>Opinion Teorica</td>
-                        <td>${opinion.opinionTeorica}</td>
-                    </tr>
+                    <strong>Opinion Teorica </strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.opinionTeorica}
+                    </div>
+                    <br/>
                 </g:if>
                 <g:if test="${opinion.opinionPractica != ""}">
-                    <tr>
-                        <td>Opinion Practica</td>
-                        <td>${opinion.opinionPractica}</td>
-                    </tr>
+                    <strong>Opinion Practica</strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.opinionPractica}
+                    </div>
+                    <br/>
                 </g:if>
                 <g:if test="${opinion.opinionProfesores != ""}">
-                    <tr>
-                        <td>Opinion Profesores</td>
-                        <td>${opinion.opinionProfesores}</td>
-                    </tr>
+                    <strong>Opinion Profesores</strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.opinionProfesores}
+                    </div>
+                    <br/>
                 </g:if>
                 <g:if test="${opinion.opinionTp != ""}">
-                    <tr>
-                        <td>Opinion Tp</td>
-                        <td>${opinion.opinionTp}</td>
-                    </tr>
+                    <strong> Opinion Tp</strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.opinionTp}
+                    </div>
+                    <br/>
                 </g:if>
                 <g:if test="${opinion.opinionParcial != ""}">
-                    <tr>
-                        <td>Opinion Parcial</td>
-                        <td>${opinion.opinionParcial}</td>
-                    </tr>
+                    <strong>Opinion Parcial</strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.opinionParcial}
+                    </div>
+                    <br/>
                 </g:if>
                 <g:if test="${opinion.opinionFinal != ""}">
-                    <tr>
-                        <td>Opinion Final</td>
-                        <td>${opinion.opinionFinal}</td>
-                    </tr>
+                    <strong> Opinion Final</strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.opinionFinal}
+                    </div>
+                    <br/>
                 </g:if>
                 <g:if test="${opinion.puntuacion != null}">
-                    <tr>
-                        <td>Puntuacion</td>
-                        <td>${opinion.puntuacion}</td>
-                    </tr>
+                    <strong> Puntuacion</strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.puntuacion}
+                    </div>
+                    <br/>
                 </g:if>
+                </td>
+                </tr>
             </table>
             <br/>
         </g:each>
@@ -107,13 +132,13 @@
         </g:each>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
-        <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId, usuarioId: 15]}">
+        <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId, usuarioId:11]}">
             <fieldset>
                 <legend>Crear Opinion</legend>
 
                 <div class="form-group">
                     <label>Profesores:</label>
-                    <g:field type="text" class="form-control" placeholder="Profesores" name="profesores"/>
+                    <g:field type="text" class="form-control" required="true" placeholder="Profesores" name="profesores"/>
                 </div>
 
                 <div class="form-group">
