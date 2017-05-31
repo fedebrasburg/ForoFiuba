@@ -27,7 +27,6 @@
                         params="${[cursoId: curso.id, catedraId: hilo.catedraId]}"><span
                         class="glyphicon glyphicon-remove"></span></g:link>
             </sec:ifAllGranted>
-
         </g:each>
     </div>
     <br/>

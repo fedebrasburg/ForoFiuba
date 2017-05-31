@@ -35,12 +35,14 @@ class HomeController {
         render(view: "Catedras", model: [Catedras: getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId)])
     }
 
+
     def cursos() {
         render(view: "Cursos", model: [Cursos: getCursos(params.catedraId), hilo: calcularHiloCursos(params.catedraId)])
     }
 
-    def opiniones() {
-        render(view: "Opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo: calcularHiloOpiniones(params.cursoId)])
+    def opiniones(){
+
+        render(view:"Opiniones", model: [Opiniones: getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
     }
 
 
@@ -139,6 +141,44 @@ class HomeController {
             println("No lo borre")
         }
         cursos()
+    }
+
+    def obtenerMateriasParecidas(String cursoId){
+        def usuarios = []
+        Opinion.findAllByCurso(Curso.get(cursoId)).each{
+            usuarios << it.usuario
+        }
+        usuarios = usuarios.unique { a, b -> a <=> b }
+        def pare = []
+        usuarios.each { usu ->
+            Opinion.findAllByUsuario(usu).unique { a, b -> a.curso.id <=> b.curso.id }.each{ op ->
+                if(op.curso.id != cursoId) {
+                    boolean entro = false
+                    pare.each{
+                        if (it.cursoId  == op.curso.id){
+                            it.contador += 1
+                            entro = true
+                        }
+                    }
+                    if (!entro) {
+                        def p = new parecido()
+                        p.cursoNombre = op.curso.nombre
+                        p.materiaNombre = Materia.get(Catedra.get(Curso.get(op.curso.id).catedra.id).materia.id).nombre
+                        p.contador = 1
+                        p.cursoId = op.curso.id
+                        pare << p
+                    }
+                }
+            }
+        }
+        pare.findAll{it -> it.cursoId != cursoId}.sort{it.contador}
+    }
+
+    class parecido{
+        String cursoNombre
+        String cursoId
+        String materiaNombre
+        Integer contador
     }
 }
 

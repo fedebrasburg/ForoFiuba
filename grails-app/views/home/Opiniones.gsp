@@ -99,6 +99,12 @@
             </table>
             <br/>
         </g:each>
+        <h2 class="titulo">Los que cursaron este curso tambien cursaron...</h2>
+        <g:each var="parecido" in="${materiasParecidas}">
+            Materia: ${parecido.materiaNombre}
+            Curso:  <g:link action="opiniones" params="${[cursoId:parecido.cursoId, cursoNombre:parecido.cursoNombre]}"> ${parecido.cursoNombre}</g:link>
+            <br/>
+        </g:each>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
         <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId, usuarioId: 15]}">
@@ -158,7 +164,6 @@
             </fieldset>
         </g:form>
     </sec:ifAllGranted>
-
 </div>
 </body>
 </html>
