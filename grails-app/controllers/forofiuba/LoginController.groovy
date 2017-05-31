@@ -31,126 +31,121 @@ import javax.servlet.http.HttpServletResponse
 @Secured('permitAll')
 class LoginController {
 
-	/** Dependency injection for the authenticationTrustResolver. */
-	AuthenticationTrustResolver authenticationTrustResolver
+    /** Dependency injection for the authenticationTrustResolver. */
+    AuthenticationTrustResolver authenticationTrustResolver
 
-	/** Dependency injection for the springSecurityService. */
-	def springSecurityService
+    /** Dependency injection for the springSecurityService. */
+    def springSecurityService
 
-	/** Dependency injection for the messageSource. */
-	MessageSource messageSource
+    /** Dependency injection for the messageSource. */
+    MessageSource messageSource
 
-	/** Default action; redirects to 'defaultTargetUrl' if logged in, /login/auth otherwise. */
-	def index() {
-		if (springSecurityService.isLoggedIn()) {
-			redirect uri: conf.successHandler.defaultTargetUrl
-		}
-		else {
-			redirect action: 'auth', params: params
-		}
-	}
+    /** Default action; redirects to 'defaultTargetUrl' if logged in, /login/auth otherwise. */
+    def index() {
+        if (springSecurityService.isLoggedIn()) {
+            redirect uri: conf.successHandler.defaultTargetUrl
+        } else {
+            redirect action: 'auth', params: params
+        }
+    }
 
-	/** Show the login page. */
-	def auth() {
+    /** Show the login page. */
+    def auth() {
 
-		def conf = getConf()
+        def conf = getConf()
 
-		if (springSecurityService.isLoggedIn()) {
-			redirect uri: conf.successHandler.defaultTargetUrl
-			return
-		}
+        if (springSecurityService.isLoggedIn()) {
+            redirect uri: conf.successHandler.defaultTargetUrl
+            return
+        }
 
-		String postUrl = request.contextPath + conf.apf.filterProcessesUrl
-		render view: 'auth', model: [postUrl: postUrl,
-		                             rememberMeParameter: conf.rememberMe.parameter,
-		                             usernameParameter: conf.apf.usernameParameter,
-		                             passwordParameter: conf.apf.passwordParameter,
-		                             gspLayout: conf.gsp.layoutAuth]
-	}
+        String postUrl = request.contextPath + conf.apf.filterProcessesUrl
+        render view: 'auth', model: [postUrl            : postUrl,
+                                     rememberMeParameter: conf.rememberMe.parameter,
+                                     usernameParameter  : conf.apf.usernameParameter,
+                                     passwordParameter  : conf.apf.passwordParameter,
+                                     gspLayout          : conf.gsp.layoutAuth]
+    }
 
-	/** The redirect action for Ajax requests. */
-	def authAjax() {
-		response.setHeader 'Location', conf.auth.ajaxLoginFormUrl
-		render(status: HttpServletResponse.SC_UNAUTHORIZED, text: 'Unauthorized')
-	}
+    /** The redirect action for Ajax requests. */
+    def authAjax() {
+        response.setHeader 'Location', conf.auth.ajaxLoginFormUrl
+        render(status: HttpServletResponse.SC_UNAUTHORIZED, text: 'Unauthorized')
+    }
 
-	/** Show denied page. */
-	def denied() {
-		if (springSecurityService.isLoggedIn() && authenticationTrustResolver.isRememberMe(authentication)) {
-			// have cookie but the page is guarded with IS_AUTHENTICATED_FULLY (or the equivalent expression)
-			redirect action: 'full', params: params
-			return
-		}
+    /** Show denied page. */
+    def denied() {
+        if (springSecurityService.isLoggedIn() && authenticationTrustResolver.isRememberMe(authentication)) {
+            // have cookie but the page is guarded with IS_AUTHENTICATED_FULLY (or the equivalent expression)
+            redirect action: 'full', params: params
+            return
+        }
 
-		[gspLayout: conf.gsp.layoutDenied]
-	}
+        [gspLayout: conf.gsp.layoutDenied]
+    }
 
-	/** Login page for users with a remember-me cookie but accessing a IS_AUTHENTICATED_FULLY page. */
-	def full() {
-		def conf = getConf()
-		render view: 'auth', params: params,
-		       model: [hasCookie: authenticationTrustResolver.isRememberMe(authentication),
-		               postUrl: request.contextPath + conf.apf.filterProcessesUrl,
-		               rememberMeParameter: conf.rememberMe.parameter,
-		               usernameParameter: conf.apf.usernameParameter,
-		               passwordParameter: conf.apf.passwordParameter,
-		               gspLayout: conf.gsp.layoutAuth]
-	}
+    /** Login page for users with a remember-me cookie but accessing a IS_AUTHENTICATED_FULLY page. */
+    def full() {
+        def conf = getConf()
+        render view: 'auth', params: params,
+                model: [hasCookie          : authenticationTrustResolver.isRememberMe(authentication),
+                        postUrl            : request.contextPath + conf.apf.filterProcessesUrl,
+                        rememberMeParameter: conf.rememberMe.parameter,
+                        usernameParameter  : conf.apf.usernameParameter,
+                        passwordParameter  : conf.apf.passwordParameter,
+                        gspLayout          : conf.gsp.layoutAuth]
+    }
 
-	/** Callback after a failed login. Redirects to the auth page with a warning message. */
-	def authfail() {
+    /** Callback after a failed login. Redirects to the auth page with a warning message. */
+    def authfail() {
 
-		String msg = ''
-		def exception = session[WebAttributes.AUTHENTICATION_EXCEPTION]
-		if (exception) {
-			if (exception instanceof AccountExpiredException) {
-				msg = "Su cuenta ha expirado, comuniquese con el administrador."
-			}
-			else if (exception instanceof CredentialsExpiredException) {
-				msg = "Su contraseña ha expirado, comuniquese con el administrador."
-			}
-			else if (exception instanceof DisabledException) {
-				msg = "Su cuenta no esta habilitada"
-			}
-			else if (exception instanceof LockedException) {
-				msg = "Su cuenta esta bloqueada, comuniquese con el administrador."
-			}
-			else {
-				msg = "Fallo la autentificacion, vuelva a intentarlo con mas ganas."
-			}
-		}
+        String msg = ''
+        def exception = session[WebAttributes.AUTHENTICATION_EXCEPTION]
+        if (exception) {
+            if (exception instanceof AccountExpiredException) {
+                msg = "Su cuenta ha expirado, comuniquese con el administrador."
+            } else if (exception instanceof CredentialsExpiredException) {
+                msg = "Su contraseña ha expirado, comuniquese con el administrador."
+            } else if (exception instanceof DisabledException) {
+                msg = "Su cuenta no esta habilitada"
+            } else if (exception instanceof LockedException) {
+                msg = "Su cuenta esta bloqueada, comuniquese con el administrador."
+            } else {
+                msg = "Fallo la autentificacion, vuelva a intentarlo con mas ganas."
+            }
+        }
 
-		if (springSecurityService.isAjax(request)) {
-			render([error: msg] as JSON)
-		}
-		else {
-			flash.message = msg
-			redirect action: 'auth', params: params
-		}
-	}
+        if (springSecurityService.isAjax(request)) {
+            render([error: msg] as JSON)
+        } else {
+            flash.message = msg
+            redirect action: 'auth', params: params
+        }
+    }
 
-	/** The Ajax success redirect url. */
-	def ajaxSuccess() {
-		render([success: true, username: authentication.name] as JSON)
-	}
+    /** The Ajax success redirect url. */
+    def ajaxSuccess() {
+        render([success: true, username: authentication.name] as JSON)
+    }
 
-	/** The Ajax denied redirect url. */
-	def ajaxDenied() {
-		render([error: 'access denied'] as JSON)
-	}
+    /** The Ajax denied redirect url. */
+    def ajaxDenied() {
+        render([error: 'access denied'] as JSON)
+    }
 
-	protected Authentication getAuthentication() {
-		SecurityContextHolder.context?.authentication
-	}
+    protected Authentication getAuthentication() {
+        SecurityContextHolder.context?.authentication
+    }
 
-	protected ConfigObject getConf() {
-		SpringSecurityUtils.securityConfig
-	}
+    protected ConfigObject getConf() {
+        SpringSecurityUtils.securityConfig
+    }
 
-	def backhome(){
-		redirect(controller: 'home', action:'index')
-	}
-	def registrar(){
-		redirect(controller: 'registro' , action: 'index')
-	}
+    def backhome() {
+        redirect(controller: 'home', action: 'index')
+    }
+
+    def registrar() {
+        redirect(controller: 'registro', action: 'index')
+    }
 }

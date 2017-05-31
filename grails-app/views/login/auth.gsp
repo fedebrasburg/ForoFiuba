@@ -3,48 +3,51 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
     <style type="text/css" media="screen">
-	
-	</style>
+
+    </style>
 </head>
 
 <body>
 <g:render template="partials/Nav"/>
 
 <div id="login">
-	<div class="inner">
-		<h1>	</h1>
-		<div class="fheader">Ingrese con su usuario</div>
+    <div class="inner">
+        <h1></h1>
 
-		<g:if test='${flash.message}'>
-			<div class="login_message">${flash.message}</div>
-		</g:if>
+        <div class="fheader">Ingrese con su usuario</div>
 
-		<form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" class="cssform" autocomplete="off">
-			<p>
-				<label for="username">Email</label>
-				<input type="text" class="text_" name="${usernameParameter ?: 'username'}" id="username"/>
-			</p>
+        <g:if test='${flash.message}'>
+            <div class="login_message">${flash.message}</div>
+        </g:if>
 
-			<p>
-				<label for="password">Contraseña</label>
-				<input type="password" class="text_" name="${passwordParameter ?: 'password'}" id="password"/>
-			</p>
+        <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" class="cssform"
+              autocomplete="off">
+            <p>
+                <label for="username">Email</label>
+                <input type="text" class="text_" name="${usernameParameter ?: 'username'}" id="username"/>
+            </p>
 
-			<p id="remember_me_holder">
-				<input type="checkbox" class="chk" name="${rememberMeParameter ?: 'remember-me'}" id="remember_me" <g:if test='${hasCookie}'>checked="checked"</g:if>/>
-				<label for="remember_me">Recordarme</label>
-			</p>
+            <p>
+                <label for="password">Contraseña</label>
+                <input type="password" class="text_" name="${passwordParameter ?: 'password'}" id="password"/>
+            </p>
 
-			<p>
-				<input type="submit" id="submit" value="Ingresar"/>
-			</p>
-		</form>
-	</div>
+            <p id="remember_me_holder">
+                <input type="checkbox" class="chk" name="${rememberMeParameter ?: 'remember-me'}" id="remember_me"
+                       <g:if test='${hasCookie}'>checked="checked"</g:if>/>
+                <label for="remember_me">Recordarme</label>
+            </p>
+
+            <p>
+                <input type="submit" id="submit" value="Ingresar"/>
+            </p>
+        </form>
+    </div>
 </div>
 <script>
-(function() {
-	document.forms['loginForm'].elements['${usernameParameter ?: 'username'}'].focus();
-})();
+    (function () {
+        document.forms['loginForm'].elements['${usernameParameter ?: 'username'}'].focus();
+    })();
 </script>
 </body>
 </html>

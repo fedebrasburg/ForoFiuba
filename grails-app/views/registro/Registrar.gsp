@@ -2,36 +2,37 @@
 <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
+
 <body>
 <g:render template="partials/Nav"/>
 <div class="body">
-    <h1> ForosFiuba - Usuarios</h1>
+    <h1>ForosFiuba - Usuarios</h1>
 
-    <g:form name="myForm" action="crearUsuario"  >
+    <g:form name="myForm" action="crearUsuario">
         <fieldset>
             <legend>Registrar</legend>
-            <label>Nombre: </label>
+            <label>Nombre:</label>
             <g:field type="text" required="true" name="nombre"/>
             <br/>
             <br/>
-            <label>Genero: </label>
-            <g:field type="text"  name="genero"   />
+            <label>Genero:</label>
+            <g:field type="text" name="genero"/>
             <br/>
             <br/>
-            <label>Email: </label>
-            <g:field type="email"  name="email"  required="true" />
+            <label>Email:</label>
+            <g:field type="email" name="email" required="true"/>
             <br/>
             <br/>
-            <label>Telefono: </label>
-            <g:field type="number"  name="telefono"  />
+            <label>Telefono:</label>
+            <g:field type="number" name="telefono"/>
             <br/>
             <br/>
-            <label>FechaDeNacimiento: </label>
+            <label>FechaDeNacimiento:</label>
             <g:datePicker name="fechaDeNacimiento" value="${new Date()}" precision="day"></g:datePicker>
             <br/>
             <br/>
-            <label>Password: </label>
-            <g:field type="password" name="password" required="true" />
+            <label>Password:</label>
+            <g:field type="password" name="password" required="true"/>
             <br/>
             <br/>
             <g:submitButton class="btn btn-default" name="botonRegistrar" value="Registrar"/>

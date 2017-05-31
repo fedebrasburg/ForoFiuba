@@ -14,7 +14,7 @@ class Opinion {
     String profesores
     Integer puntuacion
 
-    static belongsTo = [Curso,Usuario]
+    static belongsTo = [Curso, Usuario]
 
     static constraints = {
         curso nullable: false
@@ -32,7 +32,8 @@ class Opinion {
 
     }
 
-    def static createOpinion(String cursoId, String usuarioId, String horarios = null, String opinionTp  = null, String opinionParcial  = null, String opinionFinal  = null, String opinionTeorica  = null, String opinionProfesores  = null ,String opinionPractica  = null,String modalidad  = null,String profesores  = null, String puntuacion  = null){
+    def
+    static createOpinion(String cursoId, String usuarioId, String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, String puntuacion = null) {
         def o = new Opinion()
         o.horarios = horarios
         o.opinionFinal = opinionFinal
@@ -43,9 +44,9 @@ class Opinion {
         o.opinionPractica = opinionPractica
         o.modalidad = modalidad
         o.profesores = profesores
-        if (puntuacion != ""){
+        if (puntuacion != "") {
             o.puntuacion = puntuacion.toInteger()
-        }else{
+        } else {
             o.puntuacion = null
         }
         o.curso = Curso.get(cursoId)

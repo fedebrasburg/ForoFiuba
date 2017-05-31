@@ -1,19 +1,19 @@
 package forofiuba
 
 class Catedra {
-    String nombre,email;
+    String nombre, email;
     Materia materia;
     static belongsTo = Materia
     static hasMany = [cursos: Curso]
 
     static constraints = {
-        nombre nullable: false,blank:false
+        nombre nullable: false, blank: false
         materia nullable: false
-        email email:true , nullable: true
+        email email: true, nullable: true
 
     }
 
-    def static createCatedra(String nombre, String email, String materiaId){
+    def static createCatedra(String nombre, String email, String materiaId) {
         def c = new Catedra()
         c.nombre = nombre
         c.email = email
@@ -21,12 +21,12 @@ class Catedra {
         c.save(flush: true, failOnError: true)
     }
 
-    static boolean deleteCatedra(String catedraId){
-        if (!Curso.findAllByCatedra(Catedra.get(catedraId)).isEmpty()){
+    static boolean deleteCatedra(String catedraId) {
+        if (!Curso.findAllByCatedra(Catedra.get(catedraId)).isEmpty()) {
             return false
         }
         def c = Catedra.get(catedraId)
-        c.delete(flush: true,failOnError: true)
+        c.delete(flush: true, failOnError: true)
         true
     }
 }
