@@ -146,7 +146,7 @@ class HomeController {
                 if(op.curso.id != cursoId) {
                     boolean entro = false
                     pare.each{
-                        if (it.cursoNombre  == op.curso.nombre){
+                        if (it.cursoId  == op.curso.id){
                             it.contador += 1
                             entro = true
                         }
@@ -156,20 +156,18 @@ class HomeController {
                         p.cursoNombre = op.curso.nombre
                         p.materiaNombre = Materia.get(Catedra.get(Curso.get(op.curso.id).catedra.id).materia.id).nombre
                         p.contador = 1
+                        p.cursoId = op.curso.id
                         pare << p
                     }
                 }
             }
         }
-        pare.each{
-            print(it.cursoNombre)
-            println(it.contador)
-        }
-        pare.findAll{it -> it.cursoNombre != Curso.get(cursoId).nombre}.sort{it.contador}
+        pare.findAll{it -> it.cursoId != cursoId}.sort{it.contador}
     }
 
     class parecido{
         String cursoNombre
+        String cursoId
         String materiaNombre
         Integer contador
     }

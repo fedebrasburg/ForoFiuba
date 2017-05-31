@@ -95,7 +95,8 @@
         </g:each>
         <h2 class="titulo">Los que cursaron este curso tambien cursaron...</h2>
         <g:each var="parecido" in="${materiasParecidas}">
-            Materia: ${parecido.materiaNombre} Curso: ${parecido.cursoNombre}
+            Materia: ${parecido.materiaNombre}
+            Curso:  <g:link action="opiniones" params="${[cursoId:parecido.cursoId, cursoNombre:parecido.cursoNombre]}"> ${parecido.cursoNombre}</g:link>
             <br/>
         </g:each>
     </div>
