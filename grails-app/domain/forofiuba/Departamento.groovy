@@ -13,4 +13,9 @@ class Departamento {
         email email: true, nullable: true
         telefono nullable: true
     }
+
+
+    def static getDepartamentos() {
+        Departamento.getAll()
+    }
 }

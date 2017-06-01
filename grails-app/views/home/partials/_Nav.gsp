@@ -8,7 +8,7 @@ body {
 }
 
 .table {
-    font-size: small;
+    font-size: medium;
 }
 
 .texto-cuerpo {

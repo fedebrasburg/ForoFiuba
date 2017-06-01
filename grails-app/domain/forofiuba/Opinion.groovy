@@ -55,5 +55,8 @@ class Opinion {
         o.save(flush: true, failOnError: true)
     }
 
+    def static getOpiniones(String cursoId) {
+        Opinion.findAllByCurso(Curso.get(cursoId))
+    }
 
 }

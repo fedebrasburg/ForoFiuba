@@ -20,6 +20,7 @@
                 params="${[departamentoId: departamento.id, departamentoNombre: departamento.nombre]}">${departamento.nombre}</g:link>
         <br/>
     </g:each>
+    <g:render template="partials/Buscador"/>
 </div>
 
 </body>

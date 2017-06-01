@@ -28,4 +28,8 @@ class Curso {
         c.delete(flush: true, failOnError: true)
         true
     }
+
+    def static getCursos(String catedraId) {
+        Curso.findAllByCatedra(Catedra.get(catedraId))
+    }
 }
