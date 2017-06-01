@@ -23,7 +23,6 @@ class Usuario {
         user nullable: false, unique: true
     }
 
-    def
     static createUsuario(String nombre, String genero, String email, String telefono, Date fechaDeNacimiento, User user) {
         def usuario = new Usuario()
         usuario.nombre = nombre
