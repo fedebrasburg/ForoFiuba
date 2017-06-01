@@ -106,22 +106,22 @@ dataSource:
   pooled: true
   jmxExport: true
   driverClassName: org.postgresql.Driver
-  username:  postgres #Poner user name de la BD
-  password:  vacaloca #Ṕass de el user
+  username:  fedebrasburg #Poner user name de la BD
+  password:   #Ṕass de el user
 
 environments:
   development:
       dataSource:
           dbCreate: update
-          url: jdbc:postgresql://localhost:5432/ForosFiuba
+          url: jdbc:postgresql://localhost:5432/forosfiuba
   test:
       dataSource:
           dbCreate: update
-          url: jdbc:postgresql://localhost:5432/ForosFiuba
+          url: jdbc:postgresql://localhost:5432/forosfiuba
   production:
       dataSource:
           dbCreate: update
-          url: jdbc:postgresql://localhost:5432/ForosFiuba
+          url: jdbc:postgresql://localhost:5432/forosfiuba
           properties:
               jmxEnabled: true
               initialSize: 5

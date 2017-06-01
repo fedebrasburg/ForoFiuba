@@ -84,7 +84,7 @@ class HomeController {
     @Secured(['ROLE_USER'])
     def createOpinion() {
         User user = springSecurityService.currentUser
-        Opinion.createOpinion(params.cursoId, user,params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion)
+        Opinion.createOpinion(params.cursoId, user,params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion, new Date())
         opiniones()
     }
 
@@ -105,6 +105,13 @@ class HomeController {
         Curso.createCurso(params.cursoNombre, params.cursoEmail, params.catedraId)
         cursos()
     }
+
+    @Secured(['ROLE_ADMIN'])
+    def createDepartamento() {
+        Departamento.createDepartamento(params.departamentoNombre,Facultad.list([max:1])[0].id, params.departamentoEmail, params.departamentoTelefono)
+        index()
+    }
+
     @Secured(['ROLE_ADMIN'])
     def deleteMateria() {
         def rta = Materia.deleteMateria(params.materiaId)
@@ -130,12 +137,21 @@ class HomeController {
         cursos()
     }
 
+    @Secured(['ROLE_ADMIN'])
+    def deleteDepartamento() {
+        def rta = Departamento.deleteDepartamento(params.departamentoId)
+        if (!rta) {
+            println("No lo borre")
+        }
+        index()
+    }
+
     def obtenerMateriasParecidas(String cursoId){
         def usuarios = []
         Opinion.findAllByCurso(Curso.get(cursoId)).each{
             usuarios << it.usuario
         }
-        usuarios = usuarios.unique { a, b -> a <=> b }
+        usuarios = usuarios.unique { a, b -> a.id <=> b.id }
         def pare = []
         usuarios.each { usu ->
             Opinion.findAllByUsuario(usu).unique { a, b -> a.curso.id <=> b.curso.id }.each{ op ->

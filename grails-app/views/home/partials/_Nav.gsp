@@ -9,6 +9,7 @@ body {
 
 .table {
     font-size: medium;
+    border: groove;
 }
 
 .texto-cuerpo {

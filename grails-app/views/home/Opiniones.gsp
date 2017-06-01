@@ -31,7 +31,7 @@
     <div align="center">
         <h2>Opiniones</h2>
         <g:each var="opinion" in="${Opiniones}">
-            <table style="width:90%" class="table" lass="table">
+            <table style="width:90%" class="table">
                 <tr>
                     <td width="100px">
                         <strong>Usuario</strong>
@@ -39,6 +39,14 @@
                         ${opinion.usuario.nombre}
                     </td>
                 <td>
+                    <g:if test="${opinion.fechaPublicacion != null}">
+                        <strong> Fecha de Publicacion </strong>
+                        <br/>
+                        <div align="right">
+                            ${opinion.fechaPublicacion[Calendar.DATE]}/${opinion.fechaPublicacion[Calendar.MONTH]}/${opinion.fechaPublicacion[Calendar.YEAR]}
+                        </div>
+                        <br/>
+                    </g:if>
                 <g:if test="${opinion.profesores != ""}">
                     <strong> Profesores </strong>
                     <br/>
@@ -124,15 +132,17 @@
             </table>
             <br/>
         </g:each>
-        <h2 class="titulo">Los que cursaron este curso tambien cursaron...</h2>
-        <g:each var="parecido" in="${materiasParecidas}">
+        <h2 class="listado">Los que cursaron este curso tambien cursaron...</h2>
+        <g:each  var="parecido" in="${materiasParecidas}">
+            <div style="font-size: large">
             Materia: ${parecido.materiaNombre}
-            Curso:  <g:link action="opiniones" params="${[cursoId:parecido.cursoId, cursoNombre:parecido.cursoNombre]}"> ${parecido.cursoNombre}</g:link>
+            ,Curso:  <g:link action="opiniones" params="${[cursoId:parecido.cursoId, cursoNombre:parecido.cursoNombre]}"> ${parecido.cursoNombre}</g:link>
+            </div>
             <br/>
         </g:each>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
-        <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId, usuarioId:11]}">
+        <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
             <fieldset>
                 <legend>Crear Opinion</legend>
 

@@ -18,8 +18,37 @@
     <g:each var="departamento" in="${Departamentos}">
         <g:link action="materias" class="listado"
                 params="${[departamentoId: departamento.id, departamentoNombre: departamento.nombre]}">${departamento.nombre}</g:link>
+        <sec:ifAllGranted roles="ROLE_ADMIN">
+            <g:link action="deleteDepartamento" class="listado"
+                    params="${[departamentoId: departamento.id]}"><span
+                    class="glyphicon glyphicon-remove"></span></g:link>
+        </sec:ifAllGranted>
         <br/>
     </g:each>
+    <br/>
+    <sec:ifAllGranted roles="ROLE_ADMIN">
+        <g:form name="myForm" action="createDepartamento">
+            <fieldset>
+                <legend>Crear Departamento</legend>
+
+                <div class="form-group">
+                    <label>Nombre Departamento:</label>
+                    <g:field type="text" class="form-control" required="true" placeholder="Nombre del departamento"
+                             name="departamentoNombre"/>
+                </div>
+
+                <div class="form-group">
+                    <label>Mail:</label>
+                    <g:field type="text" class="form-control" placeholder="Email" name="departamentoEmail"/>
+                </div>
+                <div class="form-group">
+                    <label>Telefono:</label>
+                    <g:field type="text" class="form-control" placeholder="Telefono" name="departamentoTelefono"/>
+                </div>
+                <g:submitButton class="btn btn-default" name="botonAgregarDepartamento" value="Crear Departamento"/>
+            </fieldset>
+        </g:form>
+    </sec:ifAllGranted>
     <g:render template="partials/Buscador"/>
 </div>
 
