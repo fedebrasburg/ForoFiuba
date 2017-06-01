@@ -32,6 +32,7 @@ class Usuario {
         usuario.telefono = telefono
         usuario.fechaDeNacimiento = fechaDeNacimiento
         usuario.user = user
+        user.usuario = usuario
         usuario.save(flush: true, failOnError: true)
     }
 

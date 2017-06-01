@@ -4,6 +4,8 @@ import grails.plugin.springsecurity.annotation.Secured
 
 class HomeController {
 
+    def springSecurityService
+
     class Hilo {
         String materiaNombre
         String materiaId
@@ -97,7 +99,8 @@ class HomeController {
 
     @Secured(['ROLE_USER'])
     def createOpinion() {
-        Opinion.createOpinion(params.cursoId, params.usuarioId, params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion)
+        User user = springSecurityService.currentUser
+        Opinion.createOpinion(params.cursoId, user,params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion)
         opiniones()
     }
 
@@ -118,7 +121,7 @@ class HomeController {
         Curso.createCurso(params.cursoNombre, params.cursoEmail, params.catedraId)
         cursos()
     }
-
+    @Secured(['ROLE_ADMIN'])
     def deleteMateria() {
         def rta = Materia.deleteMateria(params.materiaId)
         if (!rta) {
@@ -126,7 +129,7 @@ class HomeController {
         }
         materias()
     }
-
+    @Secured(['ROLE_ADMIN'])
     def deleteCatedra() {
         def rta = Catedra.deleteCatedra(params.catedraId)
         if (!rta) {
@@ -134,7 +137,7 @@ class HomeController {
         }
         catedras()
     }
-
+    @Secured(['ROLE_ADMIN'])
     def deleteCurso() {
         def rta = Curso.deleteCurso(params.cursoId)
         if (!rta) {
