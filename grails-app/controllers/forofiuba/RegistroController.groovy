@@ -6,12 +6,19 @@ import grails.plugin.springsecurity.annotation.Secured
 class RegistroController {
 
     def springSecurityService
+    @Secured(['ROLE_USER'])
 
     def index() {
         render(view: "Registrar")
     }
 
     def crearUsuario() {
+        if(params.password!=params.checkpassword){
+            List<String> errorList =new ArrayList<String>();
+            errorList.add("Contraseñas diferentes")
+            render(view: "Registrar", model: [errorList: errorList])
+            return
+        }
         def usuario = new Usuario(params)
         usuario.save(flush:true)
         def role=Rol.findByAuthority("ROLE_USER")
