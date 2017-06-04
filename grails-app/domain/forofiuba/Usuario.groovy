@@ -28,7 +28,7 @@ class Usuario implements Serializable {
     static constraints = {
         username blank: false, unique: true,email: true,nullable: false
         nombre nullable: false, blank: false
-        genero(inList: ["H", "M", "U"], nullable: true)
+        genero nullable: true
         fechaDeNacimiento nullable: true
         opiniones nullable: true
         carreras nullable: true

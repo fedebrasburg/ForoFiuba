@@ -50,7 +50,7 @@ form {
 
             <sec:ifNotLoggedIn>
                 <li>
-                    <g:link action="index" controller="registro"><span class="glyphicon glyphicon-check"></span> Registrarse</g:link>
+                    <g:link action="index" controller="Registro"><span class="glyphicon glyphicon-check"></span> Registrarse</g:link>
                 </li>
             </sec:ifNotLoggedIn>
             <sec:ifNotLoggedIn>

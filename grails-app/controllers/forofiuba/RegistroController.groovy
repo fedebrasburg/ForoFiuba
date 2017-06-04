@@ -6,7 +6,6 @@ import grails.plugin.springsecurity.annotation.Secured
 class RegistroController {
 
     def springSecurityService
-    @Secured(['ROLE_USER'])
 
     def index() {
         render(view: "Registrar")

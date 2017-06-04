@@ -35,6 +35,10 @@
             <g:field type="password" name="password" required="true"/>
             <br/>
             <br/>
+            <label>Password:</label>
+            <g:field type="password" name="checkpassword" required="true"/>
+            <br/>
+            <br/>
             <g:submitButton class="btn btn-default" name="botonRegistrar" value="Registrar"/>
         </fieldset>
     </g:form>

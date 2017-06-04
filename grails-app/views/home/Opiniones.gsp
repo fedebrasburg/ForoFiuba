@@ -36,7 +36,12 @@
                     <td width="100px">
                         <strong>Usuario</strong>
                         <br/>
-                        ${opinion.usuario.nombre}
+                        <g:link action="perfilUsuario"
+                                params="${[usuarioId: opinion.usuario.username]}">
+                                ${opinion.usuario.nombre}
+
+                            </span>
+                        </g:link>
                     </td>
                 <td>
                     <g:if test="${opinion.fechaPublicacion != null}">

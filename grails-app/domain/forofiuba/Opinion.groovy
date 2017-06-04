@@ -52,13 +52,16 @@ class Opinion {
             o.puntuacion = null
         }
         o.curso = Curso.get(cursoId)
-        o.usuario = user.usuario;
+        o.usuario = user;
         o.fechaPublicacion = fechaPublicacion
         o.save(flush: true,     failOnError: true)
     }
 
-    def static getOpiniones(String cursoId) {
+    def static getOpinionesByCurso(String cursoId) {
         Opinion.findAllByCurso(Curso.get(cursoId))
+    }
+    def static getOpinionesByUsername(String username) {
+        Opinion.findAllByUsuario(Usuario.findByUsername(username))
     }
 
 }

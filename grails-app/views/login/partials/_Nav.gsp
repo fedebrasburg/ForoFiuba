@@ -43,23 +43,23 @@ form {
                 <g:link action="index"><img height="22" width="22"
                                             src="http://www.foros-fiuba.com.ar/templates/fisubsilversh/images/phpbb2_logo.gif"></g:link>
             </li>
-            <li
+            <li>
                 <g:link action="index" controller="home"><span class="glyphicon glyphicon-home"></span> Home</g:link>
             </li>
 
 
             <sec:ifNotLoggedIn>
                 <li>
-                    <g:link action="index" controller="registro"><span class="glyphicon glyphicon-check"></span> Registrarse</g:link>
+                    <g:link action="index" controller="Registro"><span class="glyphicon glyphicon-check"></span> Registrarse</g:link>
                 </li>
             </sec:ifNotLoggedIn>
             <sec:ifNotLoggedIn>
-                <li class="active">>
+                <li>
                     <g:link action="index" controller="Login"><span class="glyphicon glyphicon-user"></span> Ingresar</g:link>
                 </li>
             </sec:ifNotLoggedIn>
             <sec:ifLoggedIn>
-                <li>
+                <li class="active">
                     <g:link action="index" controller="perfil"><span class="glyphicon glyphicon-user"></span> Perfil</g:link>
                 </li>
             </sec:ifLoggedIn>

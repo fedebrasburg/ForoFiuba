@@ -28,6 +28,9 @@ class HomeController {
     def login() {
         redirect(controller: 'login', action: 'index')
     }
+    def perfilUsuario(){
+        redirect(controller: 'perfil',action: 'index',params: ["usuarioId":"${params.usuarioId}"])
+    }
 
     def registrar() {
         redirect(controller: 'registro', action: 'index')
@@ -44,7 +47,7 @@ class HomeController {
 
     def opiniones(){
 
-        render(view:"Opiniones", model: [Opiniones: Opinion.getOpiniones(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
+        render(view:"Opiniones", model: [Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
     }
 
     def busqueda(){
