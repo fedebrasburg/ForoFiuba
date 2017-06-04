@@ -12,9 +12,25 @@ class RegistroController {
     }
 
     def crearUsuario() {
-        User user = User.createUserRoleUser(params.email, params.password)
-        springSecurityService.reauthenticate user.username
-        Usuario.createUsuario(params.nombre, params.genero, params.email, params.telefono, params.fechaDeNacimiento, user)
+        def usuario = new Usuario(params)
+        usuario.save(flush:true)
+        def role=Rol.findByAuthority("ROLE_USER")
+        if(!role){
+            throw ExceptionMessage("No encuentra el rol de usuario")
+        }
+        if(usuario.hasErrors()){
+            List<String> errorList =new ArrayList<String>();
+            usuario.errors.allErrors.each {
+                errorList.add(it.toString())
+
+            }
+            render(view: "Registrar", model: [errorList: errorList])
+            return
+        }
+        def usuarioRol =new UsuarioRol( user: usuario ,role:role)
+        usuarioRol.save(flush:true,failOnError:true)
+        springSecurityService.reauthenticate params.username,params.password
+
         backhome()
     }
 

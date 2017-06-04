@@ -6,7 +6,7 @@ import groovy.transform.ToString
 import org.apache.commons.lang.builder.HashCodeBuilder
 
 @ToString(cache = true, includeNames = true, includePackage = false)
-class UserRole implements Serializable {
+class UsuarioRol implements Serializable {
 
     private static final long serialVersionUID = 1
 
@@ -15,7 +15,7 @@ class UserRole implements Serializable {
 
     @Override
     boolean equals(other) {
-        if (other instanceof UserRole) {
+        if (other instanceof UsuarioRol) {
             other.userId == user?.id && other.roleId == role?.id
         }
     }
@@ -28,7 +28,7 @@ class UserRole implements Serializable {
         builder.toHashCode()
     }
 
-    static UserRole get(long userId, long roleId) {
+    static UsuarioRol get(long userId, long roleId) {
         criteriaFor(userId, roleId).get()
     }
 
@@ -37,37 +37,37 @@ class UserRole implements Serializable {
     }
 
     private static DetachedCriteria criteriaFor(long userId, long roleId) {
-        UserRole.where {
+        UsuarioRol.where {
             user == Usuario.load(userId) &&
                     role == Rol.load(roleId)
         }
     }
 
-    static UserRole create(Usuario user, Rol role) {
-        def instance = new UserRole(user: user, role: role)
+    static UsuarioRol create(Usuario user, Rol role) {
+        def instance = new UsuarioRol(user: user, role: role)
         instance.save()
         instance
     }
 
     static boolean remove(Usuario u, Rol r) {
         if (u != null && r != null) {
-            UserRole.where { user == u && role == r }.deleteAll()
+            UsuarioRol.where { user == u && role == r }.deleteAll()
         }
     }
 
     static int removeAll(Usuario u) {
-        u == null ? 0 : UserRole.where { user == u }.deleteAll()
+        u == null ? 0 : UsuarioRol.where { user == u }.deleteAll()
     }
 
     static int removeAll(Rol r) {
-        r == null ? 0 : UserRole.where { role == r }.deleteAll()
+        r == null ? 0 : UsuarioRol.where { role == r }.deleteAll()
     }
 
     static constraints = {
-        role validator: { Rol r, UserRole ur ->
+        role validator: { Rol r, UsuarioRol ur ->
             if (ur.user?.id) {
-                UserRole.withNewSession {
-                    if (UserRole.exists(ur.user.id, r.id)) {
+                UsuarioRol.withNewSession {
+                    if (UsuarioRol.exists(ur.user.id, r.id)) {
                         return ['userRole.exists']
                     }
                 }

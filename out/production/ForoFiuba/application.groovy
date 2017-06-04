@@ -4,8 +4,8 @@ grails.plugin.springsecurity.auth.loginFormUrl = '/login/auth'
 grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/home/index'
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'forofiuba.Usuario'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'forofiuba.UsuarioRol'
-grails.plugin.springsecurity.authority.className = 'forofiuba.Rol'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'forofiuba.UserRole'
+grails.plugin.springsecurity.authority.className = 'forofiuba.Role'
 grails.plugin.springsecurity.roleHierarchy = '''
 
   ROLE_ADMIN > ROLE_USER

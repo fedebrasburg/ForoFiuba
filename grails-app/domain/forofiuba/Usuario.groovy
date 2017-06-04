@@ -2,11 +2,10 @@ package forofiuba
 
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
-import org.codehaus.groovy.control.messages.ExceptionMessage
 
 @EqualsAndHashCode(includes = 'username')
 @ToString(includes = 'username', includeNames = true, includePackage = false)
-class User implements Serializable {
+class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1
 
@@ -18,42 +17,28 @@ class User implements Serializable {
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired
-    static belongsTo = Usuario;
     final static Date MIN_DATE = Calendar.instance.with { add(YEAR, -12); it }.time
     final static Date MAX_DATE = Calendar.instance.with { add(YEAR, -100); it }.time
     String nombre
     String genero
     String telefono
     Date fechaDeNacimiento
-    User user
 
     static hasMany = [opiniones: Opinion, carreras: Carrera]
     static constraints = {
-        genero(inList: ["H", "M", "U"], nullable: true)
+        username blank: false, unique: true,email: true,nullable: false
         nombre nullable: false, blank: false
+        genero(inList: ["H", "M", "U"], nullable: true)
         fechaDeNacimiento nullable: true
         opiniones nullable: true
         carreras nullable: true
         telefono nullable: true
-        user nullable: false, unique: true
-        password blank: false, password: true
-        username blank: false, unique: true,email: true
+        password blank: false, password: true,nullable: false
     }
 
-    static createUsuario(String nombre, String genero, String email, String telefono, Date fechaDeNacimiento, User user) {
-        def usuario = new Usuario()
-        usuario.nombre = nombre
-        usuario.genero = genero
-        usuario.email = email
-        usuario.telefono = telefono
-        usuario.fechaDeNacimiento = fechaDeNacimiento
-        usuario.user = user
-        user.usuario = usuario
-        usuario.save(flush: true, failOnError: true)
-    }
 
-    Set<Role> getAuthorities() {
-        UserRole.findAllByUser(this)*.role
+    Set<Rol> getAuthorities() {
+        UsuarioRol.findAllByUser(this)*.role
     }
 
     def beforeInsert() {
@@ -74,20 +59,8 @@ class User implements Serializable {
 
 
     static mapping = {
-        table '`User`'
-        password column: '`password`'
+//        table '`Usuario`'
+  //      password column: '`password`'
     }
 
-    def static createUserRoleUser(String nombre, String password) {
-        def user = new User()
-        user.username = nombre
-        user.password = password
-        user.save(flush: true, failOnError: true)
-        Role role=Role.findByAuthority("ROLE_USER")
-        if(!role){
-            raise ExceptionMessage("No encuentra el rol de usuario")
-        }
-        new UserRole(user: user, role: role).save(flush: true, failOnError: true)
-        return  user
-    }
 }

@@ -35,7 +35,7 @@ class Opinion {
 
     }
 
-    static createOpinion(String cursoId, User user,String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, String puntuacion = null, Date fechaPublicacion) {
+    static createOpinion(String cursoId, Usuario user, String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, String puntuacion = null, Date fechaPublicacion) {
         def o = new Opinion()
         o.horarios = horarios
         o.opinionFinal = opinionFinal
@@ -54,7 +54,7 @@ class Opinion {
         o.curso = Curso.get(cursoId)
         o.usuario = user.usuario;
         o.fechaPublicacion = fechaPublicacion
-        o.save(flush: true, failOnError: true)
+        o.save(flush: true,     failOnError: true)
     }
 
     def static getOpiniones(String cursoId) {

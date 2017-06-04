@@ -38,10 +38,6 @@
             <g:submitButton class="btn btn-default" name="botonRegistrar" value="Registrar"/>
         </fieldset>
     </g:form>
-    <g:each var="empanada" in="${errorList}">
-        <li> "${empanada}"</li>
-    </g:each>
-
-    </div>
-    </body>
-    </html>
+</div>
+</body>
+</html>
