@@ -111,7 +111,7 @@ class HomeController {
 
     @Secured(['ROLE_ADMIN'])
     def createDepartamento() {
-        Departamento.createDepartamento(params.departamentoNombre,Facultad.list([max:1])[0].id, params.departamentoEmail, params.departamentoTelefono)
+        Departamento.createDepartamento(params.departamentoNombre, params.departamentoEmail, params.departamentoTelefono)
         index()
     }
 

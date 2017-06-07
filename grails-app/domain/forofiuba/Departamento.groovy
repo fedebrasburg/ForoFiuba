@@ -2,14 +2,11 @@ package forofiuba
 
 class Departamento {
     String nombre;
-    Facultad facultad;
-    static belongsTo = Facultad;
     static hasMany = [materias: Materia]
     String email;
     String telefono;
     static constraints = {
         nombre nullable: false, blank: false
-        facultad nullable: false
         email email: true, nullable: true
         telefono nullable: true
     }
@@ -28,10 +25,9 @@ class Departamento {
         true
     }
 
-    def static createDepartamento(String nombre, Long facultadId, String email, String telefono){
+    def static createDepartamento(String nombre, String email, String telefono){
         def d = new Departamento()
         d.nombre = nombre
-        d.facultad = Facultad.get(facultadId)
         d.email = email
         d.telefono = telefono
         d.save(flush: true, failOnError: true)
