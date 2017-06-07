@@ -22,7 +22,8 @@ class HomeController {
     }
 
     def materias() {
-        render(view: "Materias", model: [Materias: Materia.getMaterias(params.departamentoId), hilo: calcularHiloMaterias(params.departamentoId)])
+
+        render(view: "Materias", model: [Materias: Materia.getMaterias(params.departamentoId), hilo: calcularHiloMaterias(params.departamentoId),carreras:Carrera.findAll()])
     }
 
     def login() {
@@ -37,7 +38,7 @@ class HomeController {
     }
 
     def catedras() {
-        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId)])
+        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId)],carreras: Materia.get(params.materiaId).carreras)
     }
 
 

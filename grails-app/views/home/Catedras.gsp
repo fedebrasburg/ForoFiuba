@@ -14,7 +14,12 @@
                 params="${[departamentoId: hilo.departamentoId, departamentoNombre: hilo.departamentoNombre]}">${hilo.departamentoNombre}</g:link> >
         ${hilo.materiaNombre}
     </div>
-
+    <div align="center">
+        <h3>Carreras</h3>
+        <g:each  in="${carreras}" var="carrera">
+            <td> ${carrera.nombre.toString()}    </td>   <br/>
+        </g:each>
+    </div>
     <div align="center">
         <h2>Catedras</h2>
         <g:each var="catedra" in="${Catedras}">
