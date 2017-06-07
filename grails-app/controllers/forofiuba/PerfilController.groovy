@@ -9,8 +9,18 @@ class PerfilController {
     def render(boolean edit,String usuarioId){
         Usuario usuario =Usuario.findByUsername(usuarioId)
         Usuario  usuarioActual = springSecurityService.currentUser
-        def opiniones=Opinion.getOpinionesByUsername(usuario.username)
-        render(view: "Perfil",model: ["usuario":usuario,"edit":edit,"opiniones":opiniones, "usuarioActual":usuarioActual])
+        def opiniones=Opinion.getOpinionesByUsername(usuario.username.toString())
+        def carreras
+        if(edit){
+            carreras=Carrera.findAll()
+        }else {
+            carreras=Carrera.withCriteria {
+                alumnos {
+                    eq('username', usuario.username)
+                }
+            }
+        }
+        render(view: "Perfil",model: ["usuario":usuario,"edit":edit,"opiniones":opiniones, "usuarioActual":usuarioActual,"carreras":carreras])
     }
     def index() {
         if(!params.usuarioId){
@@ -21,19 +31,24 @@ class PerfilController {
     }
     def mostrarEditar(){
         Usuario usuarioActual = springSecurityService.currentUser
-        Usuario usuario =Usuario.findByUsername(params.usuarioId)
-        if(usuarioActual!=usuario){
-            render(false,usuario.username)
-        }
-        render(true,params.usuarioId)
+        render(true,usuarioActual.username)
     }
+
     def editar(){
         Usuario usuarioActual = springSecurityService.currentUser
+        if(!params.usuarioId){
+            render(false,usuarioActual.username)
+            return
+        }
         Usuario usuario =Usuario.findByUsername(params.usuarioId)
         if(usuarioActual!=usuario){
             render(false,usuario.username)
+            return
         }
         usuario.properties=params
+        def carrerasListNombres =params.list('carrerasNombre')
+        def carrerasList= Carrera.findAllByNombreInList(carrerasListNombres)
+        usuario.carreras=carrerasList
         usuario.save(failOnError:true)
         render(false)
     }

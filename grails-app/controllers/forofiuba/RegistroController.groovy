@@ -8,7 +8,8 @@ class RegistroController {
     def springSecurityService
 
     def index() {
-        render(view: "Registrar")
+        def carreras=Carrera.findAll()
+        render(view: "Registrar",model:["carreras":carreras] )
     }
 
     def crearUsuario() {
@@ -18,7 +19,13 @@ class RegistroController {
             render(view: "Registrar", model: [errorList: errorList])
             return
         }
+
         def usuario = new Usuario(params)
+        def carrerasListNombres =params.list('carrerasNombre')
+        if(carrerasListNombres){
+            def carrerasList= Carrera.findAllByNombreInList(carrerasListNombres)
+            usuario.carreras=carrerasList
+        }
         usuario.save(flush:true)
         def role=Rol.findByAuthority("ROLE_USER")
         if(!role){

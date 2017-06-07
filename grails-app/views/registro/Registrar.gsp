@@ -39,11 +39,19 @@
             <g:field type="password" name="checkpassword" required="true"/>
             <br/>
             <br/>
+            <label>Carreras:</label>
+            <br/>
+            <g:each  in="${carreras}" var="carrera">
+                <g:checkBox name="carrerasNombre" value="${carrera.nombre.toString()}" /> ${carrera.nombre.toString()}           <br/>
+            </g:each>
+            <br/>
             <g:submitButton class="btn btn-default" name="botonRegistrar" value="Registrar"/>
+
         </fieldset>
     </g:form>
-    <g:each var="empanada" in="${errorList}">
-        <li> "${empanada}"</li>
+    <g:each var="error" in="${errorList}">
+        <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
+                error="${error}"/></li>
     </g:each>
 
     </div>

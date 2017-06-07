@@ -3,13 +3,14 @@ package forofiuba
 class Materia {
     String nombre, descripcion;
     Departamento departamento;
-    static belongsTo = Departamento
-    static hasMany = [catedras: Catedra]
+    static belongsTo = [Departamento,Carrera]
+    static hasMany = [catedras: Catedra,carreras: Carrera]
     static constraints = {
         nombre nullable: false, blank: false
         descripcion nullable: true
         departamento nullable: false
         catedras nullable: true
+        carreras nullable: true
     }
 
     def static createMateria(String nombre, String descripcion, String departamentoId) {
