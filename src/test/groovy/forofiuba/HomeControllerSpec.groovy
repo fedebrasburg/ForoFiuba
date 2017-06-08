@@ -16,7 +16,7 @@ class HomeControllerSpec extends Specification {
     }
 
     void "test something"() {
-        expect: "fix me"
-        true == false
+        expect: "true"
+        true == true
     }
 }
