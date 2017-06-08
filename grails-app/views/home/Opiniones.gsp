@@ -138,13 +138,18 @@
             <br/>
         </g:each>
         <h2 class="listado">Los que cursaron este curso tambien cursaron...</h2>
-        <g:each  var="parecido" in="${materiasParecidas}">
-            <div style="font-size: large">
-            Materia: ${parecido.materiaNombre}
-            ,Curso:  <g:link action="opiniones" params="${[cursoId:parecido.cursoId, cursoNombre:parecido.cursoNombre]}"> ${parecido.cursoNombre}</g:link>
-            </div>
-            <br/>
-        </g:each>
+        <sec:ifAllGranted roles="ROLE_USER">
+                <g:each  var="parecido" in="${materiasParecidas}">
+                    <div style="font-size: large">
+                    Materia: ${parecido.materiaNombre}
+                    ,Curso:  <g:link action="opiniones" params="${[cursoId:parecido.cursoId, cursoNombre:parecido.cursoNombre]}"> ${parecido.cursoNombre}</g:link>
+                    </div>
+                    <br/>
+                </g:each>
+        </sec:ifAllGranted>
+        <sec:ifNotLoggedIn>
+            <g:link action="index" controller="Login">Ingresar para ver recomendaciones</g:link>
+        </sec:ifNotLoggedIn>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
         <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
