@@ -89,7 +89,7 @@ class HomeController {
     @Secured(['ROLE_USER'])
     def createOpinion() {
         Usuario user = springSecurityService.currentUser
-        Opinion.createOpinion(params.cursoId, user,params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion, new Date())
+        Opinion.createOpinion(params.cursoId, user,params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion, new Date(), params.year, params.cuatrimestre)
         opiniones()
     }
 

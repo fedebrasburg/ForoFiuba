@@ -44,6 +44,12 @@
                         </g:link>
                     </td>
                 <td>
+                    <strong> Cursada  </strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.cuatrimestre}º cuatrimestre de ${opinion.year}
+                    </div>
+                    <br/>
                     <g:if test="${opinion.fechaPublicacion != null}">
                         <strong> Fecha de Publicacion </strong>
                         <br/>
@@ -162,7 +168,14 @@
             <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
                 <fieldset>
                     <legend>Crear Opinion</legend>
-
+                    <div class="form-group">
+                        <label>Cuatrimestre cursado:</label>
+                        <g:field type="number" class="form-control" min="1" max="2" name="cuatrimestre"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Cuatrimestre cursado:</label>
+                        <g:field type="number" class="form-control" min="1960" max="2100" name="year"/>
+                    </div>
                     <div class="form-group">
                         <label>Profesores:</label>
                         <g:field type="text" class="form-control" required="true" placeholder="Profesores" name="profesores"/>
