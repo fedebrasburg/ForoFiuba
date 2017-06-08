@@ -34,7 +34,7 @@ class Materia {
         Materia.findAllByDepartamento(Departamento.get(departamentoId))
     }
 
-    def static getCorrelativas(String materiaId){
+    def static getCorrelativas(Long materiaId){
         Materia.get(materiaId).correlativas
     }
 

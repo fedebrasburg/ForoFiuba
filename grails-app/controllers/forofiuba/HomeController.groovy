@@ -47,8 +47,7 @@ class HomeController {
     }
 
     def opiniones(){
-
-        render(view:"Opiniones", model: [Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
+        render(view:"Opiniones", model: [cursoCorrelativas:cursoCorrelativas(springSecurityService.currentUser,params.cursoId),Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
     }
 
     def busqueda(){
@@ -200,6 +199,12 @@ class HomeController {
         String cursoId
         String materiaNombre
         Integer contador
+    }
+
+    boolean cursoCorrelativas(Usuario user, String cursoId){
+        def correlativas = Materia.getCorrelativas(Curso.get(cursoId).catedra.materia.id)
+        def cursadas = []
+        return correlativas.size() == cursadas.intersect(correlativas).size()
     }
 }
 

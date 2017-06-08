@@ -37,6 +37,7 @@ class Usuario implements Serializable {
     }
 
 
+
     Set<Rol> getAuthorities() {
         UsuarioRol.findAllByUser(this)*.role
     }
