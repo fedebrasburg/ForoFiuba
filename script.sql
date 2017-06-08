@@ -82,13 +82,21 @@ Insert into catedra(id,version,nombre,materia_id) values (41,0,'Servetto',15);
 Insert into curso(id,version,nombre,catedra_id) values (78,0,'Servetto',41);
 Insert into materia(id,version,nombre,departamento_id) values (16,0,'Bases de datos',3);
 Insert into catedra(id,version,nombre,materia_id) values (42,0,'Ale',16);
-Insert into curso(id,version,nombre,catedra_id) values (79,0,'Porta',42);
+Insert into curso(id,version,nombre,catedra_id) values (79,0,'Fasce - Roman',42);
 Insert into materia(id,version,nombre,departamento_id) values (47,0,'Computacion',3);
 Insert into catedra(id,version,nombre,materia_id) values (48,0,'Cabrera',47);
+Insert into curso(id,version,nombre,catedra_id) values (80,0,'Cabrera',48);
 
 Insert into departamento(id,version,nombre) values (4,0,'Electronica');
 Insert into materia(id,version,nombre,departamento_id) values (18,0,'Estructura del computador',4);
 Insert into catedra(id,version,nombre,materia_id) values (45,0,'Mazzeo',18);
+Insert into curso(id,version,nombre,catedra_id) values (84,0,'Burin',45);
+Insert into curso(id,version,nombre,catedra_id) values (85,0,'Zambrano',45);
+Insert into curso(id,version,nombre,catedra_id) values (86,0,'Cabibo',45);
+
 Insert into materia(id,version,nombre,departamento_id) values (19,0,'Laboratorio',4);
 Insert into catedra(id,version,nombre,materia_id) values (46,0,'Rosa',19);
+Insert into curso(id,version,nombre,catedra_id) values (81,0,'Marino',46);
+Insert into curso(id,version,nombre,catedra_id) values (82,0,'Fiorentin',46);
+Insert into curso(id,version,nombre,catedra_id) values (83,0,'Rosa',46);
 
