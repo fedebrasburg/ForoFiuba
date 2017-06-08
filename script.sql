@@ -136,39 +136,39 @@ Insert into materia_materia(materia_correlativas_id, materia_id) values (10,6);
 
 
 
-Insert into carrera(id,version,nombre) values(1000,0,"Informatica")
-Insert into carrera_materias(carrera_id,materia_id) values(1000,5)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,6)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,7)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,8)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,9)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,10)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,11)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,12)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,13)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,14)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,15)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,15)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,16)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,18)
-Insert into carrera_materias(carrera_id,materia_id) values(1000,19)
+Insert into carrera(id,version,nombre) values(1000,0,'Informatica');
+Insert into carrera_materias(carrera_id,materia_id) values(1000,5);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,6);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,7);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,8);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,9);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,10);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,11);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,12);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,13);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,14);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,15);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,15);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,16);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,18);
+Insert into carrera_materias(carrera_id,materia_id) values(1000,19);
 
-Insert into carrera(id,version,nombre) values(1001,0,"Quimica")
-Insert into carrera_materias(carrera_id,materia_id) values(1001,5)
-Insert into carrera_materias(carrera_id,materia_id) values(1001,6)
-Insert into carrera_materias(carrera_id,materia_id) values(1001,8)
-Insert into carrera_materias(carrera_id,materia_id) values(1001,9)
-Insert into carrera_materias(carrera_id,materia_id) values(1001,11)
+Insert into carrera(id,version,nombre) values(1001,0,'Quimica');
+Insert into carrera_materias(carrera_id,materia_id) values(1001,5);
+Insert into carrera_materias(carrera_id,materia_id) values(1001,6);
+Insert into carrera_materias(carrera_id,materia_id) values(1001,8);
+Insert into carrera_materias(carrera_id,materia_id) values(1001,9);
+Insert into carrera_materias(carrera_id,materia_id) values(1001,11);
 
 
 
-Insert into carrera(id,version,nombre) values(1002,0,"Industrial")
-Insert into carrera_materias(carrera_id,materia_id) values(1002,5)
-Insert into carrera_materias(carrera_id,materia_id) values(1002,6)
-Insert into carrera_materias(carrera_id,materia_id) values(1002,8)
-Insert into carrera_materias(carrera_id,materia_id) values(1002,9)
-Insert into carrera_materias(carrera_id,materia_id) values(1002,11)
-Insert into carrera_materias(carrera_id,materia_id) values(1002,47)
+Insert into carrera(id,version,nombre) values(1002,0,'Industrial');
+Insert into carrera_materias(carrera_id,materia_id) values(1002,5);
+Insert into carrera_materias(carrera_id,materia_id) values(1002,6);
+Insert into carrera_materias(carrera_id,materia_id) values(1002,8);
+Insert into carrera_materias(carrera_id,materia_id) values(1002,9);
+Insert into carrera_materias(carrera_id,materia_id) values(1002,11);
+Insert into carrera_materias(carrera_id,materia_id) values(1002,47);
 
 
 

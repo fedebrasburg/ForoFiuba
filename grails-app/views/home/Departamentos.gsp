@@ -26,6 +26,16 @@
         <br/>
     </g:each>
     <br/>
+    <h3> Carreras </h3>
+    <div style="column-count: 3">
+    <g:each var="carrera" in="${Carreras.keySet()}">
+        <h4>${carrera.nombre}</h4>
+        <g:each in="${carrera.materias}" var="materia">
+            ${materia.nombre}
+            <br/>
+        </g:each>
+    </g:each>
+    </div>
     <sec:ifAllGranted roles="ROLE_ADMIN">
         <g:form name="myForm" action="createDepartamento">
             <fieldset>

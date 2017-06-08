@@ -18,7 +18,7 @@ class HomeController {
     }
 
     def index() {
-        render(view: "Departamentos", model: [Departamentos: Departamento.getDepartamentos()])
+        render(view: "Departamentos", model: [Carreras: Carrera.getAllMateriasPorCarrera(),Departamentos: Departamento.getDepartamentos()])
     }
 
     def materias() {

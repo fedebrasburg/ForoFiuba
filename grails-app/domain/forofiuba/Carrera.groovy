@@ -9,4 +9,12 @@ class Carrera {
         materias nullable: false
     }
 
+    def static getAllMateriasPorCarrera(){
+        def dic = [:]
+        Carrera.getAll().each{carrera ->
+            dic[carrera] = carrera.materias
+        }
+        return dic
+    }
+
 }
