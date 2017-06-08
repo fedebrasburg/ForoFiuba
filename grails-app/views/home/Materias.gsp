@@ -9,7 +9,7 @@
     <h1 class="titulo" align="center">ForosFiuba - Materias</h1>
 
     <div class="hilo">
-        <g:link action="index">Departamentos ></g:link> ${hilo.departamentoNombre}
+        <g:link action="index">Departamentos </g:link> > ${hilo.departamentoNombre}
     </div>
 
     <div align="center">
