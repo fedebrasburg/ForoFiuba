@@ -4,7 +4,7 @@ class Materia {
     String nombre, descripcion;
     Departamento departamento;
     static belongsTo = [Departamento,Carrera]
-    static hasMany = [catedras: Catedra,carreras: Carrera]
+    static hasMany = [catedras: Catedra,carreras: Carrera, correlativas: Materia]
     static constraints = {
         nombre nullable: false, blank: false
         descripcion nullable: true
@@ -32,6 +32,10 @@ class Materia {
 
     def static getMaterias(String departamentoId) {
         Materia.findAllByDepartamento(Departamento.get(departamentoId))
+    }
+
+    def static getCorrelativas(String materiaId){
+        Materia.get(materiaId).correlativas
     }
 
 
