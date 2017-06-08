@@ -208,5 +208,7 @@ class HomeController {
         def cursadas = []
         return correlativas.size() == cursadas.intersect(correlativas).size()
     }
+
+
 }
 
