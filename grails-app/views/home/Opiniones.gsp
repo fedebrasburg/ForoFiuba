@@ -44,6 +44,12 @@
                         </g:link>
                     </td>
                 <td>
+                    <strong> Cursada  </strong>
+                    <br/>
+                    <div align="right">
+                        ${opinion.cuatrimestre}º cuatrimestre de ${opinion.year}
+                    </div>
+                    <br/>
                     <g:if test="${opinion.fechaPublicacion != null}">
                         <strong> Fecha de Publicacion </strong>
                         <br/>
@@ -138,71 +144,96 @@
             <br/>
         </g:each>
         <h2 class="listado">Los que cursaron este curso tambien cursaron...</h2>
-        <g:each  var="parecido" in="${materiasParecidas}">
-            <div style="font-size: large">
-            Materia: ${parecido.materiaNombre}
-            ,Curso:  <g:link action="opiniones" params="${[cursoId:parecido.cursoId, cursoNombre:parecido.cursoNombre]}"> ${parecido.cursoNombre}</g:link>
-            </div>
-            <br/>
-        </g:each>
+        <sec:ifAllGranted roles="ROLE_USER">
+                <g:each  var="parecido" in="${materiasParecidas}">
+                    <div style="font-size: large">
+                    Materia: ${parecido.materiaNombre}
+                    ,Curso:  <g:link action="opiniones" params="${[cursoId:parecido.cursoId, cursoNombre:parecido.cursoNombre]}"> ${parecido.cursoNombre}</g:link>
+                    </div>
+                    <br/>
+                </g:each>
+            <g:if test="${materiasParecidas.isEmpty()}">
+                <div style="font-size: large">
+                    No hay opiniones suficientes para el sistema de recomendaciones
+                </div>
+            </g:if>
+        </sec:ifAllGranted>
+        <sec:ifNotLoggedIn>
+            <g:link action="index" controller="Login">Ingresar para ver recomendaciones</g:link>
+        </sec:ifNotLoggedIn>
+        <br/>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
-        <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
-            <fieldset>
-                <legend>Crear Opinion</legend>
+        <g:if test="${cursoCorrelativas}">
+            <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
+                <fieldset>
+                    <legend>Crear Opinion</legend>
+                    <div class="form-group">
+                        <label>Cuatrimestre cursado:</label>
+                        <g:field type="number" class="form-control" min="1" max="2" name="cuatrimestre"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Cuatrimestre cursado:</label>
+                        <g:field type="number" class="form-control" min="1960" max="2100" name="year"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Profesores:</label>
+                        <g:field type="text" class="form-control" required="true" placeholder="Profesores" name="profesores"/>
+                    </div>
 
-                <div class="form-group">
-                    <label>Profesores:</label>
-                    <g:field type="text" class="form-control" required="true" placeholder="Profesores" name="profesores"/>
-                </div>
+                    <div class="form-group">
+                        <label>Modalidad:</label>
+                        <g:field type="text" class="form-control" placeholder="Modalidad" name="modalidad"/>
+                    </div>
 
-                <div class="form-group">
-                    <label>Modalidad:</label>
-                    <g:field type="text" class="form-control" placeholder="Modalidad" name="modalidad"/>
-                </div>
+                    <div class="form-group">
+                        <label>Horarios:</label>
+                        <g:field type="text" class="form-control" placeholder="Horarios" name="horarios"/>
+                    </div>
 
-                <div class="form-group">
-                    <label>Horarios:</label>
-                    <g:field type="text" class="form-control" placeholder="Horarios" name="horarios"/>
-                </div>
+                    <div class="form-group">
+                        <label>Opinion Teorica:</label>
+                        <g:field type="text" class="form-control" name="opinionTeorica"/>
+                    </div>
 
-                <div class="form-group">
-                    <label>Opinion Teorica:</label>
-                    <g:field type="text" class="form-control" name="opinionTeorica"/>
-                </div>
+                    <div class="form-group">
+                        <label>Opinion Practica:</label>
+                        <g:field type="text" class="form-control" name="opinionPractica"/>
+                    </div>
 
-                <div class="form-group">
-                    <label>Opinion Practica:</label>
-                    <g:field type="text" class="form-control" name="opinionPractica"/>
-                </div>
+                    <div class="form-group">
+                        <label>Opinion del equipo docente:</label>
+                        <g:field type="text" class="form-control" name="opinionProfesores"/>
+                    </div>
 
-                <div class="form-group">
-                    <label>Opinion del equipo docente:</label>
-                    <g:field type="text" class="form-control" name="opinionProfesores"/>
-                </div>
+                    <div class="form-group">
+                        <label>Opinion de Tp:</label>
+                        <g:field type="text" class="form-control" name="opinionTp"/>
+                    </div>
 
-                <div class="form-group">
-                    <label>Opinion de Tp:</label>
-                    <g:field type="text" class="form-control" name="opinionTp"/>
-                </div>
+                    <div class="form-group">
+                        <label>Opinion del Parcial:</label>
+                        <g:field type="text" class="form-control" name="opinionParcial"/>
+                    </div>
 
-                <div class="form-group">
-                    <label>Opinion del Parcial:</label>
-                    <g:field type="text" class="form-control" name="opinionParcial"/>
-                </div>
+                    <div class="form-group">
+                        <label>Opinion del Final:</label>
+                        <g:field type="text" class="form-control" name="opinionFinal"/>
+                    </div>
 
-                <div class="form-group">
-                    <label>Opinion del Final:</label>
-                    <g:field type="text" class="form-control" name="opinionFinal"/>
-                </div>
-
-                <div class="form-group">
-                    <label>Puntuacion:</label>
-                    <g:field type="number" class="form-control" min="1" max="10" name="puntuacion"/>
-                </div>
-                <g:submitButton class="btn btn-default" name="botonAgregar" value="Crear Opinion"/>
-            </fieldset>
-        </g:form>
+                    <div class="form-group">
+                        <label>Puntuacion:</label>
+                        <g:field type="number" class="form-control" min="1" max="10" name="puntuacion"/>
+                    </div>
+                    <g:submitButton class="btn btn-default" name="botonAgregar" value="Crear Opinion"/>
+                </fieldset>
+            </g:form>
+        </g:if>
+        <g:if test="${!cursoCorrelativas}">
+            <h4 align="center">
+            No podes opinar por no haber opinado en las correlativas :(
+            </h4>
+        </g:if>
     </sec:ifAllGranted>
 
 </div>

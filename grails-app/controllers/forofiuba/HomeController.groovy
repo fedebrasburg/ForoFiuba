@@ -18,11 +18,12 @@ class HomeController {
     }
 
     def index() {
-        render(view: "Departamentos", model: [Departamentos: Departamento.getDepartamentos()])
+        render(view: "Departamentos", model: [Carreras: Carrera.getAllMateriasPorCarrera(),Departamentos: Departamento.getDepartamentos()])
     }
 
     def materias() {
-        render(view: "Materias", model: [Materias: Materia.getMaterias(params.departamentoId), hilo: calcularHiloMaterias(params.departamentoId)])
+
+        render(view: "Materias", model: [Materias: Materia.getMaterias(params.departamentoId), hilo: calcularHiloMaterias(params.departamentoId),carreras:Carrera.findAll()])
     }
 
     def login() {
@@ -36,8 +37,10 @@ class HomeController {
         redirect(controller: 'registro', action: 'index')
     }
 
+
     def catedras() {
-        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId)])
+        def carreras=Materia.get(params.materiaId).carreras
+        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId),carreras: Materia.get(params.materiaId).carreras])
     }
 
 
@@ -46,8 +49,7 @@ class HomeController {
     }
 
     def opiniones(){
-
-        render(view:"Opiniones", model: [Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
+        render(view:"Opiniones", model: [cursoCorrelativas:cursoCorrelativas(springSecurityService.currentUser,params.cursoId),Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
     }
 
     def busqueda(){
@@ -87,13 +89,13 @@ class HomeController {
     @Secured(['ROLE_USER'])
     def createOpinion() {
         Usuario user = springSecurityService.currentUser
-        Opinion.createOpinion(params.cursoId, user,params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion, new Date())
+        Opinion.createOpinion(params.cursoId, user,params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion, new Date(), params.year, params.cuatrimestre)
         opiniones()
     }
 
     @Secured(['ROLE_ADMIN'])
     def createMateria() {
-        Materia.createMateria(params.materiaNombre, params.materiaDescripcion, params.departamentoId)
+        Materia.createMateria(params.materiaNombre, params.materiaDescripcion, params.departamentoId,params.list("carrerasNombre"))
         materias()
     }
 
@@ -111,7 +113,7 @@ class HomeController {
 
     @Secured(['ROLE_ADMIN'])
     def createDepartamento() {
-        Departamento.createDepartamento(params.departamentoNombre,Facultad.list([max:1])[0].id, params.departamentoEmail, params.departamentoTelefono)
+        Departamento.createDepartamento(params.departamentoNombre, params.departamentoEmail, params.departamentoTelefono)
         index()
     }
 
@@ -199,6 +201,12 @@ class HomeController {
         String cursoId
         String materiaNombre
         Integer contador
+    }
+
+    boolean cursoCorrelativas(Usuario user, String cursoId){
+        def correlativas = Materia.getCorrelativas(Curso.get(cursoId).catedra.materia.id)
+        def cursadas = []
+        return correlativas.size() == cursadas.intersect(correlativas).size()
     }
 }
 

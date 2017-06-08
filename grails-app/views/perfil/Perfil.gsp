@@ -25,6 +25,11 @@
                 <label>Telefono:</label>
                 <g:field type="number" name="telefono" value="${usuario.telefono}"/>
                 <br/>
+                <label>Carreras:</label><br/>
+                <g:each  in="${carreras}" var="carrera">
+                    <g:checkBox name="carrerasNombre" value="${carrera.nombre.toString()}" />     ${carrera.nombre.toString()}       <br/>
+                </g:each>
+                <br/>
                 <g:if test="${usuario==usuarioActual}">
                     <g:submitButton class="btn btn-default" name="editar" value="Guardar"/>
                 </g:if>
@@ -38,6 +43,10 @@
             <label>Email:      <td>${usuario.username}</td></label> <br/>
             <label>Fecha de nacimiento:      <g:formatDate date="${usuario.fechaDeNacimiento}"  format="dd-MM-yyyy" /> </label> <br/>
             <label>Telefono:      <td>${usuario.telefono}</td></label> <br/>
+            <label>Carreras:</label>
+            <g:each  in="${carreras}" var="carrera">
+                   <td> ${carrera.nombre.toString()}    </td>   <br/>
+            </g:each>
             <g:if test="${usuario==usuarioActual}">
                 <g:submitButton class="btn btn-default" name="edit" value="Editar">
                 <span class="glyphicons glyphicons-pencil"></span>

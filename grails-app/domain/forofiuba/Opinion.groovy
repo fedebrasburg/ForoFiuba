@@ -14,6 +14,8 @@ class Opinion {
     String profesores
     Integer puntuacion
     Date fechaPublicacion
+    String cuatrimestre
+    String year
 
 
     static belongsTo = [Curso, Usuario]
@@ -31,11 +33,13 @@ class Opinion {
         opinionProfesores nullable: true
         modalidad nullable: true
         profesores nullable: true
-        fechaPublicacion nullable: true
+        fechaPublicacion nullable: false
+        year nullable:false, range: 1960..2100, blank: false
+        cuatrimestre nullable:false, range: 1..2, blank: false
 
     }
 
-    static createOpinion(String cursoId, Usuario user, String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, String puntuacion = null, Date fechaPublicacion) {
+    static createOpinion(String cursoId, Usuario user, String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, String puntuacion = null, Date fechaPublicacion, String year, String cuatrimestre) {
         def o = new Opinion()
         o.horarios = horarios
         o.opinionFinal = opinionFinal
@@ -46,6 +50,8 @@ class Opinion {
         o.opinionPractica = opinionPractica
         o.modalidad = modalidad
         o.profesores = profesores
+        o.year = year
+        o.cuatrimestre = cuatrimestre
         if (puntuacion != "") {
             o.puntuacion = puntuacion.toInteger()
         } else {

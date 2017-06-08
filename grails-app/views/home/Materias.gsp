@@ -42,6 +42,14 @@
                     <label>Descripcion:</label>
                     <g:field type="text" placeholder="Descripcion" class="form-control" name="materiaDescripcion"/>
                 </div>
+                <div class="form-group">
+
+                <label>Carreras:</label>
+                <br/>
+                <g:each  in="${carreras}" var="carrera">
+                    <g:checkBox name="carrerasNombre" value="${carrera.nombre.toString()}" /> ${carrera.nombre.toString()}           <br/>
+                </g:each>
+                </div>
                 <g:submitButton class="btn btn-default" name="botonAgregarMateria" value="Crear Materia"/>
             </fieldset>
         </g:form>

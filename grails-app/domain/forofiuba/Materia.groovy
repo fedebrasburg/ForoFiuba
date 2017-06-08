@@ -3,21 +3,27 @@ package forofiuba
 class Materia {
     String nombre, descripcion;
     Departamento departamento;
-    static belongsTo = Departamento
-    static hasMany = [catedras: Catedra]
+    static belongsTo = [Departamento,Carrera]
+    static hasMany = [catedras: Catedra,carreras: Carrera, correlativas: Materia]
     static constraints = {
         nombre nullable: false, blank: false
         descripcion nullable: true
         departamento nullable: false
         catedras nullable: true
+        carreras nullable: true
     }
 
-    def static createMateria(String nombre, String descripcion, String departamentoId) {
+    def static createMateria(String nombre, String descripcion, String departamentoId, List<String> carreras) {
         def m = new Materia()
         m.nombre = nombre
         m.descripcion = descripcion
         m.departamento = Departamento.get(departamentoId)
+        m.carreras=Carrera.findAllByNombreInList(carreras)
         m.save(flush: true, failOnError: true)
+        m.carreras.each{ Carrera carrera->
+            carrera.materias.add(m)
+            carrera.save(flush: true)
+        }
     }
 
     static boolean deleteMateria(String materiaId) {
@@ -31,6 +37,10 @@ class Materia {
 
     def static getMaterias(String departamentoId) {
         Materia.findAllByDepartamento(Departamento.get(departamentoId))
+    }
+
+    def static getCorrelativas(Long materiaId){
+        Materia.get(materiaId).correlativas
     }
 
 
