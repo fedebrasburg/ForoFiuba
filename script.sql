@@ -1,5 +1,6 @@
 
 delete from materia_materia;
+delete from carrera_materias;
 delete from opinion;
 delete from curso;
 delete from catedra;
@@ -130,7 +131,6 @@ Insert into curso(id,version,nombre,catedra_id) values (82,0,'Fiorentin',46);
 Insert into curso(id,version,nombre,catedra_id) values (83,0,'Rosa',46);
 
 Insert into materia_materia(materia_correlativas_id, materia_id) values (19,6);
-Insert into materia_materia(materia_correlativas_id, materia_id) values (10,6);
 
 
 

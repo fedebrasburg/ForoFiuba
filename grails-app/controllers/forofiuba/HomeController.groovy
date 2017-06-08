@@ -40,7 +40,7 @@ class HomeController {
 
     def catedras() {
         def carreras=Materia.get(params.materiaId).carreras
-        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId),carreras: Materia.get(params.materiaId).carreras])
+        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId),correlativas:Materia.get(params.materiaId).correlativas,carreras: Materia.get(params.materiaId).carreras])
     }
 
 

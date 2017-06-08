@@ -15,6 +15,15 @@
         ${hilo.materiaNombre}
     </div>
     <div align="center">
+        <h3>Correlativas</h3>
+        <g:each  in="${correlativas}" var="materia">
+            <td> ${materia.nombre.toString()}    <br/>
+        </g:each>
+        <g:if test="${correlativas.isEmpty()}">
+            No tiene
+        </g:if>
+    </div>
+    <div align="center">
         <h3>Carreras</h3>
         <g:each  in="${carreras}" var="carrera">
             <td> ${carrera.nombre.toString()}    </td>   <br/>
