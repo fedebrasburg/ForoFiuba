@@ -31,7 +31,8 @@
     <g:each var="carrera" in="${Carreras.keySet()}">
         <h4>${carrera.nombre}</h4>
         <g:each in="${carrera.materias}" var="materia">
-            ${materia.nombre}
+            <g:link action="catedras"
+                    params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}</g:link>
             <br/>
         </g:each>
     </g:each>
