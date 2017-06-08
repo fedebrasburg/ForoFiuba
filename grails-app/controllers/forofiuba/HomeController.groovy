@@ -37,8 +37,10 @@ class HomeController {
         redirect(controller: 'registro', action: 'index')
     }
 
+
     def catedras() {
-        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId)],carreras: Materia.get(params.materiaId).carreras)
+        def carreras=Materia.get(params.materiaId).carreras
+        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId),carreras: Materia.get(params.materiaId).carreras])
     }
 
 
@@ -93,7 +95,7 @@ class HomeController {
 
     @Secured(['ROLE_ADMIN'])
     def createMateria() {
-        Materia.createMateria(params.materiaNombre, params.materiaDescripcion, params.departamentoId)
+        Materia.createMateria(params.materiaNombre, params.materiaDescripcion, params.departamentoId,params.list("carrerasNombre"))
         materias()
     }
 
