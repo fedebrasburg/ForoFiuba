@@ -13,12 +13,17 @@ class Materia {
         carreras nullable: true
     }
 
-    def static createMateria(String nombre, String descripcion, String departamentoId) {
+    def static createMateria(String nombre, String descripcion, String departamentoId, List<String> carreras) {
         def m = new Materia()
         m.nombre = nombre
         m.descripcion = descripcion
         m.departamento = Departamento.get(departamentoId)
+        m.carreras=Carrera.findAllByNombreInList(carreras)
         m.save(flush: true, failOnError: true)
+        m.carreras.each{ Carrera carrera->
+            carrera.materias.add(m)
+            carrera.save(flush: true)
+        }
     }
 
     static boolean deleteMateria(String materiaId) {
