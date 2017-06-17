@@ -61,19 +61,17 @@ class PerfilController {
     def getCompas(Usuario user){
         def cursosCompartidos = [:]
         Opinion.findAllByUsuario(user).unique { a, b -> a.curso.id <=> b.curso.id }.each{ opinion ->
-            def compas = []
-            Opinion.findAllByCurso(opinion.curso).each{posibleMatch ->
-                if(posibleMatch.year == opinion.year && posibleMatch.cuatrimestre == opinion.cuatrimestre &&  posibleMatch.usuario.id != opinion.usuario.id){
-                    compas << posibleMatch.usuario
-                }
-
+            def compas = Opinion.findAllByCurso(opinion.curso).findAll{posibleMatch ->
+                (posibleMatch.year == opinion.year && posibleMatch.cuatrimestre == opinion.cuatrimestre &&  posibleMatch.usuario.id != opinion.usuario.id)
+            }.collect { posibleMatch ->
+                posibleMatch.usuario
             }
             if(!compas.isEmpty()){
-                def cursoCompartido
-                c.cursoNombre = opinion.curso.nombre
-                c.cuatrimestre = opinion.cuatrimestre
-                c.year = opinion.year
-                cursosCompartidos[c] = compas
+                def cursoCompartido = new CursoCompartido()
+                cursoCompartido.cursoNombre = opinion.curso.nombre
+                cursoCompartido.cuatrimestre = opinion.cuatrimestre
+                cursoCompartido.year = opinion.year
+                cursosCompartidos[cursoCompartido] = compas
             }
         }
         cursosCompartidos

@@ -137,10 +137,10 @@ class HomeController {
                         }
                     }
                     if (!entro) {
-                        def p = new Parecido()
-                        p.cursoNombre = op.curso.nombre
-                        p.materiaNombre = Materia.get(Catedra.get(Curso.get(op.curso.id).catedra.id).materia.id).nombre
-                        p.cursoId = op.curso.id
+                        def parecido = new Parecido()
+                        parecido.cursoNombre = op.curso.nombre
+                        parecido.materiaNombre = Materia.get(Catedra.get(Curso.get(op.curso.id).catedra.id).materia.id).nombre
+                        parecido.cursoId = op.curso.id
                         pare << p
                     }
                 }
