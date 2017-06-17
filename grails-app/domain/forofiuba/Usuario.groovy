@@ -64,4 +64,16 @@ class Usuario implements Serializable {
   //      password column: '`password`'
     }
 
+    boolean puedeOpinar(Curso curso){
+        curso.catedra.materia.correlativas.every{ materia ->
+            opinoSobre(materia)
+        }
+    }
+
+    private boolean opinoSobre(Materia materia){
+        opiniones.find{opinion->
+            opinion.materia == materia
+        }
+    }
+
 }

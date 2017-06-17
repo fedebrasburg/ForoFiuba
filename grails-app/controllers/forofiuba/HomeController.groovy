@@ -5,25 +5,19 @@ import grails.plugin.springsecurity.annotation.Secured
 class HomeController {
 
     def springSecurityService
-
-    class Hilo {
-        String materiaNombre
-        String materiaId
-        String catedraNombre
-        String catedraId
-        String cursoNombre
-        String cursoId
-        String departamentoNombre
-        String departamentoId
-    }
+    def armadorDeHilo
 
     def index() {
+        departamentos()
+    }
+
+    def departamentos(){
         render(view: "Departamentos", model: [Carreras: Carrera.getAllMateriasPorCarrera(),Departamentos: Departamento.getDepartamentos()])
     }
 
     def materias() {
 
-        render(view: "Materias", model: [Materias: Materia.getMaterias(params.departamentoId), hilo: calcularHiloMaterias(params.departamentoId),carreras:Carrera.findAll()])
+        render(view: "Materias", model: [Materias: Materia.getMaterias(params.departamentoId), hilo: armadorDeHilo.calcularHiloMaterias(params.departamentoId),carreras:Carrera.findAll()])
     }
 
     def login() {
@@ -40,49 +34,26 @@ class HomeController {
 
     def catedras() {
         def carreras=Materia.get(params.materiaId).carreras
-        render(view: "Catedras", model: [Catedras: Catedra.getCatedras(params.materiaId), hilo: calcularHiloCatedras(params.materiaId),correlativas:Materia.get(params.materiaId).correlativas,carreras: Materia.get(params.materiaId).carreras])
+        [Catedras: Catedra.getCatedras(params.materiaId), hilo: armadorDeHilo.calcularHiloCatedras(params.materiaId), correlativas:Materia.get(params.materiaId).correlativas, carreras: Materia.get(params.materiaId).carreras]
     }
 
 
     def cursos() {
-        render(view: "Cursos", model: [Cursos: Curso.getCursos(params.catedraId), hilo: calcularHiloCursos(params.catedraId)])
+        render(view: "Cursos", model: [Cursos: Curso.getCursos(params.catedraId), hilo: armadorDeHilo.calcularHiloCursos(params.catedraId)])
     }
 
     def opiniones(){
-        render(view:"Opiniones", model: [cursoCorrelativas:cursoCorrelativas(springSecurityService.currentUser,params.cursoId),Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo:calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
+        Usuario usuario = springSecurityService.currentUser
+        Curso curso = Curso.get(params.cursoId)
+        boolean puedeOpinar = false
+        if (usuario){
+            puedeOpinar = usuario.puedeOpinar(curso)
+        }
+        [puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)]
     }
 
     def busqueda(){
         render(view:"Busqueda", model: [Parecidos:obtenerMateriasSegunNombre(params.nombre)] )
-    }
-
-
-    def calcularHiloMaterias(String departamentoId) {
-        def hilo = new Hilo()
-        hilo.departamentoNombre = Departamento.get(departamentoId).nombre
-        hilo.departamentoId = departamentoId
-        hilo
-    }
-
-    def calcularHiloCatedras(String materiaId) {
-        def hilo = calcularHiloMaterias(Materia.get(materiaId).departamento.id.toString())
-        hilo.materiaId = materiaId
-        hilo.materiaNombre = Materia.get(materiaId).nombre
-        hilo
-    }
-
-    def calcularHiloCursos(String catedraId) {
-        def hilo = calcularHiloCatedras(Catedra.get(catedraId).materia.id.toString())
-        hilo.catedraId = catedraId
-        hilo.catedraNombre = Catedra.get(catedraId).nombre
-        hilo
-    }
-
-    def calcularHiloOpiniones(String cursoId) {
-        def hilo = calcularHiloCursos(Curso.get(cursoId).catedra.id.toString())
-        hilo.cursoId = cursoId
-        hilo.cursoNombre = Curso.get(cursoId).nombre
-        hilo
     }
 
 
@@ -152,11 +123,9 @@ class HomeController {
     }
 
     def obtenerMateriasParecidas(String cursoId){
-        def usuarios = []
-        Opinion.findAllByCurso(Curso.get(cursoId)).each{
-            usuarios << it.usuario
-        }
-        usuarios = usuarios.unique { a, b -> a.id <=> b.id }
+        def usuarios = Opinion.findAllByCurso(Curso.get(cursoId)).collect{opinion->
+            opinion.usuario
+        }.unique { a, b -> a.id <=> b.id }
         def pare = []
         usuarios.each { usu ->
             Opinion.findAllByUsuario(usu).unique { a, b -> a.curso.id <=> b.curso.id }.each{ op ->
@@ -164,15 +133,13 @@ class HomeController {
                     boolean entro = false
                     pare.each{
                         if (it.cursoId  == op.curso.id){
-                            it.contador += 1
                             entro = true
                         }
                     }
                     if (!entro) {
-                        def p = new parecido()
+                        def p = new Parecido()
                         p.cursoNombre = op.curso.nombre
                         p.materiaNombre = Materia.get(Catedra.get(Curso.get(op.curso.id).catedra.id).materia.id).nombre
-                        p.contador = 1
                         p.cursoId = op.curso.id
                         pare << p
                     }
@@ -182,32 +149,6 @@ class HomeController {
         pare.findAll{it -> it.cursoId != cursoId}.sort{it.contador}
     }
 
-    def obtenerMateriasSegunNombre(String nombre){
-        def listaCursos = []
-        Curso.getAll().each{curso ->
-            if (curso.nombre.toLowerCase().contains(nombre.toLowerCase())){
-                def p = new parecido()
-                p.cursoNombre = curso.nombre
-                p.materiaNombre = Materia.get(Catedra.get(Curso.get(curso.id).catedra.id).materia.id).nombre
-                p.cursoId = curso.id
-                listaCursos << p
-            }
-        }
-        return listaCursos
-    }
-
-    class parecido{
-        String cursoNombre
-        String cursoId
-        String materiaNombre
-        Integer contador
-    }
-
-    boolean cursoCorrelativas(Usuario user, String cursoId){
-        def correlativas = Materia.getCorrelativas(Curso.get(cursoId).catedra.materia.id)
-        def cursadas = []
-        return correlativas.size() == cursadas.intersect(correlativas).size()
-    }
 
 
 }

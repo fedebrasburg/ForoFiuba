@@ -60,7 +60,7 @@ class PerfilController {
 
     def getCompas(Usuario user){
         def cursosCompartidos = [:]
-        Opinion.findAllByUsuario(user).unique { a, b -> a.curso <=> b.curso }.each{ opinion ->
+        Opinion.findAllByUsuario(user).unique { a, b -> a.curso.id <=> b.curso.id }.each{ opinion ->
             def compas = []
             Opinion.findAllByCurso(opinion.curso).each{posibleMatch ->
                 if(posibleMatch.year == opinion.year && posibleMatch.cuatrimestre == opinion.cuatrimestre &&  posibleMatch.usuario.id != opinion.usuario.id){
@@ -69,7 +69,7 @@ class PerfilController {
 
             }
             if(!compas.isEmpty()){
-                def c = new cursoCompartido()
+                def cursoCompartido
                 c.cursoNombre = opinion.curso.nombre
                 c.cuatrimestre = opinion.cuatrimestre
                 c.year = opinion.year
@@ -79,9 +79,4 @@ class PerfilController {
         cursosCompartidos
     }
 
-    class cursoCompartido{
-        String cursoNombre
-        String cuatrimestre
-        String year
-    }
 }

@@ -68,7 +68,14 @@ form {
                     <g:link controller='logout'><span class="glyphicon glyphicon-power"></span>Logout</g:link>
                 </li>
             </sec:ifLoggedIn>
-
+        </ul>
+        <ul class="nav navbar-right">
+            <li>
+                <g:form name="myForm" action="busqueda">
+                    <g:textField placeholder="Nombre del curso"  name="nombre"/>
+                        <g:submitButton class="btn btn-default" name="botonAgregarCurso" value="Buscar"/>
+                </g:form>
+            </li>
         </ul>
     </div>
 </nav>

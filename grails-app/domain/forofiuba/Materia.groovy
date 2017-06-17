@@ -43,5 +43,16 @@ class Materia {
         Materia.get(materiaId).correlativas
     }
 
+    def obtenerMateriasSegunNombre(String nombre) {
+        Curso.getAll().findAll { curso ->
+            curso.nombre.toLowerCase().contains(nombre.toLowerCase())
+        }.collect { curso ->
+            def parecido
+            p.cursoNombre = curso.nombre
+            p.materiaNombre = Materia.get(Catedra.get(Curso.get(curso.id).catedra.id).materia.id).nombre
+            p.cursoId = curso.id
+            p
+        }
+    }
 
 }

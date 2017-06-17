@@ -106,7 +106,7 @@ dataSource:
   pooled: true
   jmxExport: true
   driverClassName: org.postgresql.Driver
-  username:  fedebrasburg #Poner user name de la BD
+  username:  fede #Poner user name de la BD
   password:   #Ṕass de el user
 
 environments:

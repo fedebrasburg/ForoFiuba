@@ -70,4 +70,8 @@ class Opinion {
         Opinion.findAllByUsuario(Usuario.findByUsername(username))
     }
 
+    def getMateria(){
+        return curso.catedra.materia
+    }
+
 }

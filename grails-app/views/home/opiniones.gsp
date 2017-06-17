@@ -164,7 +164,7 @@
         <br/>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
-        <g:if test="${cursoCorrelativas}">
+        <g:if test="${puedeOpinar}">
             <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
                 <fieldset>
                     <legend>Crear Opinion</legend>
@@ -229,11 +229,11 @@
                 </fieldset>
             </g:form>
         </g:if>
-        <g:if test="${!cursoCorrelativas}">
+        <g:else>
             <h4 align="center">
             No podes opinar por no haber opinado en las correlativas :(
             </h4>
-        </g:if>
+        </g:else>
     </sec:ifAllGranted>
 
 </div>

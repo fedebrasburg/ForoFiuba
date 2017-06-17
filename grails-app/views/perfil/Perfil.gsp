@@ -54,7 +54,7 @@
             </g:if>
         </g:form>
     </g:else>
-    <g:if test="${!CursosCompartidos.isEmpty()}">
+    <g:if test="${!CursosCompartidos.isEmpty() && usuario==usuarioActual}">
         <legend> Compañeros y compañeras:</legend>
         <g:each in="${CursosCompartidos.keySet()}" var="c">
             <h5>En el curso ${c.cursoNombre} ${c.cuatrimestre}º ${c.year} cursaste con: </h5>

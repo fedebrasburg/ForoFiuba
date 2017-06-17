@@ -2,17 +2,39 @@
 <head>
     <link rel="stylesheet" href="styles/general.css" type="text/css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <style>
+    .bg-1{
+        background-color: blue;
+        color: #ffffff;
+    }
+    .bg-2 {
+        background-color: #474e5d; /* Dark Blue */
+        color: #ffffff;
+    }
+    .container-fluid {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+    </style>
 </head>
 
 <body>
 <g:render template="partials/Nav"/>
-<div class="body" align="center">
-    <h2 class="titulo">Foros-Fiuba</h2>
-
+<div class="container-fluid bg-1 text-center">
+    <div style="font-size: 140px">
+        Foros Fiuba
+    </div>
+</div>
+<div class="container-fluid bg-2 text-center" style="font-size: 175%">
     <div class="texto-cuerpo">
         ¡Bienvenido a Foros-Fiuba! Este sitio lo hacemos estudiantes de distintas carreras de la Facultad de Ingeniería de la Universidad de Buenos Aires. <br/>
         Es principalmente un foro de discusión, sobre temas inherentes a las carreras, materias, y temas de interés para gente de FIUBA.
     </div>
+</div>
+
+<div class="body" align="center">
+
+
 
     <h2>Departamentos</h2>
     <g:each var="departamento" in="${Departamentos}">
@@ -60,7 +82,6 @@
             </fieldset>
         </g:form>
     </sec:ifAllGranted>
-    <g:render template="partials/Buscador"/>
 </div>
 
 </body>
