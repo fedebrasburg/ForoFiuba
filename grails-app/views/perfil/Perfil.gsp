@@ -48,7 +48,7 @@
                    <td> ${carrera.nombre.toString()}    </td>   <br/>
             </g:each>
             <g:if test="${usuario==usuarioActual}">
-                <g:submitButton class="btn btn-default" name="edit" value="Editar">
+                <g:submitButton class="btn btn-default" name="edit" value="editar">
                 <span class="glyphicons glyphicons-pencil"></span>
                 </g:submitButton>
             </g:if>

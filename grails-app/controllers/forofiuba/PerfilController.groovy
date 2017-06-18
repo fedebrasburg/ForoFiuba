@@ -36,11 +36,11 @@ class PerfilController {
 
     def editar(){
         Usuario usuarioActual = springSecurityService.currentUser
-        if(!params.usuarioId){
+        if(!params.usuarioid){
             render(false,usuarioActual.username)
             return
         }
-        Usuario usuario =Usuario.findByUsername(params.usuarioId)
+        Usuario usuario =Usuario.findByUsername(params.usuarioid)
         if(usuarioActual!=usuario){
             render(false,usuario.username)
             return
@@ -50,7 +50,7 @@ class PerfilController {
         def carrerasList= Carrera.findAllByNombreInList(carrerasListNombres)
         usuario.carreras=carrerasList
         usuario.save(failOnError:true)
-        render(false)
+        render(false,usuarioActual.username)
     }
     def deleteOpinion() {
         def o = Opinion.get(params.opinionId)
