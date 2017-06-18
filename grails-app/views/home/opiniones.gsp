@@ -173,7 +173,7 @@
                         <g:field type="number" class="form-control" min="1" max="2" name="cuatrimestre"/>
                     </div>
                     <div class="form-group">
-                        <label>Cuatrimestre cursado:</label>
+                        <label>Año cursado:</label>
                         <g:field type="number" class="form-control" min="1960" max="2100" name="year"/>
                     </div>
                     <div class="form-group">

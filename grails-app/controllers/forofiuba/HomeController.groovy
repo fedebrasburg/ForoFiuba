@@ -49,7 +49,7 @@ class HomeController {
         if (usuario){
             puedeOpinar = usuario.puedeOpinar(curso)
         }
-        [puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)]
+        render(view:"opiniones", model: [puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas:obtenerMateriasParecidas(params.cursoId)])
     }
 
     def busqueda(){
@@ -141,7 +141,7 @@ class HomeController {
                         parecido.cursoNombre = op.curso.nombre
                         parecido.materiaNombre = Materia.get(Catedra.get(Curso.get(op.curso.id).catedra.id).materia.id).nombre
                         parecido.cursoId = op.curso.id
-                        pare << p
+                        //pare << p TODO: Que es esto?
                     }
                 }
             }

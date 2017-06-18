@@ -43,7 +43,7 @@
             <label>Email:      <td>${usuario.username}</td></label> <br/>
             <label>Fecha de nacimiento:      <g:formatDate date="${usuario.fechaDeNacimiento}"  format="dd-MM-yyyy" /> </label> <br/>
             <label>Telefono:      <td>${usuario.telefono}</td></label> <br/>
-            <label>Carreras:</label>
+            <label>Carreras: </label><br/>
             <g:each  in="${carreras}" var="carrera">
                    <td> ${carrera.nombre.toString()}    </td>   <br/>
             </g:each>
