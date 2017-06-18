@@ -20,7 +20,7 @@ class PerfilController {
                 }
             }
         }
-        render(view: "Perfil",model: ["usuario":usuario,"edit":edit,"opiniones":opiniones, "usuarioActual":usuarioActual,"carreras":carreras,CursosCompartidos:getCompas(usuarioActual)])
+        render(view: "Perfil",model: ["usuario":usuario,"edit":edit,"opiniones":opiniones, "usuarioActual":usuarioActual,"carreras":carreras,CursosCompartidos:usuarioActual.getCompas()])
     }
     def index() {
         if(!params.usuarioId){
@@ -55,26 +55,8 @@ class PerfilController {
     def deleteOpinion() {
         def o = Opinion.get(params.opinionId)
         o.delete(flush: true, failOnError: true)
-        render(false)
+        index()
     }
 
-    def getCompas(Usuario user){
-        def cursosCompartidos = [:]
-        Opinion.findAllByUsuario(user).unique { a, b -> a.curso.id <=> b.curso.id }.each{ opinion ->
-            def compas = Opinion.findAllByCurso(opinion.curso).findAll{posibleMatch ->
-                (posibleMatch.year == opinion.year && posibleMatch.cuatrimestre == opinion.cuatrimestre &&  posibleMatch.usuario.id != opinion.usuario.id)
-            }.collect { posibleMatch ->
-                posibleMatch.usuario
-            }
-            if(!compas.isEmpty()){
-                def cursoCompartido = new CursoCompartido()
-                cursoCompartido.cursoNombre = opinion.curso.nombre
-                cursoCompartido.cuatrimestre = opinion.cuatrimestre
-                cursoCompartido.year = opinion.year
-                cursosCompartidos[cursoCompartido] = compas
-            }
-        }
-        cursosCompartidos
-    }
 
 }

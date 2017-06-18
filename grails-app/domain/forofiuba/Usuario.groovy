@@ -76,4 +76,21 @@ class Usuario implements Serializable {
         }
     }
 
+    def getCompas(){
+        Opinion.findAllByUsuario(this).unique { a, b -> a.curso.id <=> b.curso.id }.collectEntries{ opinion ->
+            def compas = Opinion.findAllByCurso(opinion.curso).findAll{posibleMatch ->
+                (posibleMatch.year == opinion.year && posibleMatch.cuatrimestre == opinion.cuatrimestre &&  posibleMatch.usuario.id != opinion.usuario.id)
+            }.collect { posibleMatch ->
+                posibleMatch.usuario
+            }
+            def cursoCompartido = new CursoCompartido()
+            cursoCompartido.cuatrimestre = opinion.curso.nombre
+            cursoCompartido.year = opinion.year
+            cursoCompartido.cursoNombre = opinion.curso.nombre
+            [(cursoCompartido) : compas]
+        }.findAll {key,value->
+            value != []
+        }
+    }
+
 }
