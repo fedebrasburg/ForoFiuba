@@ -40,11 +40,11 @@ form {
     <div class="container">
         <ul class="nav navbar-nav">
             <li>
-                <g:link action="index"><img height="22" width="22"
+                <g:link action="departamentos"><img height="22" width="22"
                                             src="http://www.foros-fiuba.com.ar/templates/fisubsilversh/images/phpbb2_logo.gif"></g:link>
             </li>
             <li >
-                <g:link action="index" controller="home"><span class="glyphicon glyphicon-home"></span> Home</g:link>
+                <g:link action="departamentos" controller="home"><span class="glyphicon glyphicon-home"></span> Home</g:link>
             </li>
 
 

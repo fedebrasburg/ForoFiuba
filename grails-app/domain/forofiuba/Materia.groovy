@@ -43,16 +43,33 @@ class Materia {
         Materia.get(materiaId).correlativas
     }
 
-    def obtenerMateriasSegunNombre(String nombre) {
+    def static obtenerMateriasSegunNombre(String nombre) {
         Curso.getAll().findAll { curso ->
             curso.nombre.toLowerCase().contains(nombre.toLowerCase())
         }.collect { curso ->
-            def parecido
-            p.cursoNombre = curso.nombre
-            p.materiaNombre = Materia.get(Catedra.get(Curso.get(curso.id).catedra.id).materia.id).nombre
-            p.cursoId = curso.id
-            p
+            def parecido = new Parecido()
+            parecido.cursoNombre = curso.nombre
+            parecido.materiaNombre = Materia.get(Catedra.get(Curso.get(curso.id).catedra.id).materia.id).nombre
+            parecido.cursoId = curso.id
+            parecido
         }
+    }
+
+    def obtenerMateriasParecidas(String cursoId){
+        Opinion.findAllByCurso(Curso.get(cursoId)).collect{opinion->
+            opinion.usuario
+        }.unique { a, b -> a.id <=> b.id
+        }.collect{usu->
+            Opinion.findAllByUsuario(usu)
+        }.flatten().collect{ op->
+            def parecido = new Parecido()
+            parecido.cursoNombre = op.curso.nombre
+            parecido.materiaNombre = op.getMateria().nombre
+            parecido.cursoId = op.curso.id
+            parecido
+        }.findAll{pare ->
+            (pare.cursoId != cursoId )
+        }.unique{a,b -> a.cursoId <=> b.cursoId}
     }
 
 }
