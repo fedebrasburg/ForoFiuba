@@ -54,7 +54,15 @@ class Materia {
             parecido
         }
     }
-
+    def estadoUsuario(Usuario usuario){
+        if(usuario.opinoSobre(this)){
+            return "Curse"
+        }
+        if(usuario.puedeOpinar(this)){
+            return "Puedo cursar"
+        }
+        return  "Faltan correlativas"
+    }
     def obtenerMateriasParecidas(String cursoId){
         Opinion.findAllByCurso(Curso.get(cursoId)).collect{opinion->
             opinion.usuario

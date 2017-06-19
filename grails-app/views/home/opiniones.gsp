@@ -36,15 +36,28 @@
                     <td width="100px">
                         <strong>Usuario</strong>
                         <br/>
-                        <g:link action="perfilUsuario"
-                                params="${[usuarioId: opinion.usuario.username]}">
-                                ${opinion.usuario.nombre}
+                        <sec:ifNotLoggedIn>
+                            ${opinion.usuario.nombre}
+                        </sec:ifNotLoggedIn>
+                        <sec:ifLoggedIn>
 
-                            </span>
-                        </g:link>
+                            <g:if test="${opinion.usuario!=usuarioActual}">
+
+                                    <g:link action="perfilUsuario"
+                                            params="${[usuarioId: opinion.usuario.username]}">
+                                        ${opinion.usuario.nombre}
+
+                                        </span>
+                                    </g:link>
+                                    </g:if>
+                                    <g:else>
+                                        ${opinion.usuario.nombre}
+                                    </g:else>
+                        </sec:ifLoggedIn>
+
                     </td>
-                <td>
-                    <strong> Cursada  </strong>
+                    <td>
+                        <strong> Cursada  </strong>
                     <br/>
                     <div align="right">
                         ${opinion.cuatrimestre}º cuatrimestre de ${opinion.year}
