@@ -82,6 +82,13 @@
                     </td>
                     <td>
 
+                            <g:if test="${opinion.usuario!=usuarioActual}">
+                                <strong> Estado  </strong><br/>
+                                <div align="right">
+                                    ${opinion.curso.catedra.materia.estadoUsuario(usuarioActual)}
+                                </div>
+
+                            </g:if>
                         <g:if test="${opinion.fechaPublicacion != null}">
                             <strong> Fecha de Publicacion </strong>
                             <br/>

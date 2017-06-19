@@ -40,7 +40,6 @@
                             ${opinion.usuario.nombre}
                         </sec:ifNotLoggedIn>
                         <sec:ifLoggedIn>
-
                             <g:if test="${opinion.usuario!=usuarioActual}">
 
                                     <g:link action="perfilUsuario"
@@ -63,6 +62,7 @@
                         ${opinion.cuatrimestre}º cuatrimestre de ${opinion.year}
                     </div>
                     <br/>
+
                     <g:if test="${opinion.fechaPublicacion != null}">
                         <strong> Fecha de Publicacion </strong>
                         <br/>

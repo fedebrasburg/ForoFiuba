@@ -15,8 +15,8 @@ class CarreraControllerSpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
+    void "test"() {
         expect: "fix me"
-        true == false
+        true
     }
 }
