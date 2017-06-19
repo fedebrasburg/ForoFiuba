@@ -11,31 +11,24 @@
         background-color: #474e5d; /* Dark Blue */
         color: #ffffff;
     }
-    .container-fluid {
-        padding-top: 70px;
-        padding-bottom: 70px;
-    }
     </style>
 </head>
 
 <body>
 <g:render template="partials/Nav"/>
 <div class="container-fluid bg-1 text-center">
-    <div style="font-size: 140px">
+    <div style="font-size: 140px; padding-top: 70px;padding-bottom: 70px;">
         Foros Fiuba
     </div>
 </div>
 <div class="container-fluid bg-2 text-center" style="font-size: 175%">
-    <div class="texto-cuerpo">
+    <div class="texto-cuerpo" style="padding-top: 70px; padding-bottom: 70px;">
         ¡Bienvenido a Foros-Fiuba! Este sitio lo hacemos estudiantes de distintas carreras de la Facultad de Ingeniería de la Universidad de Buenos Aires. <br/>
         Es principalmente un foro de discusión, sobre temas inherentes a las carreras, materias, y temas de interés para gente de FIUBA.
     </div>
 </div>
 
 <div class="body" align="center">
-
-
-
     <h2>Departamentos</h2>
     <g:each var="departamento" in="${Departamentos}">
         <g:link action="materias" class="listado"
