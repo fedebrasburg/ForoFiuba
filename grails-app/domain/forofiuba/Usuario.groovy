@@ -65,8 +65,11 @@ class Usuario implements Serializable {
     }
 
     boolean puedeOpinar(Curso curso){
-        curso.catedra.materia.correlativas.every{ materia ->
-            opinoSobre(materia)
+        puedeOpinar(curso.catedra.materia)
+    }
+    boolean puedeOpinar(Materia materia){
+        materia.correlativas.every{ correlativa ->
+            opinoSobre(correlativa)
         }
     }
 
@@ -84,7 +87,7 @@ class Usuario implements Serializable {
                 posibleMatch.usuario
             }
             def cursoCompartido = new CursoCompartido()
-            cursoCompartido.cuatrimestre = opinion.curso.nombre
+            cursoCompartido.cuatrimestre = opinion.cuatrimestre
             cursoCompartido.year = opinion.year
             cursoCompartido.cursoNombre = opinion.curso.nombre
             [(cursoCompartido) : compas]

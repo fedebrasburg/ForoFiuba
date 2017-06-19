@@ -60,7 +60,12 @@
             <h5>En el curso ${c.cursoNombre} ${c.cuatrimestre}º ${c.year} cursaste con: </h5>
             <ul>
                 <g:each in="${CursosCompartidos[c]}" var="usuario">
-                    <li>${usuario.nombre}</li>
+                    <g:link controller="perfil"
+                            action="index"
+                            params="${[usuarioId: usuario.username]}">
+                        ${usuario.nombre}
+
+                    </g:link>
                 </g:each>
             </ul>
         </g:each>
@@ -71,11 +76,12 @@
             <table style="width:90%" class="table">
                 <tr>
                     <td width="100px">
-                        <strong>Usuario</strong>
+                        <strong> Materia </strong>
                         <br/>
-                        ${opinion.usuario.nombre}
+                        ${opinion.curso.catedra.materia.nombre}<br/>
                     </td>
                     <td>
+
                         <g:if test="${opinion.fechaPublicacion != null}">
                             <strong> Fecha de Publicacion </strong>
                             <br/>

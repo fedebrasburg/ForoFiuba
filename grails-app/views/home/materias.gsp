@@ -16,7 +16,12 @@
         <h2>Materias</h2>
         <g:each var="materia" in="${Materias}">
             <g:link action="catedras" class="listado"
-                    params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}</g:link>
+                    params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}
+            </g:link>
+
+            <sec:ifLoggedIn>
+                ${materia.estadoUsuario(usuarioActual)}
+            </sec:ifLoggedIn>
             <sec:ifAllGranted roles="ROLE_ADMIN">
 
                 <g:link action="deleteMateria" class="listado"

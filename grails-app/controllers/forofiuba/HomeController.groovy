@@ -16,14 +16,15 @@ class HomeController {
     }
 
     def materias() {
-        render("view":"materias", "model":[Materias: Materia.getMaterias(params.departamentoId), hilo: armadorDeHilo.calcularHiloMaterias(params.departamentoId), carreras:Carrera.findAll()])
+        Usuario usuario = springSecurityService.currentUser
+        render("view":"materias", "model":[Materias: Materia.getMaterias(params.departamentoId), hilo: armadorDeHilo.calcularHiloMaterias(params.departamentoId), carreras:Carrera.findAll(),usuarioActual: usuario])
     }
 
     def login() {
         redirect(controller: 'login', action: 'departamentos')
     }
     def perfilUsuario(){
-        redirect(controller: 'perfil',action: 'departamentos',params: ["usuarioId":"${params.usuarioId}"])
+        redirect(controller: 'perfil',action: 'index',params: ["usuarioId":"${params.usuarioId}"])
     }
 
     def registrar() {
@@ -48,8 +49,7 @@ class HomeController {
         if (usuario){
             puedeOpinar = usuario.puedeOpinar(curso)
         }
-
-        render("view":"opiniones", "model":[puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId)])
+        render("view":"opiniones", "model":[puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId),"usuarioActual":usuario])
     }
 
     def busqueda(){
