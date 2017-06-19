@@ -244,8 +244,17 @@
         </g:if>
         <g:else>
             <h4 align="center">
-            No podes opinar por no haber opinado en las correlativas :(
+                No podes opinar por no haber opinado en las correlativas :(
+                <br/>
+                <br/>
+                Te faltan cursar:
             </h4>
+            <div align="center">
+                <g:each in="${materiasFaltantes}" var="materia">
+                    <g:link action="catedras"
+                            params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}</g:link>
+                </g:each>
+            </div>
         </g:else>
     </sec:ifAllGranted>
 

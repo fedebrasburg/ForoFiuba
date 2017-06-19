@@ -46,10 +46,13 @@ class HomeController {
         Usuario usuario = springSecurityService.currentUser
         Curso curso = Curso.get(params.cursoId)
         boolean puedeOpinar = false
+        def materiasFaltantes = []
         if (usuario){
             puedeOpinar = usuario.puedeOpinar(curso)
+            materiasFaltantes = usuario.materiasFaltantes(curso)
         }
-        render("view":"opiniones", "model":[puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId),"usuarioActual":usuario])
+
+        render("view":"opiniones", "model":[materiasFaltantes:materiasFaltantes,puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId),"usuarioActual":usuario])
     }
 
     def busqueda(){

@@ -79,6 +79,12 @@ class Usuario implements Serializable {
         }
     }
 
+    def materiasFaltantes(Curso curso){
+        curso.catedra.materia.correlativas.findAll{materia->
+            !opinoSobre(materia)
+        }
+    }
+
     def getCompas(){
         Opinion.findAllByUsuario(this).unique { a, b -> a.curso.id <=> b.curso.id }.collectEntries{ opinion ->
             def compas = Opinion.findAllByCurso(opinion.curso).findAll{posibleMatch ->
