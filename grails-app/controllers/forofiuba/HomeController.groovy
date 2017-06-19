@@ -1,6 +1,10 @@
 package forofiuba
 
 import grails.plugin.springsecurity.annotation.Secured
+import grails.validation.Validateable
+import org.apache.commons.lang.Validate
+import org.apache.el.util.Validation
+import org.springframework.validation.annotation.Validated
 
 class HomeController {
 
@@ -41,6 +45,9 @@ class HomeController {
         render("view":"cursos", "model":[Cursos: Curso.getCursos(params.catedraId), hilo: armadorDeHilo.calcularHiloCursos(params.catedraId)])
     }
 
+
+
+    CreateOpinionCommand createOpinionCommand = new CreateOpinionCommand()
     def opiniones(){
         Usuario usuario = springSecurityService.currentUser
         Curso curso = Curso.get(params.cursoId)
@@ -50,19 +57,24 @@ class HomeController {
             puedeOpinar = usuario.puedeOpinar(curso)
             materiasFaltantes = usuario.materiasFaltantes(curso)
         }
-        render("view":"opiniones", "model":[materiasFaltantes:materiasFaltantes, puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId)])
+        render("view":"opiniones", "model":[textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId)])
+        createOpinionCommand = new CreateOpinionCommand()
     }
 
     def busqueda(){
         [Parecidos:Materia.obtenerMateriasSegunNombre(params.nombre)]
     }
 
-
     @Secured(['ROLE_USER'])
     def createOpinion() {
-        println("EERNERNKWJN")
         Usuario user = springSecurityService.currentUser
-        Opinion.createOpinion(params.cursoId, user,params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion, new Date(), params.year, params.cuatrimestre)
+        CreateOpinionCommand com = new CreateOpinionCommand(params.horarios,params.opinionTp,params.opinionParcial,params.opinionFinal,params.opinionTeorica,params.opinionProfesores,params.opinionPractica,params.modalidad,params.profesores,params.puntuacion.toInteger(),params.cuatrimestre,params.year)
+        if(com.validate()) {
+            Opinion.createOpinion(params.cursoId, user, params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores,  params.puntuacion.toInteger(), new Date(), params.year, params.cuatrimestre)
+        }else{
+            println("En create" + com.puntuacion.toString())
+            createOpinionCommand = com
+        }
         opiniones()
     }
 
