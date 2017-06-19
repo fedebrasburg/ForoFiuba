@@ -54,7 +54,19 @@ class Materia {
             parecido
         }
     }
+
+    public boolean materiaPerteneceACarrerasUsuario(Usuario usuario){
+        usuario.carreras.collect{carrera->
+            carrera.materias
+        }.flatten().any{materia->
+            materia.id == id
+        }
+    }
+
     def estadoUsuario(Usuario usuario){
+        if (!materiaPerteneceACarrerasUsuario(usuario)){
+            return "No esta en tus planes"
+        }
         if(usuario.opinoSobre(this)){
             return "Curse"
         }

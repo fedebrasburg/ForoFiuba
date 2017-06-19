@@ -177,7 +177,7 @@
         <br/>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
-        <g:if test="${puedeOpinar}">
+        <g:if test="${puedeOpinar && esDeLaCarrera}">
             <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
                 <fieldset>
                     <legend>Crear Opinion</legend>
@@ -243,6 +243,12 @@
             </g:form>
         </g:if>
         <g:else>
+            <g:if test="${!esDeLaCarrera}">
+                <h4 align="center">
+                    No podes opinar por que no pertenece a tu plan
+                </h4>
+            </g:if>
+            <g:else>
             <h4 align="center">
                 No podes opinar por no haber opinado en las correlativas :(
                 <br/>
@@ -255,6 +261,7 @@
                             params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}</g:link>
                 </g:each>
             </div>
+            </g:else>
         </g:else>
     </sec:ifAllGranted>
 

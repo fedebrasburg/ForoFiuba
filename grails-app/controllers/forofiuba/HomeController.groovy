@@ -58,7 +58,7 @@ class HomeController {
             puedeOpinar = usuario.puedeOpinar(curso)
             materiasFaltantes = usuario.materiasFaltantes(curso)
         }
-        render("view":"opiniones", "model":[textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, puedeOpinar:puedeOpinar, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId),"usuarioActual":usuario])
+        render("view":"opiniones", "model":[textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, puedeOpinar:puedeOpinar,esDeLaCarrera:curso.catedra.materia.materiaPerteneceACarrerasUsuario(usuario), Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId),"usuarioActual":usuario])
         createOpinionCommand = new CreateOpinionCommand()
     }
 
