@@ -15,8 +15,5 @@ class HomeControllerSpec extends Specification {
     def cleanup() {
     }
 
-    void "test something"() {
-        expect: "true"
-        true
-    }
+
 }

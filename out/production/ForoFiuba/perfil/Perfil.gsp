@@ -27,7 +27,7 @@
                 <br/>
                 <label>Carreras:</label><br/>
                 <g:each  in="${carreras}" var="carrera">
-                    <g:checkBox name="carrerasNombre" value="${carrera.nombre.toString()}" checked="${usuario.carreras.any{carreraUsuario -> return (carreraUsuario == carrera)}}"/>     ${carrera.nombre.toString()}       <br/>
+                    <g:checkBox name="carrerasNombre" value="${carrera.nombre.toString()}" />     ${carrera.nombre.toString()}       <br/>
                 </g:each>
                 <br/>
                 <g:if test="${usuario==usuarioActual}">
