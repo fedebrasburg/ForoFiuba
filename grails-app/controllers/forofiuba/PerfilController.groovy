@@ -14,11 +14,7 @@ class PerfilController {
         if(edit){
             carreras=Carrera.findAll()
         }else {
-            carreras=Carrera.withCriteria {
-                alumnos {
-                    eq('username', usuario.username)
-                }
-            }
+            carreras=usuario.carreras
         }
         render(view: "Perfil",model: ["usuario":usuario,"edit":edit,"opiniones":opiniones, "usuarioActual":usuarioActual,"carreras":carreras,CursosCompartidos:usuarioActual.getCompas()])
     }
@@ -50,7 +46,7 @@ class PerfilController {
         def carrerasList= Carrera.findAllByNombreInList(carrerasListNombres)
         usuario.carreras=carrerasList
         usuario.save(failOnError:true)
-        render(false,usuarioActual.username)
+        render(false,usuario.username)
     }
     def deleteOpinion() {
         def o = Opinion.get(params.opinionId)

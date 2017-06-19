@@ -177,78 +177,72 @@
         <br/>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
-        <g:if test="${puedeOpinar && esDeLaCarrera}">
+        <g:if test="${puedeOpinar}">
             <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
                 <fieldset>
                     <legend>Crear Opinion</legend>
                     <div class="form-group">
                         <label>Cuatrimestre cursado:</label>
-                        <g:field type="number" class="form-control" value="${textoDefault.cuatrimestre}" required="true" min="1" max="2" name="cuatrimestre"/>
+                        <g:field type="number" class="form-control" min="1" max="2" name="cuatrimestre"/>
                     </div>
                     <div class="form-group">
                         <label>Año cursado:</label>
-                        <g:field type="number" class="form-control" value="${textoDefault.year}" required="true" min="1960" max="2100" name="year"/>
+                        <g:field type="number" class="form-control" min="1960" max="2100" name="year"/>
                     </div>
                     <div class="form-group">
                         <label>Profesores:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.profesores}" placeholder="Profesores" name="profesores"/>
+                        <g:field type="text" class="form-control" required="true" placeholder="Profesores" name="profesores"/>
                     </div>
 
                     <div class="form-group">
                         <label>Modalidad:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.modalidad}" placeholder="Modalidad" name="modalidad"/>
+                        <g:field type="text" class="form-control" placeholder="Modalidad" name="modalidad"/>
                     </div>
 
                     <div class="form-group">
                         <label>Horarios:</label>
-                        <g:field type="text" class="form-control"  value="${textoDefault.horarios}" placeholder="Horarios" name="horarios"/>
+                        <g:field type="text" class="form-control" placeholder="Horarios" name="horarios"/>
                     </div>
 
                     <div class="form-group">
                         <label>Opinion Teorica:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionTeorica}" name="opinionTeorica"/>
+                        <g:field type="text" class="form-control" name="opinionTeorica"/>
                     </div>
 
                     <div class="form-group">
                         <label>Opinion Practica:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionPractica}" name="opinionPractica"/>
+                        <g:field type="text" class="form-control" name="opinionPractica"/>
                     </div>
 
                     <div class="form-group">
                         <label>Opinion del equipo docente:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionProfesores}" name="opinionProfesores"/>
+                        <g:field type="text" class="form-control" name="opinionProfesores"/>
                     </div>
 
                     <div class="form-group">
                         <label>Opinion de Tp:</label>
-                        <g:field type="text" class="form-control"  value="${textoDefault.opinionTp}"name="opinionTp"/>
+                        <g:field type="text" class="form-control" name="opinionTp"/>
                     </div>
 
                     <div class="form-group">
                         <label>Opinion del Parcial:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionParcial}" name="opinionParcial"/>
+                        <g:field type="text" class="form-control" name="opinionParcial"/>
                     </div>
 
                     <div class="form-group">
                         <label>Opinion del Final:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionFinal}" name="opinionFinal"/>
+                        <g:field type="text" class="form-control" name="opinionFinal"/>
                     </div>
 
                     <div class="form-group">
                         <label>Puntuacion:</label>
-                        <g:field type="number" required="true" class="form-control" value="${textoDefault.puntuacion}" min="1" max="10" name="puntuacion"/>
+                        <g:field type="number" class="form-control" min="1" max="10" name="puntuacion"/>
                     </div>
                     <g:submitButton class="btn btn-default" name="botonAgregar" value="Crear Opinion"/>
                 </fieldset>
             </g:form>
         </g:if>
         <g:else>
-            <g:if test="${!esDeLaCarrera}">
-                <h4 align="center">
-                    No podes opinar por que no pertenece a tu plan
-                </h4>
-            </g:if>
-            <g:else>
             <h4 align="center">
                 No podes opinar por no haber opinado en las correlativas :(
                 <br/>
@@ -261,7 +255,6 @@
                             params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}</g:link>
                 </g:each>
             </div>
-            </g:else>
         </g:else>
     </sec:ifAllGranted>
 

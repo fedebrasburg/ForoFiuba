@@ -10,13 +10,20 @@ import spock.lang.Specification
 class DepartamentoSpec extends Specification {
 
     def setup() {
+        def departamento=new Departamento(nombre: "Matematica")
     }
 
     def cleanup() {
     }
 
-    void "test something"() {
-        expect: "fix me"
-        true == false
+    void "Probar Nombre"() {
+        when:
+            def dep=setup()
+        then:
+            dep.nombre=="Matematica"
+    }
+    void "Probar Error"() {
+        then:
+            shouldFail { new Departamento() }
     }
 }

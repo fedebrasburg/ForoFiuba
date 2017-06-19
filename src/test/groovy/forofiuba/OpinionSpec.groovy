@@ -16,7 +16,5 @@ class OpinionSpec extends Specification {
     def cleanup() {
     }
 
-    void "Creo una opinion"() {
 
-    }
 }
