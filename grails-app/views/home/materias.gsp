@@ -12,16 +12,18 @@
         <g:link action="index">Departamentos </g:link> > ${hilo.departamentoNombre}
     </div>
 
-    <div align="center">
+    <div align="center" >
         <h2>Materias</h2>
         <g:each var="materia" in="${Materias}">
             <g:link action="catedras" class="listado"
                     params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}
             </g:link>
+            <div class="">
+            <sec:ifLoggedIn >
 
-            <sec:ifLoggedIn>
                 ${materia.estadoUsuario(usuarioActual)}
             </sec:ifLoggedIn>
+            </div>
             <sec:ifAllGranted roles="ROLE_ADMIN">
 
                 <g:link action="deleteMateria" class="listado"

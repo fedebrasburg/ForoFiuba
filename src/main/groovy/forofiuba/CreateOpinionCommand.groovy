@@ -15,14 +15,13 @@ class CreateOpinionCommand implements Validateable{
     String modalidad
     String profesores
     Integer puntuacion
-    String cuatrimestre
-    String year
+    Cuatrimestre cuatrimestre
 
     public CreateOpinionCommand(){
-
+        cuatrimestre=new Cuatrimestre()
     }
 
-    public CreateOpinionCommand(String horarios,String opinionTp,String opinionParcial,String opinionFinal,String opinionTeorica,String opinionProfesores,String opinionPractica,String modalidad,String profesores,Integer puntuacion,String cuatrimestre,String year){
+    public CreateOpinionCommand(String horarios,String opinionTp,String opinionParcial,String opinionFinal,String opinionTeorica,String opinionProfesores,String opinionPractica,String modalidad,String profesores,Integer puntuacion,String cuatrimestre,String anio){
         this.horarios = horarios
         this.opinionTp = opinionTp
         this.opinionParcial = opinionParcial
@@ -32,9 +31,8 @@ class CreateOpinionCommand implements Validateable{
         this.opinionPractica = opinionPractica
         this.modalidad = modalidad
         this.profesores = profesores
-        this.puntuacion = puntuacion
-        this.cuatrimestre = cuatrimestre
-        this.year = year
+        this.cuatrimestre = new Cuatrimestre("cuatrimestre":cuatrimestre,"anio":anio)
+        this.puntuacion=puntuacion
         println(puntuacion)
     }
 

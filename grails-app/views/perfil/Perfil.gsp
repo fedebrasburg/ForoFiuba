@@ -6,7 +6,7 @@
 <body>
 <g:render template="partials/Nav"/>
 <div class="body">
-    <h1>ForosFiuba - Usuarios</h1>
+    <h1>OpinaFiuba - Usuarios</h1>
     <legend>Perfil</legend>
     <g:if test="${edit}">
         <g:form name="myForm" action="editar"  params="${[usuarioid: usuario.username]}">
@@ -57,7 +57,7 @@
     <g:if test="${!CursosCompartidos.isEmpty() && usuario==usuarioActual}">
         <legend> Compañeros y compañeras:</legend>
         <g:each in="${CursosCompartidos.keySet()}" var="c">
-            <h5>En el curso ${c.cursoNombre} ${c.cuatrimestre}º ${c.year} cursaste con: </h5>
+            <h5>En el curso ${c.cursoNombre} ${c.cuatrimestre.cuatrimestre}º ${c.cuatrimestre.anio} cursaste con: </h5>
             <ul>
                 <g:each in="${CursosCompartidos[c]}" var="usuario">
                     <g:link controller="perfil"
@@ -78,7 +78,9 @@
                     <td width="100px">
                         <strong> Materia </strong>
                         <br/>
-                        ${opinion.curso.catedra.materia.nombre}<br/>
+                        <g:link action="catedras"  controller="home" params="${[materiaId: opinion.curso.catedra.materia.id, materiaNombre: opinion.curso.catedra.materia.nombre]}">${opinion.curso.catedra.materia.nombre}
+                        </g:link>
+                        <br/>
                     </td>
                     <td>
 
@@ -87,8 +89,26 @@
                                 <div align="right">
                                     ${opinion.curso.catedra.materia.estadoUsuario(usuarioActual)}
                                 </div>
+                                <g:if test="${opinion.curso.catedra.materia.estadoUsuario(usuarioActual)=="Curse"  }">
+                                    <strong> Curso conmigo  </strong><br/>
+                                    <div align="right">
 
-                            </g:if>
+                                    <g:if test="${usuarioActual.cursoCon(CursosCompartidos,opinion.cuatrimestre,opinion.curso.nombre)  }">
+                                        Si
+                                    </g:if>
+                                    <g:else>
+                                        No
+                                    </g:else>
+                                    </div>
+                                    <br/>
+
+                                </g:if>
+                            </g:if>              <strong> Cursada  </strong>
+                        <br/>
+                        <div align="right">
+                            ${opinion.cuatrimestre.cuatrimestre}º cuatrimestre de ${opinion.cuatrimestre.anio}
+                        </div>
+                        <br/>
                         <g:if test="${opinion.fechaPublicacion != null}">
                             <strong> Fecha de Publicacion </strong>
                             <br/>

@@ -6,7 +6,7 @@
 <body>
 <g:render template="partials/Nav"/>
 <div class="body">
-    <h1>ForosFiuba - Usuarios</h1>
+    <h1>OpinaFiuba - Usuarios</h1>
     <legend>Perfil</legend>
     <g:if test="${edit}">
         <g:form name="myForm" action="editar"  params="${[usuarioid: usuario.username]}">
@@ -57,7 +57,7 @@
     <g:if test="${!CursosCompartidos.isEmpty() && usuario==usuarioActual}">
         <legend> Compañeros y compañeras:</legend>
         <g:each in="${CursosCompartidos.keySet()}" var="c">
-            <h5>En el curso ${c.cursoNombre} ${c.cuatrimestre}º ${c.year} cursaste con: </h5>
+            <h5>En el curso ${c.cursoNombre} ${c.cuatrimestre.cuatrimestre}º ${c.cuatrimestre.anio} cursaste con: </h5>
             <ul>
                 <g:each in="${CursosCompartidos[c]}" var="usuario">
                     <g:link controller="perfil"
@@ -78,7 +78,9 @@
                     <td width="100px">
                         <strong> Materia </strong>
                         <br/>
-                        ${opinion.curso.catedra.materia.nombre}<br/>
+                        <g:link action="catedras"  controller="home" params="${[materiaId: opinion.curso.catedra.materia.id, materiaNombre: opinion.curso.catedra.materia.nombre]}">${opinion.curso.catedra.materia.nombre}
+                        </g:link>
+                        <br/>
                     </td>
                     <td>
 

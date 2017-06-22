@@ -12,10 +12,10 @@
 
 <body>
 <g:render template="partials/Nav"/>
-<div class="body">
-    <h1 align="center" class="titulo">ForosFiuba - Opiniones</h1>
+<div class="body"  align="center">
+    <h1 align="center" class="titulo">OpinaFiuba - Opiniones</h1>
 
-    <div class="hilo">
+    <div class="hilo" align="left">
         <g:link action="index">Departamentos</g:link> >
         <g:link action="materias"
                 params="${[departamentoId: hilo.departamentoId, departamentoNombre: hilo.departamentoNombre]}">${hilo.departamentoNombre}</g:link> >
@@ -59,7 +59,7 @@
                         <strong> Cursada  </strong>
                     <br/>
                     <div align="right">
-                        ${opinion.cuatrimestre}º cuatrimestre de ${opinion.year}
+                        ${opinion.cuatrimestre.cuatrimestre}º cuatrimestre de ${opinion.cuatrimestre.anio}
                     </div>
                     <br/>
 
@@ -183,16 +183,16 @@
                     <p style="color: red;"><g:message error="${it}"/></p>
                 </g:eachError>
             </g:hasErrors>
-            <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
+            <g:form name="myForm" action="createOpinion" align="left" params="${[cursoId: hilo.cursoId]}">
                 <fieldset>
                     <legend>Crear Opinion</legend>
                     <div class="form-group">
                         <label>Cuatrimestre cursado:</label>
-                        <g:field type="number" class="form-control" value="${textoDefault.cuatrimestre}" required="true" min="1" max="2" name="cuatrimestre"/>
+                        <g:field type="number" class="form-control" value="${textoDefault.cuatrimestre.cuatrimestre}" required="true" min="1" max="2" name="cuatrimestre"/>
                     </div>
                     <div class="form-group">
                         <label>Año cursado:</label>
-                        <g:field type="number" class="form-control" value="${textoDefault.year}" required="true" min="1960" max="2100" name="year"/>
+                        <g:field type="number" class="form-control" value="${textoDefault.cuatrimestre.anio}" required="true" min="1960" max="2100" name="year"/>
                     </div>
                     <div class="form-group">
                         <label>Profesores:</label>

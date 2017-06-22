@@ -74,15 +74,15 @@
 </script>
 <div >
     <h1 align="center" style="color:black; font-size: 100px">
-        <div class="typewrite" data-period="6000" data-type='[ "ForosFiuba." ]'>
+        <div class="typewrite" data-period="6000" data-type='[ "OpinaFiuba." ]'>
             <span class="wrap"></span>
         </div>
     </h1>
 </div>
 <div class="container-fluid bg-2 text-center" style="font-size: 175%">
     <div class="texto-cuerpo" style="padding-top: 70px; padding-bottom: 70px;">
-        ¡Bienvenido a Foros-Fiuba! Este sitio lo hacemos estudiantes de distintas carreras de la Facultad de Ingeniería de la Universidad de Buenos Aires. <br/>
-        Es principalmente un foro de discusión, sobre temas inherentes a las carreras, materias, y temas de interés para gente de FIUBA.
+        ¡Bienvenido a OpinaFiuba! Este sitio lo hacemos estudiantes de distintas carreras de la Facultad de Ingeniería de la Universidad de Buenos Aires. <br/>
+        Es principalmente un sitio para compartir opinonenes sobre cursos, hecho para gente de FIUBA, por gente de FIUBA.
     </div>
 </div>
 

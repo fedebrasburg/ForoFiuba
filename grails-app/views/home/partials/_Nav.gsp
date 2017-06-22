@@ -38,7 +38,7 @@ form {
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <g:link action="departamentos" class="navbar-brand"> ForoFiuba</g:link>
+            <g:link action="departamentos" class="navbar-brand"> OpinaFiuba</g:link>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->

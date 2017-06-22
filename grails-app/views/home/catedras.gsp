@@ -6,7 +6,7 @@
 <body>
 <g:render template="partials/Nav"/>
 <div class="body">
-    <h1 class="titulo" align="center">ForosFiuba - Catedras</h1>
+    <h1 class="titulo" align="center">OpinaFiuba - Catedras</h1>
 
     <div class="hilo">
         <g:link action="index">Departamentos</g:link> >

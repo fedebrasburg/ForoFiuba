@@ -73,7 +73,7 @@ class Usuario implements Serializable {
         }
     }
 
-    private boolean opinoSobre(Materia materia){
+    private opinoSobre(Materia materia){
         opiniones.any{opinion->
             def materiaOpinion = opinion.getMateria()
             boolean bool=( materiaOpinion.id == materia.id)
@@ -90,18 +90,24 @@ class Usuario implements Serializable {
     def getCompas(){
         Opinion.findAllByUsuario(this).unique { a, b -> a.curso.id <=> b.curso.id }.collectEntries{ opinion ->
             def compas = Opinion.findAllByCurso(opinion.curso).findAll{posibleMatch ->
-                (posibleMatch.year == opinion.year && posibleMatch.cuatrimestre == opinion.cuatrimestre &&  posibleMatch.usuario.id != opinion.usuario.id)
+                (posibleMatch.cuatrimestre == opinion.cuatrimestre &&  posibleMatch.usuario.id != opinion.usuario.id)
             }.collect { posibleMatch ->
                 posibleMatch.usuario
             }
             def cursoCompartido = new CursoCompartido()
             cursoCompartido.cuatrimestre = opinion.cuatrimestre
-            cursoCompartido.year = opinion.year
             cursoCompartido.cursoNombre = opinion.curso.nombre
             [(cursoCompartido) : compas]
         }.findAll {key,value->
             value != []
         }
+    }
+    boolean cursoCon(def cursoCompartidos,Cuatrimestre cuatrimestre,String cursoNombre){
+        CursoCompartido posibleCursoCompartidos=new CursoCompartido("cursoNombre":cursoNombre,"cuatrimestre":cuatrimestre)
+        boolean cursoCon =  cursoCompartidos.keySet().any{cursoCompartido->
+            cursoCompartido==((posibleCursoCompartidos))
+        }
+        return cursoCon
     }
 
 }

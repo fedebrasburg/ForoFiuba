@@ -6,7 +6,7 @@
 <body>
 <g:render template="partials/Nav"/>
 <div class="body">
-    <h1>ForosFiuba - Usuarios</h1>
+    <h1>OpinaFiuba - Usuarios</h1>
 
     <g:form name="myForm" action="crearUsuario">
         <fieldset>
