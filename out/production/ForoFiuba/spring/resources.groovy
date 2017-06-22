@@ -3,4 +3,5 @@ beans = {
     armadorDeHilo(forofiuba.ArmadorDeHilo)
     parecido(forofiuba.Parecido)
     cursoCompartido(forofiuba.CursoCompartido)
+
 }

@@ -28,7 +28,7 @@
         ${hilo.cursoNombre}
     </div>
 
-    <div align="center">
+    <div align="center" style="width:90%">
         <h2>Opiniones</h2>
         <g:each var="opinion" in="${Opiniones}">
             <table style="width:90%" class="table">
@@ -178,6 +178,11 @@
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
         <g:if test="${puedeOpinar && esDeLaCarrera}">
+            <g:hasErrors bean="${textoDefault}" >
+                <g:eachError bean="${textoDefault}" >
+                    <p style="color: red;"><g:message error="${it}"/></p>
+                </g:eachError>
+            </g:hasErrors>
             <g:form name="myForm" action="createOpinion" params="${[cursoId: hilo.cursoId]}">
                 <fieldset>
                     <legend>Crear Opinion</legend>
@@ -241,6 +246,7 @@
                     <g:submitButton class="btn btn-default" name="botonAgregar" value="Crear Opinion"/>
                 </fieldset>
             </g:form>
+
         </g:if>
         <g:else>
             <g:if test="${!esDeLaCarrera}">

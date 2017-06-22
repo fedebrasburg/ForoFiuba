@@ -86,7 +86,7 @@
     </div>
 </div>
 
-<div class="body" align="center">
+<div class="body" align="center"  style="padding-top: 70px; padding-bottom: 70px;">
     <h2>Departamentos</h2>
     <g:each var="departamento" in="${Departamentos}">
         <g:link action="materias" class="listado"
@@ -115,7 +115,7 @@
             <fieldset>
                 <legend>Crear Departamento</legend>
 
-                <div class="form-group">
+                <div class="form-group" >
                     <label>Nombre Departamento:</label>
                     <g:field type="text" class="form-control" required="true" placeholder="Nombre del departamento"
                              name="departamentoNombre"/>

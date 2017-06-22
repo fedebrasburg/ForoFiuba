@@ -1,41 +1,92 @@
 <html>
 <head>
-    <link rel="stylesheet" href="styles/general.css" type="text/css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <style>
-    .bg-1{
-        background-color: blue;
-        color: #ffffff;
-    }
     .bg-2 {
         background-color: #474e5d; /* Dark Blue */
         color: #ffffff;
-    }
-    .container-fluid {
-        padding-top: 70px;
-        padding-bottom: 70px;
+        margin-top: 0px;
     }
     </style>
 </head>
 
 <body>
 <g:render template="partials/Nav"/>
-<div class="container-fluid bg-1 text-center">
-    <div style="font-size: 140px">
-        Foros Fiuba
-    </div>
+
+<script type="text/javascript">
+    var TxtType = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    TxtType.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) { delta /= 2; }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 500;
+        }
+
+        setTimeout(function() {
+            that.tick();
+        }, delta);
+    };
+
+    window.onload = function() {
+        var elements = document.getElementsByClassName('typewrite');
+        for (var i=0; i<elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+                new TxtType(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        // de la linea
+        css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+        document.body.appendChild(css);
+    };
+</script>
+<div >
+    <h1 align="center" style="color:black; font-size: 100px">
+        <div class="typewrite" data-period="6000" data-type='[ "ForosFiuba." ]'>
+            <span class="wrap"></span>
+        </div>
+    </h1>
 </div>
 <div class="container-fluid bg-2 text-center" style="font-size: 175%">
-    <div class="texto-cuerpo">
+    <div class="texto-cuerpo" style="padding-top: 70px; padding-bottom: 70px;">
         ¡Bienvenido a Foros-Fiuba! Este sitio lo hacemos estudiantes de distintas carreras de la Facultad de Ingeniería de la Universidad de Buenos Aires. <br/>
         Es principalmente un foro de discusión, sobre temas inherentes a las carreras, materias, y temas de interés para gente de FIUBA.
     </div>
 </div>
 
 <div class="body" align="center">
-
-
-
     <h2>Departamentos</h2>
     <g:each var="departamento" in="${Departamentos}">
         <g:link action="materias" class="listado"

@@ -12,9 +12,8 @@
 
 <div id="login">
     <div class="inner">
-        <h1></h1>
+        <h4>Ingrese con su usuario</h4>
 
-        <div class="fheader">Ingrese con su usuario</div>
 
         <g:if test='${flash.message}'>
             <div class="login_message">${flash.message}</div>
@@ -24,12 +23,12 @@
               autocomplete="off">
             <p>
                 <label for="username">Email</label>
-                <input type="text" class="text_" name="${usernameParameter ?: 'username'}" id="username"/>
+                <input type="text" class="form-control" name="${usernameParameter ?: 'username'}" id="username"/>
             </p>
 
             <p>
                 <label for="password">Contraseña</label>
-                <input type="password" class="text_" name="${passwordParameter ?: 'password'}" id="password"/>
+                <input type="password" class="form-control" name="${passwordParameter ?: 'password'}" id="password"/>
             </p>
 
             <p id="remember_me_holder">

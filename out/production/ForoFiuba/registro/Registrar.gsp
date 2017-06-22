@@ -12,31 +12,31 @@
         <fieldset>
             <legend>Registrar</legend>
             <label>Nombre:</label>
-            <g:field type="text" required="true" name="nombre"/>
+            <g:field type="text" required="true" name="nombre"  value="${textoDefault.nombre}"  />
             <br/>
             <br/>
             <label>Genero:</label>
-            <g:field type="text" name="genero"/>
+            <g:field type="text" name="genero" value="${textoDefault.genero}" />
             <br/>
             <br/>
             <label>Email:</label>
-            <g:field type="email" name="username" required="true"/>
+            <g:field type="email" name="username" required="true" value="${textoDefault.username}"/>
             <br/>
             <br/>
             <label>FechaDeNacimiento:</label>
-            <g:datePicker name="fechaDeNacimiento" value="${new Date()}" precision="day"></g:datePicker>
+            <g:datePicker name="fechaDeNacimiento" value="${textoDefault.fechaDeNacimiento}" precision="day" ></g:datePicker>
             <br/>
             <br/>
             <label>Telefono:</label>
-            <g:field type="number" name="telefono"/>
+            <g:field type="number" name="telefono" value="${textoDefault.telefono}"/>
             <br/>
             <br/>
             <label>Password:</label>
-            <g:field type="password" name="password" required="true"/>
+            <g:field type="password" name="password" value="${textoDefault.password}" required="true"/>
             <br/>
             <br/>
             <label>Password:</label>
-            <g:field type="password" name="checkpassword" required="true"/>
+            <g:field type="password" name="checkpassword" required="true" value="${textoDefault.password}" />
             <br/>
             <br/>
             <label>Carreras:</label>

@@ -19,7 +19,6 @@
     <g:if test="${Parecidos.isEmpty()}">
         No se encontraron resultados..
     </g:if>
-    <g:render template="partials/Buscador"/>
     <g:link action="index"> Volver a Departamentos</g:link>
 </div>
 

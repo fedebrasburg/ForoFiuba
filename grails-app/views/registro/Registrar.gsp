@@ -11,34 +11,41 @@
     <g:form name="myForm" action="crearUsuario">
         <fieldset>
             <legend>Registrar</legend>
-            <label>Nombre:</label>
-            <g:field type="text" required="true" name="nombre"/>
-            <br/>
-            <br/>
-            <label>Genero:</label>
-            <g:field type="text" name="genero"/>
-            <br/>
-            <br/>
-            <label>Email:</label>
-            <g:field type="email" name="username" required="true"/>
-            <br/>
-            <br/>
-            <label>FechaDeNacimiento:</label>
-            <g:datePicker name="fechaDeNacimiento" value="${new Date()}" precision="day"></g:datePicker>
-            <br/>
-            <br/>
-            <label>Telefono:</label>
-            <g:field type="number" name="telefono"/>
-            <br/>
-            <br/>
-            <label>Password:</label>
-            <g:field type="password" name="password" required="true"/>
-            <br/>
-            <br/>
-            <label>Password:</label>
-            <g:field type="password" name="checkpassword" required="true"/>
-            <br/>
-            <br/>
+            <div class="form-group">
+                <label>Nombre:</label>
+                <g:field type="text" class="form-control" required="true" name="nombre"  value="${textoDefault.nombre}"  />
+            </div>
+                <div class="form-group">
+
+                    <label>Genero:</label>
+
+                    <g:field type="text" class="form-control" name="genero" value="${textoDefault.genero}" />
+                </div>
+
+                    <div class="form-group">
+                        <label>Email:</label>
+            <g:field type="email" class="form-control" name="username" required="true" value="${textoDefault.username}"/>
+                    </div>
+            <div class="form-group">
+
+                <label>FechaDeNacimiento:</label>
+            <g:datePicker name="fechaDeNacimiento" value="${textoDefault.fechaDeNacimiento}" precision="day" ></g:datePicker>
+            </div>
+            <div class="form-group">
+                <label>Telefono:</label>
+            <g:field type="number" name="telefono" class="form-control" value="${textoDefault.telefono}"/>
+            </div>
+            <div class="form-group">
+
+                <label>Password:</label>
+            <g:field type="password" name="password" class="form-control" value="${textoDefault.password}" required="true"/>
+            </div>
+            <div class="form-group">
+
+                <label>Password:</label>
+            <g:field type="password" name="checkpassword" class="form-control" required="true" value="${textoDefault.password}" />
+            </div>
+
             <label>Carreras:</label>
             <br/>
             <g:each  in="${carreras}" var="carrera">
