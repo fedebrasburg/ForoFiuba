@@ -2,11 +2,10 @@
 body {
     background-color: #E3E5F2;
 }
-
-.body {
-    margin-left: 20px;
+.navbar {
+    margin-bottom: 0 !important;
+    margin-top: 0;
 }
-
 .table {
     font-size: medium;
     border: groove;

@@ -1,10 +1,6 @@
 package forofiuba
 
 import grails.plugin.springsecurity.annotation.Secured
-import grails.validation.Validateable
-import org.apache.commons.lang.Validate
-import org.apache.el.util.Validation
-import org.springframework.validation.annotation.Validated
 
 class HomeController {
 
@@ -54,11 +50,13 @@ class HomeController {
         Curso curso = Curso.get(params.cursoId)
         boolean puedeOpinar = false
         def materiasFaltantes = []
+        boolean esDeLaCarrera = false
         if (usuario){
             puedeOpinar = usuario.puedeOpinar(curso)
             materiasFaltantes = usuario.materiasFaltantes(curso)
+            esDeLaCarrera = curso.catedra.materia.materiaPerteneceACarrerasUsuario(usuario)
         }
-        render("view":"opiniones", "model":[textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, puedeOpinar:puedeOpinar,esDeLaCarrera:curso.catedra.materia.materiaPerteneceACarrerasUsuario(usuario), Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId),"usuarioActual":usuario])
+        render("view":"opiniones", "model":[textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, puedeOpinar:puedeOpinar,esDeLaCarrera:esDeLaCarrera, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId),"usuarioActual":usuario])
         createOpinionCommand = new CreateOpinionCommand()
     }
 
