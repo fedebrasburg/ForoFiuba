@@ -34,5 +34,17 @@ class CarreraSpec extends Specification {
             (materia1 in dicc[carrera1])&&(materia3 in dicc[carrera1])&&(materia1 in dicc[carrera2])&&(materia2 in dicc[carrera2])
     }
 
+    void "Probar diccionarioMateriasPorCarrera Vacio"() {
+        when:
+        carrera1 = new Carrera(id:1,nombre: "Informatica");
+        materia1=new Materia(id: 1,nombre: "Fisica I", carreras: [carrera1,carrera2])
+        then:
+            def dicc =Carrera.diccionarioMateriasPorCarrera([carrera1])
+            !(materia1 in dicc[carrera1])
 
+        when:
+            carrera1.materias=[materia1]
+            dicc =Carrera.diccionarioMateriasPorCarrera([carrera1])
+        then: (materia1 in dicc[carrera1])
+    }
 }

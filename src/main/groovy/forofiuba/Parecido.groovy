@@ -4,4 +4,5 @@ class Parecido {
     String cursoNombre
     String cursoId
     String materiaNombre
+    Materia materia
 }

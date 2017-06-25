@@ -46,6 +46,7 @@ class Materia {
             parecido.cursoNombre = curso.nombre
             parecido.materiaNombre = curso.catedra.materia.nombre
             parecido.cursoId = curso.id
+
             parecido
         }
     }
@@ -56,7 +57,7 @@ class Materia {
         usuario.carreras.collect{carrera->
             carrera.materias
         }.flatten().unique().any{Materia materia->
-            Boolean equal =(materia.id == this.id)
+            Boolean equal =(materia == this)
             equal
         }
     }
@@ -67,7 +68,7 @@ class Materia {
         return estado
     }
 
-    def obtenerMateriasParecidas(Curso curso){
+    def static obtenerMateriasParecidas(Curso curso){
         curso.opiniones.collect{opinion->
             opinion.usuario
         }.unique { a, b -> a.id <=> b.id
@@ -77,11 +78,19 @@ class Materia {
             Parecido parecido = new Parecido()
             parecido.cursoNombre = op.curso.nombre
             parecido.materiaNombre = op.getMateria().nombre
+            parecido.materia = op.getMateria()
             parecido.cursoId = op.curso.id
             parecido
         }.findAll{Parecido pare ->
-            (pare.cursoId = curso.id )
+            pare.cursoId != curso.id
         }.unique{a,b -> a.cursoId <=> b.cursoId}
+    }
+    def static  obtenerMateriasParecidasNoCursadasPorUsuario(Curso curso,Usuario usuario){
+        List<Parecido> parecidas= obtenerMateriasParecidas(curso);
+        parecidas.findAll{Parecido parecida->
+            (EstadoUsuario.estadoUsuario(usuario,parecida.materia)!=EstadoUsuario.EstadoEnum.CURSADO)
+
+        }
     }
     def static getMaterias(Departamento departamento){
         departamento.materias

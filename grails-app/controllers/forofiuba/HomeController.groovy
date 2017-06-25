@@ -50,14 +50,18 @@ class HomeController {
         Usuario usuario = springSecurityService.currentUser
         Curso curso = Curso.get(params.cursoId)
         def materiasFaltantes = []
+        List<Parecido> parecidos;
         EstadoUsuario.EstadoEnum estadoDeMateria;
         if (usuario){
             estadoDeMateria = curso.catedra.materia.estadoUsuario(usuario)
             if(estadoDeMateria==EstadoUsuario.EstadoEnum.FALTANCORRELATIVAS){
                 materiasFaltantes = usuario.materiasFaltantes(curso)
             }
+            parecidos=Materia.obtenerMateriasParecidasNoCursadasPorUsuario(Curso.get(params.cursoId),usuario)
+        }else{
+            parecidos=Materia.obtenerMateriasParecidas(Curso.get(params.cursoId))
         }
-        render("view":"opiniones", "model":[estadoDeMateria: estadoDeMateria ,textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, Opiniones: Opinion.getOpinionesByCurso(curso   ), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(Curso.get(params.cursoId)),"usuarioActual":usuario])
+        render("view":"opiniones", "model":[estadoDeMateria: estadoDeMateria ,textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, Opiniones: Opinion.getOpinionesByCurso(curso   ), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: parecidos,"usuarioActual":usuario])
         createOpinionCommand = new CreateOpinionCommand()
     }
 

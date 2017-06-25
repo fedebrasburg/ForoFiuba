@@ -272,8 +272,7 @@
             <g:else>
                 <div align="center">
                     <h4 align="center">
-
-                        Ya opinaste sobre esta materia, gracias por dejar tu opion :)
+                        Ya opinaste sobre esta materia, gracias por dejar tu opinion :)
                     </h4>
                 </div>
                 <br/>
