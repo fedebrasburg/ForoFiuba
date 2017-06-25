@@ -9,9 +9,10 @@ class Carrera {
         materias nullable: false
     }
 
-    def static getAllMateriasPorCarrera(){
+
+    def static diccionarioMateriasPorCarrera(List<Carrera> carreras){
         def dic = [:]
-        Carrera.getAll().each{carrera ->
+        carreras.each{carrera ->
             dic[carrera] = carrera.materias
         }
         return dic

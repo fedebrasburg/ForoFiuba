@@ -1,3 +1,4 @@
+<%@ page import="forofiuba.EstadoUsuario" %>
 <html>
 <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -87,10 +88,28 @@
                             <g:if test="${opinion.usuario!=usuarioActual}">
                                 <strong> Estado  </strong><br/>
                                 <div align="right">
-                                    ${opinion.curso.catedra.materia.estadoUsuario(usuarioActual)}
+                                    ${opinion.curso.catedra.materia.estadoUsuario(usuarioActual).toString()}
                                 </div>
+                                <g:if test="${opinion.curso.catedra.materia.estadoUsuario(usuarioActual)== forofiuba.EstadoUsuario.EstadoEnum.CURSADO  }">
+                                    <strong> Curso conmigo  </strong><br/>
+                                    <div align="right">
 
-                            </g:if>
+                                    <g:if test="${usuarioActual.cursoCon(CursosCompartidos,opinion.cuatrimestre,opinion.curso.nombre)  }">
+                                        Si
+                                    </g:if>
+                                    <g:else>
+                                        No
+                                    </g:else>
+                                    </div>
+                                    <br/>
+
+                                </g:if>
+                            </g:if>              <strong> Cursada  </strong>
+                        <br/>
+                        <div align="right">
+                            ${opinion.cuatrimestre.cuatrimestre}º cuatrimestre de ${opinion.cuatrimestre.anio}
+                        </div>
+                        <br/>
                         <g:if test="${opinion.fechaPublicacion != null}">
                             <strong> Fecha de Publicacion </strong>
                             <br/>

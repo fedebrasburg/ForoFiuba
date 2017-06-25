@@ -22,8 +22,5 @@ class DepartamentoSpec extends Specification {
         then:
             dep.nombre=="Matematica"
     }
-    void "Probar Error"() {
-        expect:
-            shouldFail { new Departamento() }
-    }
+
 }

@@ -9,7 +9,7 @@ class PerfilController {
     def render(boolean edit,String usuarioId){
         Usuario usuario =Usuario.findByUsername(usuarioId)
         Usuario  usuarioActual = springSecurityService.currentUser
-        def opiniones=Opinion.getOpinionesByUsername(usuario.username.toString())
+        def opiniones=Opinion.getOpinionesByUsername(usuario)
         def carreras
         if(edit){
             carreras=Carrera.findAll()

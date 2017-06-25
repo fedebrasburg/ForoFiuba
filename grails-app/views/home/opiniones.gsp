@@ -177,7 +177,7 @@
         <br/>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
-        <g:if test="${puedeOpinar && esDeLaCarrera}">
+        <g:if test="${estadoDeMateria == forofiuba.EstadoUsuario.EstadoEnum.CURSABLE}">
             <g:hasErrors bean="${textoDefault}" >
                 <g:eachError bean="${textoDefault}" >
                     <p style="color: red;"><g:message error="${it}"/></p>
@@ -249,12 +249,13 @@
 
         </g:if>
         <g:else>
-            <g:if test="${!esDeLaCarrera}">
+            <g:if test="${estadoDeMateria==forofiuba.EstadoUsuario.EstadoEnum.NOESTAENELPLAN}">
                 <h4 align="center">
                     No podes opinar por que no pertenece a tu plan
                 </h4>
             </g:if>
-            <g:else>
+            <g:if test="${estadoDeMateria==forofiuba.EstadoUsuario.EstadoEnum.FALTANCORRELATIVAS}">
+
             <h4 align="center">
                 No podes opinar por no haber opinado en las correlativas :(
                 <br/>
@@ -267,8 +268,20 @@
                             params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}</g:link>
                 </g:each>
             </div>
+            </g:if>
+            <g:else>
+                <div align="center">
+                    <h4 align="center">
+
+                        Ya opinaste sobre esta materia, gracias por dejar tu opion :)
+                    </h4>
+                </div>
+                <br/>
+                <br/>
+
             </g:else>
         </g:else>
+
     </sec:ifAllGranted>
 
 </div>

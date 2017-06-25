@@ -12,12 +12,13 @@ class HomeController {
     }
 
     def departamentos(){
-        render("view":"departamentos", "model":[Carreras: Carrera.getAllMateriasPorCarrera(), Departamentos: Departamento.getDepartamentos()])
+        List<Carrera> carreras=Carrera.getAll()
+        render("view":"departamentos", "model":[Carreras: Carrera.diccionarioMateriasPorCarrera(carreras), Departamentos: Departamento.getAll()])
     }
 
     def materias() {
         Usuario usuario = springSecurityService.currentUser
-        render("view":"materias", "model":[Materias: Materia.getMaterias(params.departamentoId), hilo: armadorDeHilo.calcularHiloMaterias(params.departamentoId), carreras:Carrera.findAll(),usuarioActual: usuario])
+        render("view":"materias", "model":[Materias: Materia.getMaterias(Departamento.get(params.departamentoId)), hilo: armadorDeHilo.calcularHiloMaterias(params.departamentoId), carreras:Carrera.findAll(),usuarioActual: usuario])
     }
 
     def login() {
@@ -34,12 +35,12 @@ class HomeController {
 
     def catedras() {
         def carreras=Materia.get(params.materiaId).carreras
-        render("view":"catedras", "model":[Catedras: Catedra.getCatedras(params.materiaId), hilo: armadorDeHilo.calcularHiloCatedras(params.materiaId), correlativas:Materia.get(params.materiaId).correlativas, carreras: Materia.get(params.materiaId).carreras])
+        render("view":"catedras", "model":[Catedras: Catedra.getCatedras(Materia.get(params.materiaId)), hilo: armadorDeHilo.calcularHiloCatedras(params.materiaId), correlativas:Materia.get(params.materiaId).correlativas, carreras: Materia.get(params.materiaId).carreras])
     }
 
 
     def cursos() {
-        render("view":"cursos", "model":[Cursos: Curso.getCursos(params.catedraId), hilo: armadorDeHilo.calcularHiloCursos(params.catedraId)])
+        render("view":"cursos", "model":[Cursos: Curso.getCursos(Catedra.get(params.catedraId)), hilo: armadorDeHilo.calcularHiloCursos(params.catedraId)])
     }
 
 
@@ -48,20 +49,20 @@ class HomeController {
     def opiniones(){
         Usuario usuario = springSecurityService.currentUser
         Curso curso = Curso.get(params.cursoId)
-        boolean puedeOpinar = false
         def materiasFaltantes = []
-        boolean esDeLaCarrera = false
+        EstadoUsuario.EstadoEnum estadoDeMateria;
         if (usuario){
-            puedeOpinar = usuario.puedeOpinar(curso)
-            materiasFaltantes = usuario.materiasFaltantes(curso)
-            esDeLaCarrera = curso.catedra.materia.materiaPerteneceACarrerasUsuario(usuario)
+            estadoDeMateria = curso.catedra.materia.estadoUsuario(usuario)
+            if(estadoDeMateria==EstadoUsuario.EstadoEnum.FALTANCORRELATIVAS){
+                materiasFaltantes = usuario.materiasFaltantes(curso)
+            }
         }
-        render("view":"opiniones", "model":[textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, puedeOpinar:puedeOpinar,esDeLaCarrera:esDeLaCarrera, Opiniones: Opinion.getOpinionesByCurso(params.cursoId), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(params.cursoId),"usuarioActual":usuario])
+        render("view":"opiniones", "model":[estadoDeMateria: estadoDeMateria ,textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, Opiniones: Opinion.getOpinionesByCurso(curso   ), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: curso.catedra.materia.obtenerMateriasParecidas(Curso.get(params.cursoId)),"usuarioActual":usuario])
         createOpinionCommand = new CreateOpinionCommand()
     }
 
     def busqueda(){
-        [Parecidos:Materia.obtenerMateriasSegunNombre(params.nombre)]
+        [Parecidos:Materia.obtenerMateriasSegunNombre(Curso.getAll(),params.nombre)]
     }
 
     @Secured(['ROLE_USER'])

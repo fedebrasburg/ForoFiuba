@@ -12,9 +12,7 @@ class Departamento {
     }
 
 
-    def static getDepartamentos() {
-        Departamento.getAll()
-    }
+
 
     static boolean deleteDepartamento(String departamentoId) {
         if (!Materia.findAllByDepartamento(Departamento.get(departamentoId)).isEmpty()) {

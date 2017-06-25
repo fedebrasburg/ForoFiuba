@@ -13,13 +13,16 @@ class Catedra {
 
     }
 
-    def static createCatedra(String nombre, String email, String materiaId) {
+
+
+     static createCatedra(String nombre, String email, String materiaId) {
         def c = new Catedra()
         c.nombre = nombre
         c.email = email
         c.materia = Materia.get(materiaId)
         c.save(flush: true, failOnError: true)
     }
+
 
     static boolean deleteCatedra(String catedraId) {
         if (!Curso.findAllByCatedra(Catedra.get(catedraId)).isEmpty()) {
@@ -30,7 +33,8 @@ class Catedra {
         true
     }
 
-    def static getCatedras(String materiaId) {
-        Catedra.findAllByMateria(Materia.get(materiaId))
+
+    def static getCatedras(Materia materia) {
+        materia.catedras
     }
 }

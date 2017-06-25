@@ -67,6 +67,7 @@ class Usuario implements Serializable {
     boolean puedeOpinar(Curso curso){
         puedeOpinar(curso.catedra.materia)
     }
+
     boolean puedeOpinar(Materia materia){
         materia.correlativas.every{ correlativa ->
             opinoSobre(correlativa)

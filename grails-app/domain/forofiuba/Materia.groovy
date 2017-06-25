@@ -35,61 +35,55 @@ class Materia {
         true
     }
 
-    def static getMaterias(String departamentoId) {
-        Materia.findAllByDepartamento(Departamento.get(departamentoId))
-    }
 
-    def static getCorrelativas(Long materiaId){
-        Materia.get(materiaId).correlativas
-    }
 
-    def static obtenerMateriasSegunNombre(String nombre) {
-        Curso.getAll().findAll { curso ->
+
+    def static obtenerMateriasSegunNombre(List<Curso> cursos,String nombre) {
+        cursos.findAll { curso ->
             curso.nombre.toLowerCase().contains(nombre.toLowerCase())
         }.collect { curso ->
             def parecido = new Parecido()
             parecido.cursoNombre = curso.nombre
-            parecido.materiaNombre = Materia.get(Catedra.get(Curso.get(curso.id).catedra.id).materia.id).nombre
+            parecido.materiaNombre = curso.catedra.materia.nombre
             parecido.cursoId = curso.id
             parecido
         }
     }
 
+
+
     public boolean materiaPerteneceACarrerasUsuario(Usuario usuario){
         usuario.carreras.collect{carrera->
             carrera.materias
-        }.flatten().any{materia->
-            materia.id == id
+        }.flatten().unique().any{Materia materia->
+            Boolean equal =(materia.id == this.id)
+            equal
         }
     }
 
-    def estadoUsuario(Usuario usuario){
-        if (!materiaPerteneceACarrerasUsuario(usuario)){
-            return "No esta en tus planes"
-        }
-        if(usuario.opinoSobre(this)){
-            return "Curse"
-        }
-        if(usuario.puedeOpinar(this)){
-            return "Puedo cursar"
-        }
-        return  "Faltan correlativas"
+
+    public EstadoUsuario.EstadoEnum estadoUsuario(Usuario usuario){
+        EstadoUsuario.EstadoEnum estado=EstadoUsuario.estadoUsuario(usuario,this);
+        return estado
     }
-    def obtenerMateriasParecidas(String cursoId){
-        Opinion.findAllByCurso(Curso.get(cursoId)).collect{opinion->
+
+    def obtenerMateriasParecidas(Curso curso){
+        curso.opiniones.collect{opinion->
             opinion.usuario
         }.unique { a, b -> a.id <=> b.id
         }.collect{usu->
-            Opinion.findAllByUsuario(usu)
-        }.flatten().collect{ op->
-            def parecido = new Parecido()
+            usu.opiniones
+        }.flatten().collect{Opinion op->
+            Parecido parecido = new Parecido()
             parecido.cursoNombre = op.curso.nombre
             parecido.materiaNombre = op.getMateria().nombre
             parecido.cursoId = op.curso.id
             parecido
-        }.findAll{pare ->
-            (pare.cursoId != cursoId )
+        }.findAll{Parecido pare ->
+            (pare.cursoId = curso.id )
         }.unique{a,b -> a.cursoId <=> b.cursoId}
     }
-
+    def static getMaterias(Departamento departamento){
+        departamento.materias
+    }
 }

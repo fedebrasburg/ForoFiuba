@@ -1,3 +1,4 @@
+<%@ page import="forofiuba.EstadoUsuario" %>
 <html>
 <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -87,9 +88,9 @@
                             <g:if test="${opinion.usuario!=usuarioActual}">
                                 <strong> Estado  </strong><br/>
                                 <div align="right">
-                                    ${opinion.curso.catedra.materia.estadoUsuario(usuarioActual)}
+                                    ${opinion.curso.catedra.materia.estadoUsuario(usuarioActual).toString()}
                                 </div>
-                                <g:if test="${opinion.curso.catedra.materia.estadoUsuario(usuarioActual)=="Curse"  }">
+                                <g:if test="${opinion.curso.catedra.materia.estadoUsuario(usuarioActual)== forofiuba.EstadoUsuario.EstadoEnum.CURSADO  }">
                                     <strong> Curso conmigo  </strong><br/>
                                     <div align="right">
 

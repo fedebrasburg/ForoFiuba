@@ -56,11 +56,12 @@ class Opinion {
         o.save(flush: true,     failOnError: true)
     }
 
-    def static getOpinionesByCurso(String cursoId) {
-        Opinion.findAllByCurso(Curso.get(cursoId))
+
+    def static getOpinionesByCurso(Curso curso) {
+        curso.opiniones
     }
-    def static getOpinionesByUsername(String username) {
-        Opinion.findAllByUsuario(Usuario.findByUsername(username))
+    def static getOpinionesByUsername(Usuario usuario) {
+        usuario.opiniones
     }
 
     def getMateria(){

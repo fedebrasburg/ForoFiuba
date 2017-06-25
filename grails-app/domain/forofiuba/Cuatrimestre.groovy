@@ -1,8 +1,8 @@
 package forofiuba
 
 class Cuatrimestre implements Comparable  {
-    String cuatrimestre
-    String anio
+    int cuatrimestre
+    int anio
 
     static constraints = {
         anio nullable:false, range: 1960..2100, blank: false

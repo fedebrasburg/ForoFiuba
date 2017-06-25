@@ -29,7 +29,9 @@ class Curso {
         true
     }
 
-    def static getCursos(String catedraId) {
-        Curso.findAllByCatedra(Catedra.get(catedraId))
+
+
+    def static getCursos(Catedra catedra) {
+        catedra.cursos
     }
 }
