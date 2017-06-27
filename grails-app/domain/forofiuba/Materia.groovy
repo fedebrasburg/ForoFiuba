@@ -73,19 +73,19 @@ class Materia {
         }.unique { a, b -> a.id <=> b.id
         }.collect{usu->
             usu.opiniones
-        }.flatten().collect{Opinion op->
+        }.flatten().findAll{ opinion ->
+            opinion.curso.id != curso.id
+        }.collect{Opinion op->
             Parecido parecido = new Parecido()
             parecido.cursoNombre = op.curso.nombre
             parecido.materiaNombre = op.getMateria().nombre
             parecido.materia = op.getMateria()
             parecido.cursoId = op.curso.id
             parecido
-        }.findAll{Parecido pare ->
-            pare.cursoId != curso.id
-        }.unique{a,b -> a.cursoId <=> b.cursoId}
+        }.unique{a,b -> a.id <=> b.id}
     }
     def static  obtenerMateriasParecidasNoCursadasPorUsuario(Curso curso,Usuario usuario){
-        List<Parecido> parecidas= obtenerMateriasParecidas(curso);
+        List<Parecido> parecidas= obtenerMateriasParecidas(curso)
         parecidas.findAll{Parecido parecida->
             (EstadoUsuario.estadoUsuario(usuario,parecida.materia)!=EstadoUsuario.EstadoEnum.CURSADO)
 

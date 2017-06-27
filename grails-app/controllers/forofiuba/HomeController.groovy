@@ -57,9 +57,7 @@ class HomeController {
             if(estadoDeMateria==EstadoUsuario.EstadoEnum.FALTANCORRELATIVAS){
                 materiasFaltantes = usuario.materiasFaltantes(curso)
             }
-            parecidos=Materia.obtenerMateriasParecidasNoCursadasPorUsuario(Curso.get(params.cursoId),usuario)
-        }else{
-            parecidos=Materia.obtenerMateriasParecidas(Curso.get(params.cursoId))
+            parecidos=Materia.obtenerMateriasParecidasNoCursadasPorUsuario(curso,usuario)
         }
         render("view":"opiniones", "model":[estadoDeMateria: estadoDeMateria ,textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, Opiniones: Opinion.getOpinionesByCurso(curso   ), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: parecidos,"usuarioActual":usuario])
         createOpinionCommand = new CreateOpinionCommand()
