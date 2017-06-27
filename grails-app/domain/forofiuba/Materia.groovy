@@ -57,8 +57,7 @@ class Materia {
         usuario.carreras.collect{carrera->
             carrera.materias
         }.flatten().unique().any{Materia materia->
-            Boolean equal =(materia == this)
-            equal
+            materia.id == this.id
         }
     }
 
