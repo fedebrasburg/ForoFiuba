@@ -62,5 +62,6 @@
         </g:form>
     </sec:ifAllGranted>
 </div>
+<g:render template="partials/Footer"/>
 </body>
 </html>

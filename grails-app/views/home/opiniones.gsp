@@ -226,7 +226,7 @@
 
                     <div class="form-group">
                         <label>Opinion de Tp:</label>
-                        <g:field type="text" class="form-control"  value="${textoDefault.opinionTp}"name="opinionTp"/>
+                        <g:field type="text" class="form-control"  value="${textoDefault.opinionTp}" name="opinionTp"/>
                     </div>
 
                     <div class="form-group">
@@ -284,5 +284,6 @@
     </sec:ifAllGranted>
 
 </div>
+<g:render template="partials/Footer"/>
 </body>
 </html>
