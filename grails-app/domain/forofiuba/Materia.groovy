@@ -82,7 +82,7 @@ class Materia {
             parecido.materia = op.getMateria()
             parecido.cursoId = op.curso.id
             parecido
-        }.unique{a,b -> a.id <=> b.id}
+        }.unique{a,b -> a.cursoId <=> b.cursoId}
     }
     def static  obtenerMateriasParecidasNoCursadasPorUsuario(Curso curso,Usuario usuario){
         List<Parecido> parecidas= obtenerMateriasParecidas(curso)

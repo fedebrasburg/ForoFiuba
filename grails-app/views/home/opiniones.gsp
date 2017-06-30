@@ -1,8 +1,10 @@
 <html>
 <head>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
     <style>
     table, th, td {
@@ -30,7 +32,7 @@
         ${hilo.cursoNombre}
     </div>
 
-    <div align="center" style="width:90%">
+    <div align="center" style="width:90%; padding-left: 140px">
         <h2>Opiniones</h2>
         <g:each var="opinion" in="${Opiniones}">
             <table style="width:90%" class="table">
@@ -170,26 +172,28 @@
             </table>
             <br/>
         </g:each>
-        <h2 class="listado">Los que cursaron este curso tambien cursaron...</h2>
-        <sec:ifAllGranted roles="ROLE_USER">
-            <g:each var="parecido" in="${materiasParecidas}">
-                <div style="font-size: large">
-                    Materia: ${parecido.materiaNombre}
-                    ,Curso:  <g:link action="opiniones"
-                                     params="${[cursoId: parecido.cursoId, cursoNombre: parecido.cursoNombre]}">${parecido.cursoNombre}</g:link>
-                </div>
-                <br/>
-            </g:each>
-            <g:if test="${materiasParecidas.isEmpty()}">
-                <div style="font-size: large">
-                    No hay opiniones suficientes para el sistema de recomendaciones
-                </div>
-            </g:if>
-        </sec:ifAllGranted>
-        <sec:ifNotLoggedIn>
-            <g:link action="index" controller="Login">Ingresar para ver recomendaciones</g:link>
-        </sec:ifNotLoggedIn>
-        <br/>
+        <div align="center" style="padding-left: 60px">
+            <h2 class="listado">Los que cursaron este curso tambien cursaron...</h2>
+            <sec:ifAllGranted roles="ROLE_USER">
+                <g:each var="parecido" in="${materiasParecidas}">
+                    <div style="font-size: large">
+                        Materia: ${parecido.materiaNombre}
+                        ,Curso:  <g:link action="opiniones"
+                                         params="${[cursoId: parecido.cursoId, cursoNombre: parecido.cursoNombre]}">${parecido.cursoNombre}</g:link>
+                    </div>
+                    <br/>
+                </g:each>
+                <g:if test="${materiasParecidas.isEmpty()}">
+                    <div style="font-size: large">
+                        No hay opiniones suficientes para el sistema de recomendaciones
+                    </div>
+                </g:if>
+            </sec:ifAllGranted>
+            <sec:ifNotLoggedIn>
+                <g:link action="index" controller="Login">Ingresar para ver recomendaciones</g:link>
+            </sec:ifNotLoggedIn>
+            <br/>
+        </div>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
         <g:if test="${estadoDeMateria == forofiuba.EstadoUsuario.EstadoEnum.CURSABLE}">
@@ -198,85 +202,110 @@
                     <p style="color: red;"><g:message error="${it}"/></p>
                 </g:eachError>
             </g:hasErrors>
+            <div id="formulario" style="display: none">
+                <g:form name="myForm" action="createOpinion" align="left" params="${[cursoId: hilo.cursoId]}">
+                    <ul class="form-style-1" style="column-count: 2">
+                        <fieldset>
+                            <div class="form-group">
+                                <label>Cuatrimestre cursado:</label>
+                                <g:field type="number" class="form-control"
+                                         value="${textoDefault.cuatrimestre.cuatrimestre}"
+                                         required="true" min="1" max="2" name="cuatrimestre"/>
+                            </div>
 
-            <g:form name="myForm" action="createOpinion" align="left" params="${[cursoId: hilo.cursoId]}">
-                <fieldset>
-                    <legend>Crear Opinion</legend>
+                            <div class="form-group">
+                                <label>Año cursado:</label>
+                                <g:field type="number" class="form-control" value="${textoDefault.cuatrimestre.anio}"
+                                         required="true" min="1960" max="2100" name="year"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Cuatrimestre cursado:</label>
-                        <g:field type="number" class="form-control" value="${textoDefault.cuatrimestre.cuatrimestre}"
-                                 required="true" min="1" max="2" name="cuatrimestre"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Profesores:</label>
+                                <g:field type="text" class="form-control" value="${textoDefault.profesores}"
+                                         placeholder="Profesores" name="profesores"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Año cursado:</label>
-                        <g:field type="number" class="form-control" value="${textoDefault.cuatrimestre.anio}"
-                                 required="true" min="1960" max="2100" name="year"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Modalidad:</label>
+                                <g:field type="text" class="form-control" value="${textoDefault.modalidad}"
+                                         placeholder="Modalidad" name="modalidad"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Profesores:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.profesores}"
-                                 placeholder="Profesores" name="profesores"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Horarios:</label>
+                                <g:field type="text" class="form-control" value="${textoDefault.horarios}"
+                                         placeholder="Horarios" name="horarios"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Modalidad:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.modalidad}"
-                                 placeholder="Modalidad" name="modalidad"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Opinion Teorica:</label>
+                                <g:field type="text" class="form-control" value="${textoDefault.opinionTeorica}"
+                                         name="opinionTeorica"/>
+                            </div>
+                            <br/>
+                            <br/>
 
-                    <div class="form-group">
-                        <label>Horarios:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.horarios}"
-                                 placeholder="Horarios" name="horarios"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Opinion Practica:</label>
+                                <g:field type="text" class="form-control" value="${textoDefault.opinionPractica}"
+                                         name="opinionPractica"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Opinion Teorica:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionTeorica}"
-                                 name="opinionTeorica"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Opinion del equipo docente:</label>
+                                <g:field type="text" class="form-control" value="${textoDefault.opinionProfesores}"
+                                         name="opinionProfesores"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Opinion Practica:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionPractica}"
-                                 name="opinionPractica"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Opinion de Tp:</label>
+                                <g:field type="text" class="form-control" value="${textoDefault.opinionTp}"
+                                         name="opinionTp"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Opinion del equipo docente:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionProfesores}"
-                                 name="opinionProfesores"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Opinion del Parcial:</label>
+                                <g:field type="text" class="form-control" value="${textoDefault.opinionParcial}"
+                                         name="opinionParcial"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Opinion de Tp:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionTp}" name="opinionTp"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Opinion del Final:</label>
+                                <g:field type="text" class="form-control" value="${textoDefault.opinionFinal}"
+                                         name="opinionFinal"/>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Opinion del Parcial:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionParcial}"
-                                 name="opinionParcial"/>
-                    </div>
+                            <div class="form-group">
+                                <label>Puntuacion:</label>
+                                <g:field type="number" required="true" class="form-control"
+                                         value="${textoDefault.puntuacion}"
+                                         min="1" max="10" name="puntuacion"/>
+                            </div>
+                            <button class="btn btn-danger" type="button" onclick="handleCancelar()">Cancelar</button>
+                            <g:submitButton class="btn btn-success" name="botonAgregar" value="Crear Opinion"/>
+                        </fieldset>
+                    </ul>
+                </g:form>
+            </div>
 
-                    <div class="form-group">
-                        <label>Opinion del Final:</label>
-                        <g:field type="text" class="form-control" value="${textoDefault.opinionFinal}"
-                                 name="opinionFinal"/>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Puntuacion:</label>
-                        <g:field type="number" required="true" class="form-control" value="${textoDefault.puntuacion}"
-                                 min="1" max="10" name="puntuacion"/>
-                    </div>
-                    <g:submitButton class="btn btn-default" name="botonAgregar" value="Crear Opinion"/>
-                </fieldset>
-            </g:form>
-
+            <div align="center">
+                <button onclick="handleCreateOpinion()" class="btn btn-info"
+                        id="botonCrearOpinion">Crear Opinion</button>
+            </div>
+            <script>
+                function handleCreateOpinion() {
+                    var x = document.getElementById('formulario');
+                    var boton = document.getElementById('botonCrearOpinion');
+                    x.style.display = 'block';
+                    boton.style.display = "none";
+                }
+                function handleCancelar() {
+                    var x = document.getElementById('formulario');
+                    var boton = document.getElementById('botonCrearOpinion');
+                    x.style.display = 'none';
+                    boton.style.display = "block";
+                }
+            </script>
         </g:if>
         <g:else>
             <g:if test="${estadoDeMateria == forofiuba.EstadoUsuario.EstadoEnum.NOESTAENELPLAN}">
