@@ -62,8 +62,8 @@ body {
     border-radius: 28px;
     font-family: Arial;
     color: #000000;
-    font-size: 60px;
-    padding: 15px 14px 15px 13px;
+    font-size: 50px;
+    padding: 10px 10px 10px 10px;
     text-decoration: none;
 }
 

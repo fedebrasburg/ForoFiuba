@@ -153,47 +153,43 @@
             </fieldset>
         </g:form>
     </sec:ifAllGranted>
+
+
     <div class="container" style="padding-bottom: 50px">
         <h2>Plan de Carreras</h2>
-        <ul class="nav nav-tabs">
-            <g:each var="carrera" in="${Carreras.keySet()}">
-                <li><a href="#${carrera.nombre}">${carrera.nombre}</a></li>
-            </g:each>
-        </ul>
 
-        <div class="tab-content">
-
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <g:each var="carrera" in="${Carreras.keySet()}">
-                <div id="${carrera.nombre}" class="tab-pane fade">
-                    <div style="column-count: 3">
-                        <g:each in="${carrera.materias}" var="materia">
-                            <g:link action="catedras"
-                                    params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}</g:link>
-                            <br/>
-                        </g:each>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="${carrera.id}">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#${carrera.nombre}"
+                               aria-expanded="false" aria-controls="${carrera.nombre}">
+                                ${carrera.nombre}
+                            </a>
+                        </h4>
+                    </div>
+
+                    <div id="${carrera.nombre}" class="panel-collapse collapse" role="tabpanel"
+                         aria-labelledby="${carrera.id}">
+                        <div class="panel-body">
+                            <div style="font-size: large">
+                                <g:each in="${carrera.materias.sort{it.nombre}}" var="materia">
+                                    <g:link action="catedras"
+                                            params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}</g:link>
+                                    <br/>
+                                </g:each>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </g:each>
-
         </div>
-
-        <script>
-            $(document).ready(function () {
-                $(".nav-tabs a").click(function () {
-                    $(this).tab('show');
-                });
-                $('.nav-tabs a').on('shown.bs.tab', function (event) {
-                    var x = $(event.target).text();         // active tab
-                    var y = $(event.relatedTarget).text();  // previous tab
-                    $(".act span").text(x);
-                    $(".prev span").text(y);
-                });
-            });
-        </script>
     </div>
+</div>
 
-    <div style="padding-top: 20px">
-        <g:render template="partials/Footer"/>
-    </div>
+<div style="padding-top: 20px">
+    <g:render template="partials/Footer"/>
+</div>
 </body>
 </html>
