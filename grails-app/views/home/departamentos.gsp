@@ -9,6 +9,7 @@
         color: #ffffff;
         margin-top: 0px;
     }
+
     .image {
         position: relative;
         width: 100%;
@@ -20,6 +21,7 @@
         left: 0;
         width: 100%;
     }
+
     .h1 span {
         color: white;
         font: bold 100px/45px Helvetica, Sans-Serif;
@@ -94,9 +96,10 @@
         document.body.appendChild(css);
     };
 </script>
+
 <div class="image">
 
-    <img  height="100%" width="100%" src="${assetPath(src: 'fiuba.jpg')}"/>
+    <img height="100%" width="100%" src="${assetPath(src: 'fiuba.jpg')}"/>
 
     <h1 class="h1" align="center" style="color:White; font-size: 100px">
         <div class="typewrite" data-period="6000" data-type='[ "OpinaFiuba." ]'>
@@ -188,6 +191,9 @@
             });
         </script>
     </div>
-    <g:render template="partials/Footer"/>
+
+    <div style="padding-top: 20px">
+        <g:render template="partials/Footer"/>
+    </div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <style>
 body {
     background-color: #E3E5F2;
+    position: relative;
 }
 
 .body{
@@ -36,19 +37,18 @@ body {
     font-size: medium;
 }
 
-form {
-    border: double;
-    margin-right: 20px;
-
-}
 
 .footer {
+    position: absolute;
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 60px;
     background-color: #f5f5f5;
+    clear: both;
 }
+
+
 
 .item-btn {
     background: #0c95f0;
