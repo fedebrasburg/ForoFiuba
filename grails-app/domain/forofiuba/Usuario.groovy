@@ -23,8 +23,9 @@ class Usuario implements Serializable {
     String genero
     String telefono
     Date fechaDeNacimiento
+    int  cantidadCalificaciones
 
-    static hasMany = [opiniones: Opinion, carreras: Carrera]
+    static hasMany = [opiniones: Opinion, carreras: Carrera,calificaciones: CalificacionOpinion]
     static constraints = {
         username blank: false, unique: true,email: true,nullable: false
         nombre nullable: false, blank: false
@@ -34,9 +35,12 @@ class Usuario implements Serializable {
         carreras nullable: true
         telefono nullable: true
         password blank: false, password: true,nullable: false
+        cantidadCalificaciones nullable:false
     }
 
-
+    public int calcular(){
+        return  this.calificaciones.size()
+    }
 
     Set<Rol> getAuthorities() {
         UsuarioRol.findAllByUser(this)*.role
@@ -62,6 +66,7 @@ class Usuario implements Serializable {
     static mapping = {
 //        table '`Usuario`'
   //      password column: '`password`'
+        cantidadCalificaciones defaultValue:0
     }
 
     boolean puedeOpinar(Curso curso){

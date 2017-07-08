@@ -63,6 +63,17 @@ class HomeController {
         createOpinionCommand = new CreateOpinionCommand()
     }
 
+    def meSirvioLaOpinion(){
+        Usuario usuario= springSecurityService.currentUser
+        Opinion opinion=Opinion.get(params.opinion)
+
+        if(!CalificacionOpinion.calificoOpinion(usuario,opinion)){
+            CalificacionOpinion.createCalificacionOpinion(usuario,opinion,Boolean.valueOf(params.meSirvioLaOpinion))
+        }
+        redirect(action: "opiniones", params: [cursoId:opinion.curso.id])
+
+    }
+
     def busqueda(){
         [Parecidos:Materia.obtenerMateriasSegunNombre(Curso.getAll(),params.nombre)]
     }

@@ -21,6 +21,6 @@
     </g:if>
     <g:link action="index"> Volver a Departamentos</g:link>
 </div>
-
+<g:render template="partials/Footer"/>
 </body>
 </html>

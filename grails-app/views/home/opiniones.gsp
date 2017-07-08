@@ -167,6 +167,26 @@
                             </div>
                             <br/>
                         </g:if>
+                        <sec:ifLoggedIn>
+                        <div align="right">
+                        <g:link action="meSirvioLaOpinion" params="${[opinion: opinion.id,meSirvioLaOpinion:true]}">
+                        <button class="btn btn-success" ><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                        </g:link> ${opinion.getCalificacionesPositivas()}
+                        <g:link action="meSirvioLaOpinion" params="${[opinion: opinion.id,meSirvioLaOpinion:false]}">
+                        <button class="btn btn-danger" ><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                        </g:link> ${opinion.getCalificacionesNegativas()}
+                        </div>
+                        </sec:ifLoggedIn>
+                        <sec:ifNotLoggedIn>
+                            <div align="right">
+                                <button class="btn btn-success" disabled="true" ><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                 ${opinion.getCalificacionesPositivas()}
+                                <button class="btn btn-danger" disabled="true" ><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                 ${opinion.getCalificacionesNegativas()}
+                            </div>
+                        </sec:ifNotLoggedIn>
+
+
                     </td>
                 </tr>
             </table>
