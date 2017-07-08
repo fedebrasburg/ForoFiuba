@@ -117,9 +117,9 @@
 </div>
 
 <div class="body">
-    <div style="padding-top: 20px" align="center">
+    <div  class="departamentosList" style="padding-top: 20px" align="center">
         <g:each var="departamento" in="${Departamentos}">
-            <g:link action="materias" class="item-btn "
+            <g:link action="materias" class="btn "
                     params="${[departamentoId: departamento.id, departamentoNombre: departamento.nombre]}">${departamento.nombre}</g:link>
             <sec:ifAllGranted roles="ROLE_ADMIN">
                 <g:link action="deleteDepartamento" class="listado"
