@@ -1,8 +1,8 @@
 package forofiuba
 
 class Parecido {
-    String cursoNombre
-    String cursoId
-    String materiaNombre
+    Curso curso
     Materia materia
+    String categoria
+    Integer puntaje = 0
 }

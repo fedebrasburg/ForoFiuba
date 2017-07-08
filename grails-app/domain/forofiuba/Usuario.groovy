@@ -81,9 +81,7 @@ class Usuario implements Serializable {
 
     private opinoSobre(Materia materia){
         opiniones.any{opinion->
-            def materiaOpinion = opinion.getMateria()
-            boolean bool=( materiaOpinion == materia)
-            return  bool
+            opinion.materia.id == materia.id
         }
     }
 
