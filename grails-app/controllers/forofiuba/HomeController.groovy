@@ -13,7 +13,9 @@ class HomeController {
 
     def departamentos() {
         List<Carrera> carreras = Carrera.getAll()
-        render("view": "departamentos", "model": [Carreras: Carrera.diccionarioMateriasPorCarrera(carreras), Departamentos: Departamento.getAll()])
+        List<Usuario> usuarios= Usuario.getAll().sort{Usuario usu->-usu.getKarma()}
+        if(usuarios.size()>5){usuarios=usuarios.getAt(0..4)}
+        render("view": "departamentos", "model": [Carreras: Carrera.diccionarioMateriasPorCarrera(carreras), Departamentos: Departamento.getAll(),usuariosKarma:usuarios])
     }
 
     def materias() {

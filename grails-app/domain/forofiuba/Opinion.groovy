@@ -15,8 +15,6 @@ class Opinion {
     Integer puntuacion
     Date fechaPublicacion
     Cuatrimestre cuatrimestre
-    int calificacionesPositivas
-    int calificacionesNegativas
 
     static hasMany = [calificaciones: CalificacionOpinion]
 
@@ -39,8 +37,7 @@ class Opinion {
     }
 
     static  mapping = {
-        calificacionesNegativas defaultValue:0
-        calificacionesPositivas defaultValue:0
+
     }
 
     public int getCalificacionesPositivas(){
@@ -53,6 +50,7 @@ class Opinion {
             !c.meSirvioLaOpinion}.size()
         return cal
     }
+
 
     static createOpinion(String cursoId, Usuario user, String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, Integer puntuacion = null, Date fechaPublicacion, String anio, String cuatrimestre) {
         def o = new Opinion()

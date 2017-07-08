@@ -23,5 +23,6 @@ class CalificacionOpinion {
         calificacionOpinion.opinion=opinion
         calificacionOpinion.meSirvioLaOpinion=meSirvioLaOpinion
         calificacionOpinion.save(flush:true)
+
     }
 }

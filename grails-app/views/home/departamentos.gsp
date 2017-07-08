@@ -117,7 +117,7 @@
 </div>
 
 <div class="body">
-    <div  class="departamentosList" style="padding-top: 20px" align="center">
+    <div class="departamentosList" style="padding-top: 20px" align="center">
         <g:each var="departamento" in="${Departamentos}">
             <g:link action="materias" class="btn "
                     params="${[departamentoId: departamento.id, departamentoNombre: departamento.nombre]}">${departamento.nombre}</g:link>
@@ -153,7 +153,19 @@
             </fieldset>
         </g:form>
     </sec:ifAllGranted>
+    <div style="..." align="center">
+        <sec:ifLoggedIn>
+            <h2>Usuarios TOP</h2>
+            <g:each var="usuario" in="${usuariosKarma}">
 
+                <g:link action="perfilUsuario"
+                        params="${[usuarioId: usuario.username]}">
+                    ${usuario.nombre} <br/>
+
+                </g:link>
+            </g:each>
+        </sec:ifLoggedIn>
+    </div>
 
     <div class="container" style="padding-bottom: 50px">
         <h2>Plan de Carreras</h2>
@@ -174,7 +186,7 @@
                          aria-labelledby="${carrera.id}">
                         <div class="panel-body">
                             <div style="font-size: large">
-                                <g:each in="${carrera.materias.sort{it.nombre}}" var="materia">
+                                <g:each in="${carrera.materias.sort { it.nombre }}" var="materia">
                                     <g:link action="catedras"
                                             params="${[materiaId: materia.id, materiaNombre: materia.nombre]}">${materia.nombre}</g:link>
                                     <br/>

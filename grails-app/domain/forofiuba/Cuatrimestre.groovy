@@ -18,4 +18,16 @@ class Cuatrimestre implements Comparable  {
             return ((int)cuatrimestre).compareTo((int)otroCuatrimestre.cuatrimestre)
         }
     }
+    static Cuatrimestre getCuatrimestreActual(){
+        Cuatrimestre cuatrimestre=new Cuatrimestre();
+        cuatrimestre.anio=Calendar.getInstance().get(Calendar.YEAR);
+        cuatrimestre.cuatrimestre= (Calendar.getInstance().get(Calendar.MONTH)<8) ? 1:2
+        return cuatrimestre
+    }
+    int distancia(Cuatrimestre otroCuatrimestre){
+        int distancia=0
+        distancia=Math.abs(this.anio-otroCuatrimestre.anio+1)
+        distancia+=Math.abs(this.cuatrimestre-otroCuatrimestre.cuatrimestre)
+        return distancia
+    }
 }
