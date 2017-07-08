@@ -44,9 +44,8 @@ class Materia {
             curso.nombre.toLowerCase().contains(nombre.toLowerCase())
         }.collect { curso ->
             def parecido = new Parecido()
-            parecido.cursoNombre = curso.nombre
-            parecido.materiaNombre = curso.catedra.materia.nombre
-            parecido.cursoId = curso.id
+            parecido.curso = curso
+            parecido.materia = curso.catedra.materia
 
             parecido
         }
