@@ -177,9 +177,9 @@
             <sec:ifAllGranted roles="ROLE_USER">
                 <g:each var="parecido" in="${materiasParecidas}">
                     <div style="font-size: large">
-                        Materia: ${parecido.materiaNombre}
+                        ${parecido.categoria} (puntos: ${parecido.puntaje}):Materia: ${parecido.materia.nombre}
                         ,Curso:  <g:link action="opiniones"
-                                         params="${[cursoId: parecido.cursoId, cursoNombre: parecido.cursoNombre]}">${parecido.cursoNombre}</g:link>
+                                         params="${[cursoId: parecido.curso.id, cursoNombre: parecido.curso.nombre]}">${parecido.curso.nombre}</g:link>
                     </div>
                     <br/>
                 </g:each>

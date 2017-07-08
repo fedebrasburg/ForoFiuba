@@ -7,25 +7,26 @@ class HomeController {
     def springSecurityService
     def armadorDeHilo
 
-    def index(){
+    def index() {
         departamentos()
     }
 
-    def departamentos(){
-        List<Carrera> carreras=Carrera.getAll()
-        render("view":"departamentos", "model":[Carreras: Carrera.diccionarioMateriasPorCarrera(carreras), Departamentos: Departamento.getAll()])
+    def departamentos() {
+        List<Carrera> carreras = Carrera.getAll()
+        render("view": "departamentos", "model": [Carreras: Carrera.diccionarioMateriasPorCarrera(carreras), Departamentos: Departamento.getAll()])
     }
 
     def materias() {
         Usuario usuario = springSecurityService.currentUser
-        render("view":"materias", "model":[Materias: Materia.getMaterias(Departamento.get(params.departamentoId)), hilo: armadorDeHilo.calcularHiloMaterias(params.departamentoId), carreras:Carrera.findAll(),usuarioActual: usuario])
+        render("view": "materias", "model": [Materias: Materia.getMaterias(Departamento.get(params.departamentoId)), hilo: armadorDeHilo.calcularHiloMaterias(params.departamentoId), carreras: Carrera.findAll(), usuarioActual: usuario])
     }
 
     def login() {
         redirect(controller: 'login', action: 'departamentos')
     }
-    def perfilUsuario(){
-        redirect(controller: 'perfil',action: 'index',params: ["usuarioId":"${params.usuarioId}"])
+
+    def perfilUsuario() {
+        redirect(controller: 'perfil', action: 'index', params: ["usuarioId": "${params.usuarioId}"])
     }
 
     def registrar() {
@@ -34,46 +35,46 @@ class HomeController {
 
 
     def catedras() {
-        def carreras=Materia.get(params.materiaId).carreras
-        render("view":"catedras", "model":[Catedras: Catedra.getCatedras(Materia.get(params.materiaId)), hilo: armadorDeHilo.calcularHiloCatedras(params.materiaId), correlativas:Materia.get(params.materiaId).correlativas, carreras: Materia.get(params.materiaId).carreras])
+        def carreras = Materia.get(params.materiaId).carreras
+        render("view": "catedras", "model": [Catedras: Catedra.getCatedras(Materia.get(params.materiaId)), hilo: armadorDeHilo.calcularHiloCatedras(params.materiaId), correlativas: Materia.get(params.materiaId).correlativas, carreras: Materia.get(params.materiaId).carreras])
     }
 
 
     def cursos() {
-        render("view":"cursos", "model":[Cursos: Curso.getCursos(Catedra.get(params.catedraId)), hilo: armadorDeHilo.calcularHiloCursos(params.catedraId)])
+        render("view": "cursos", "model": [Cursos: Curso.getCursos(Catedra.get(params.catedraId)), hilo: armadorDeHilo.calcularHiloCursos(params.catedraId)])
     }
-
 
 
     CreateOpinionCommand createOpinionCommand = new CreateOpinionCommand()
-    def opiniones(){
+
+    def opiniones() {
         Usuario usuario = springSecurityService.currentUser
         Curso curso = Curso.get(params.cursoId)
         def materiasFaltantes = []
-        List<Parecido> parecidos;
+        List<Parecido> materiasRecomendades;
         EstadoUsuario.EstadoEnum estadoDeMateria;
-        if (usuario){
+        if (usuario) {
             estadoDeMateria = curso.catedra.materia.estadoUsuario(usuario)
-            if(estadoDeMateria==EstadoUsuario.EstadoEnum.FALTANCORRELATIVAS){
+            if (estadoDeMateria == EstadoUsuario.EstadoEnum.FALTANCORRELATIVAS) {
                 materiasFaltantes = usuario.materiasFaltantes(curso)
             }
-            parecidos=Materia.obtenerMateriasParecidasNoCursadasPorUsuario(curso,usuario)
+            materiasRecomendades = Materia.obtenerRecomendacionesSegunUsuario(usuario, curso)
         }
-        render("view":"opiniones", "model":[estadoDeMateria: estadoDeMateria ,textoDefault:createOpinionCommand,materiasFaltantes:materiasFaltantes, Opiniones: Opinion.getOpinionesByCurso(curso   ), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: parecidos,"usuarioActual":usuario])
+        render("view": "opiniones", "model": [estadoDeMateria: estadoDeMateria, textoDefault: createOpinionCommand, materiasFaltantes: materiasFaltantes, Opiniones: Opinion.getOpinionesByCurso(curso), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: materiasRecomendades, "usuarioActual": usuario])
         createOpinionCommand = new CreateOpinionCommand()
     }
 
-    def busqueda(){
-        [Parecidos:Materia.obtenerMateriasSegunNombre(Curso.getAll(),params.nombre)]
+    def busqueda() {
+        [Parecidos: Materia.obtenerMateriasSegunNombre(Curso.getAll(), params.nombre)]
     }
 
     @Secured(['ROLE_USER'])
     def createOpinion() {
         Usuario user = springSecurityService.currentUser
-        CreateOpinionCommand com = new CreateOpinionCommand(params.horarios,params.opinionTp,params.opinionParcial,params.opinionFinal,params.opinionTeorica,params.opinionProfesores,params.opinionPractica,params.modalidad,params.profesores,params.puntuacion.toInteger(),params.cuatrimestre,params.year)
-        if(com.validate()) {
-            Opinion.createOpinion(params.cursoId, user, params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores,  params.puntuacion.toInteger(), new Date(), params.year, params.cuatrimestre)
-        }else{
+        CreateOpinionCommand com = new CreateOpinionCommand(params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion.toInteger(), params.cuatrimestre, params.year)
+        if (com.validate()) {
+            Opinion.createOpinion(params.cursoId, user, params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion.toInteger(), new Date(), params.year, params.cuatrimestre)
+        } else {
             println("En create" + com.puntuacion.toString())
             createOpinionCommand = com
         }
@@ -82,7 +83,7 @@ class HomeController {
 
     @Secured(['ROLE_ADMIN'])
     def createMateria() {
-        Materia.createMateria(params.materiaNombre, params.materiaDescripcion, params.departamentoId,params.list("carrerasNombre"))
+        Materia.createMateria(params.materiaNombre, params.materiaDescripcion, params.departamentoId, params.list("carrerasNombre"))
         materias()
     }
 
@@ -112,6 +113,7 @@ class HomeController {
         }
         materias()
     }
+
     @Secured(['ROLE_ADMIN'])
     def deleteCatedra() {
         def rta = Catedra.deleteCatedra(params.catedraId)
@@ -120,6 +122,7 @@ class HomeController {
         }
         catedras()
     }
+
     @Secured(['ROLE_ADMIN'])
     def deleteCurso() {
         def rta = Curso.deleteCurso(params.cursoId)
@@ -137,8 +140,6 @@ class HomeController {
         }
         departamentos()
     }
-
-
 
 
 }
