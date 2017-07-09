@@ -1,7 +1,6 @@
 package forofiuba
 
 
-
 class Materia {
 
     String nombre, descripcion;
@@ -97,13 +96,23 @@ class Materia {
             if (cantidadDeMateriasCursadasIguales(usuario, op.usuario) > 1) {
                 parecido.puntaje *= Constantes.CURSO_OTRA
             }
+            //Si la opinion tiene muchos dislikes vale menos y si es mas valorado suma mas
+            Integer diferencia = op.calificacionesPositivas - op.calificacionesNegativas
+            def factores = diferencia / Constantes.FACTOR_DIFERENCIA
+            if (factores > 1) {
+                if (diferencia < 0) {
+                    parecido.puntaje *= factores*Constantes.FACTOR_NEGATIVO
+                }else{
+                    parecido.puntaje *= factores*Constantes.FACTOR_POSITIVO
+                }
+            }
             parecido
-        }.each{Parecido parecido ->
-            if(!(parecido.curso.id in cursosId)){
+        }.each { Parecido parecido ->
+            if (!(parecido.curso.id in cursosId)) {
                 cursosId << parecido.curso.id
                 listaFinal << parecido
-            }else{
-                listaFinal.find{Parecido parecidoEnLista ->
+            } else {
+                listaFinal.find { Parecido parecidoEnLista ->
                     parecidoEnLista.curso.id = parecido.curso.id
                 }.punraje += parecido.puntaje
             }
