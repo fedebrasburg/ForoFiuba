@@ -39,6 +39,7 @@ class RegistroController {
             def carrerasList= Carrera.findAllByNombreInList(carrerasListNombres)
             usuario.carreras=carrerasList
         }
+        usuario.karma=new Karma()
         usuario.save(flush:true)
         if (usuario.hasErrors()){
             List<String> errorList =new ArrayList<String>();

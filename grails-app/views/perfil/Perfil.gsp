@@ -82,6 +82,13 @@
                         <g:link action="catedras"  controller="home" params="${[materiaId: opinion.curso.catedra.materia.id, materiaNombre: opinion.curso.catedra.materia.nombre]}">${opinion.curso.catedra.materia.nombre}
                         </g:link>
                         <br/>
+                        <strong> Catedra </strong>
+                        <g:link action="cursos" controller="home" params="${[ catedraId: opinion.curso.catedra.id]}">
+                            ${opinion.curso.catedra.nombre}</g:link>
+                        <strong> Curso </strong>
+                        <g:link action="opiniones"  controller="home" params="${[cursoId: opinion.curso.id, cursoNombre: opinion.curso.nombre]}">${opinion.curso.nombre}
+                        </g:link>
+                        <br/>
                     </td>
                     <td>
 

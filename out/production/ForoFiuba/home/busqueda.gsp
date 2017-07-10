@@ -11,9 +11,9 @@
 
     <h2>Cursos encontrados:</h2>
     <g:each var="parecido" in="${Parecidos}">
-          ${parecido.materiaNombre} >
+          ${parecido.materia.nombre} >
         <g:link action="opiniones"
-                params="${[cursoId: parecido.cursoId, cursoNombre: parecido.cursoNombre]}">${parecido.cursoNombre}</g:link>
+                params="${[cursoId: parecido.curso.id, cursoNombre: parecido.curso.nombre]}">${parecido.curso.nombre}</g:link>
         <br/>
     </g:each>
     <g:if test="${Parecidos.isEmpty()}">

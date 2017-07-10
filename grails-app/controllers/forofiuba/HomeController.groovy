@@ -13,8 +13,8 @@ class HomeController {
 
     def departamentos() {
         List<Carrera> carreras = Carrera.getAll()
-        List<Usuario> usuarios= Usuario.getAll().sort{Usuario usu->-usu.getKarma()}
-        if(usuarios.size()>5){usuarios=usuarios.getAt(0..4)}
+        List<Usuario> usuarios= Usuario.getTopKarmaUsuarios();
+        UsuarioRol.createKarmaUsuarios(usuarios)
         render("view": "departamentos", "model": [Carreras: Carrera.diccionarioMateriasPorCarrera(carreras), Departamentos: Departamento.getAll(),usuariosKarma:usuarios])
     }
 
@@ -73,7 +73,7 @@ class HomeController {
         if(!CalificacionOpinion.calificoOpinion(usuario,opinion)){
             CalificacionOpinion.createCalificacionOpinion(usuario,opinion,Boolean.valueOf(params.meSirvioLaOpinion))
         }
-        redirect(action: "opiniones", params: [cursoId:opinion.curso.id])
+        redirect(action: "opiniones",params: [cursoId:opinion.curso.id])
 
     }
 

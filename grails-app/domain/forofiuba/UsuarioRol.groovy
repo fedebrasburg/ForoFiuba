@@ -13,6 +13,24 @@ class UsuarioRol implements Serializable {
     Usuario user
     Rol role
 
+    public static void createKarmaUsuarios(List<Usuario> usuariosKarma){
+        Rol rolKarma=Rol.findByAuthority("ROLE_KARMA")
+        List<UsuarioRol> listUsuarioKarma= UsuarioRol.findAllByRole(rolKarma)
+        if(!listUsuarioKarma.containsAll(usuariosKarma)){
+            deleteAllKarmaRol()
+            usuariosKarma.each {Usuario usuario-> createKarmaRol(usuario)}
+        }
+        listUsuarioKarma= UsuarioRol.findAllByRole(rolKarma)
+    }
+    public static void createKarmaRol(Usuario usuario){
+        Rol rolKarma=Rol.findByAuthority("ROLE_KARMA")
+        new UsuarioRol(user:  usuario,role:  rolKarma).save(flush:true)
+    }
+    public static void deleteAllKarmaRol(){
+        Rol rolKarma=Rol.findByAuthority("ROLE_KARMA")
+        List<UsuarioRol> listUsuarioKarma= UsuarioRol.findAllByRole(rolKarma)
+        UsuarioRol.deleteAll(listUsuarioKarma)
+    }
     @Override
     boolean equals(other) {
         if (other instanceof UsuarioRol) {

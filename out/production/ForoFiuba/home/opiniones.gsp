@@ -167,12 +167,26 @@
                             </div>
                             <br/>
                         </g:if>
-                        <g:link action="meSirvioLaOpinion" params="${[opinion: opinion,usuarioActual: usuarioActual,meSirvioLaOpinion:true]}">
-                        <button class="btn btn-default" >Me Sirvio<span class="glyphicon glyphicon-thumbs-up"></span></button>
-                        </g:link> opinion.getCalificacionesPositivas()
-                        <g:link action="meSirvioLaOpinion" params="${[opinion: opinion,usuarioActual: usuarioActual,meSirvioLaOpinion:false]}">
-                        <button class="btn btn-default" >No me Sirvio<span class="glyphicon glyphicon-thumbs-down"></span></button>
-                        </g:link> opinion.getCalificacionesNegativas()
+                        <sec:ifLoggedIn>
+                        <div align="right">
+                        <g:link action="meSirvioLaOpinion" params="${[opinion: opinion.id,meSirvioLaOpinion:true]}">
+                        <button class="btn btn-success" ><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                        </g:link> ${opinion.getCalificacionesPositivas()}
+                        <g:link action="meSirvioLaOpinion" params="${[opinion: opinion.id,meSirvioLaOpinion:false]}">
+                        <button class="btn btn-danger" ><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                        </g:link> ${opinion.getCalificacionesNegativas()}
+                        </div>
+                        </sec:ifLoggedIn>
+                        <sec:ifNotLoggedIn>
+                            <div align="right">
+                                <button class="btn btn-success" disabled="true" ><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                                 ${opinion.getCalificacionesPositivas()}
+                                <button class="btn btn-danger" disabled="true" ><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                 ${opinion.getCalificacionesNegativas()}
+                            </div>
+                        </sec:ifNotLoggedIn>
+
+
                     </td>
                 </tr>
             </table>
@@ -183,9 +197,9 @@
             <sec:ifAllGranted roles="ROLE_USER">
                 <g:each var="parecido" in="${materiasParecidas}">
                     <div style="font-size: large">
-                        Materia: ${parecido.materiaNombre}
+                        ${parecido.categoria} (puntos: ${parecido.puntaje}):Materia: ${parecido.materia.nombre}
                         ,Curso:  <g:link action="opiniones"
-                                         params="${[cursoId: parecido.cursoId, cursoNombre: parecido.cursoNombre]}">${parecido.cursoNombre}</g:link>
+                                         params="${[cursoId: parecido.curso.id, cursoNombre: parecido.curso.nombre]}">${parecido.curso.nombre}</g:link>
                     </div>
                     <br/>
                 </g:each>
