@@ -12,4 +12,7 @@ class Constantes {
     final static String PROBABLE = "Probablemente la curses aca"
     final static String NO_PROBABLE = "Probablemente no la curses aca"
     final static Integer MALA_PUNTUACION = 2
+    final static Float FACTOR_NEGATIVO = 0.9
+    final static Float FACTOR_POSITIVO = 1.1
+    final static Integer FACTOR_DIFERENCIA = 5
 }
