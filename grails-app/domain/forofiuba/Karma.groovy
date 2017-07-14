@@ -1,63 +1,65 @@
 package forofiuba
 
 class Karma {
-    final static double MIN_CONFIABLES=2.2;
-    final static double MAX_CONFIABLES=3.8;
+    final static double MIN_CONFIABLES=1.9;
+    final static double MAX_CONFIABLES=4.1;
     final static int VALOR_CANTIDAD_DE_OPINIONES=3,VALOR_CALIFICACION_DE_SUS_OPINIONES=2,VALOR_CANTIDAD_CALIFICACIONES=1,VALOR_CONFIABILIDAD=10,VALOR_REGULARIDAD=2;
     Usuario usuario
     static belongsTo = Usuario
     static constraints = {
     }
-    
-    public int getCantidadCalificaciones(){
+
+    private int getCantidadCalificaciones(){
+        if(!usuario.calificaciones)return 0
         return  usuario.calificaciones.size()
     }
-    public int getKarmaCantidadCalificaciones(){
+    private int getKarmaCantidadCalificaciones(){
         return VALOR_CANTIDAD_CALIFICACIONES*getCantidadCalificaciones()
     }
-    public int getCantidadOpiniones(){
+    private int getCantidadOpiniones(){
+        if(!usuario.opiniones)return 0
         return  usuario.opiniones.size()
     }
-    public int getKarmaCantidadOpiniones(){
+    private int getKarmaCantidadOpiniones(){
         return VALOR_CANTIDAD_DE_OPINIONES*getCantidadOpiniones()
     }
-    public  double getPromedioOpiniones(){
+    private  double getPromedioOpiniones(){
         if(!usuario.opiniones){return 0}
         return usuario.opiniones.sum{Opinion opinion->opinion.puntuacion}/getCantidadOpiniones()
     }
-    public boolean esConfiable(){
+    private boolean esConfiable(){
         return ((MIN_CONFIABLES<getPromedioOpiniones())&&(getPromedioOpiniones()<MAX_CONFIABLES))
     }
-    public int getKarmaConfiable(){
+    private int getKarmaConfiable(){
         return (esConfiable()?1:-1)*VALOR_CONFIABILIDAD
     }
-    public int getCantidadCalificacionesOpinionesPositivas(){
+    private int getCantidadCalificacionesOpinionesPositivas(){
         if(!usuario.opiniones){return 0}
         return usuario.opiniones.sum{it.getCalificacionesPositivas()}
     }
-    public int getCantidadCalificacionesOpinionesNegativas(){
+    private int getCantidadCalificacionesOpinionesNegativas(){
         if(!usuario.opiniones){return 0}
         return usuario.opiniones.sum{ it.getCalificacionesNegativas()}
     }
-    public int getKarmaCalificacionOpiniones(){
+    private int getKarmaCalificacionOpiniones(){
         return VALOR_CALIFICACION_DE_SUS_OPINIONES*(getCantidadCalificacionesOpinionesPositivas()-getCantidadCalificacionesOpinionesNegativas())
 
     }
-    public int getRegularidad(){
+    private int getRegularidad(){
         if(!usuario.opiniones){return 0}
         Cuatrimestre cuatrimestre=usuario.opiniones.min {Opinion opinion->opinion.cuatrimestre}.cuatrimestre
         Cuatrimestre cuatrimestreActual=Cuatrimestre.getCuatrimestreActual()
         int cantidadDeCuatrimestres=cuatrimestre.distancia(cuatrimestreActual);
         return getCantidadOpiniones()/cantidadDeCuatrimestres;
     }
-    public getKarmaRegularidad(){
+    private getKarmaRegularidad(){
         return getRegularidad()*VALOR_REGULARIDAD
     }
     public int calcularKarma(){
-        int karma=  (getKarmaCalificacionOpiniones()+getKarmaCantidadCalificaciones()+getKarmaCantidadOpiniones()+getKarmaConfiable()+getKarmaRegularidad());
-        if(karma<0){
-            return 0
+        int karmaCalculado=  (getKarmaCalificacionOpiniones()+getKarmaCantidadCalificaciones()+getKarmaCantidadOpiniones()+getKarmaConfiable()+getKarmaRegularidad());
+        if(karmaCalculado<=-1) {
+            karmaCalculado=0
         }
-        return karma
+        return karmaCalculado
     }
 }

@@ -21,6 +21,7 @@ class UsuarioRol implements Serializable {
             usuariosKarma.each {Usuario usuario-> createKarmaRol(usuario)}
         }
         listUsuarioKarma= UsuarioRol.findAllByRole(rolKarma)
+        listUsuarioKarma
     }
     public static void createKarmaRol(Usuario usuario){
         Rol rolKarma=Rol.findByAuthority("ROLE_KARMA")

@@ -14,7 +14,9 @@ class Rol implements Serializable {
     static constraints = {
         authority blank: false, unique: true
     }
-
+    static Rol rolAlumno(){
+        return Rol.findByAuthority("ROLE_USER")
+    }
     static mapping = {
         cache true
     }

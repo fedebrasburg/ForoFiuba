@@ -25,7 +25,7 @@ class Usuario implements Serializable {
     String telefono
     Date fechaDeNacimiento
     Karma karma
-
+    int karmaCalculado
 
     static hasMany = [opiniones: Opinion, carreras: Carrera,calificaciones: CalificacionOpinion]
 
@@ -39,13 +39,22 @@ class Usuario implements Serializable {
         carreras nullable: true
         telefono nullable: true
         password blank: false, password: true,nullable: false
-//        karma nullable:false
+    }
+    public int calcularKarma(){
+        karmaCalculado= karma.calcularKarma()
+        return karmaCalculado
     }
     public int Karma(){
-        return karma.calcularKarma()
+        return karmaCalculado
     }
-    public static List<Usuario> getTopKarmaUsuarios(){
+    private static  List<Usuario>  getKarmaUsuarios(){
         List<Usuario> usuarios= Usuario.getAll().sort{Usuario usu->-usu.Karma()}
+        usuarios = usuarios.findAll {Usuario usu -> (Rol.rolAlumno() in usu.getAuthorities())}
+        return usuarios
+    }
+
+    public static List<Usuario> getTopKarmaUsuarios(){
+        List<Usuario> usuarios= getKarmaUsuarios()
         if(usuarios.size()>5){usuarios=usuarios.getAt(0..4)}
         return usuarios
     }

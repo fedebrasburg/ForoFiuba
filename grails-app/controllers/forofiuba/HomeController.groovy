@@ -14,7 +14,6 @@ class HomeController {
     def departamentos() {
         List<Carrera> carreras = Carrera.getAll()
         List<Usuario> usuarios= Usuario.getTopKarmaUsuarios();
-        UsuarioRol.createKarmaUsuarios(usuarios)
         render("view": "departamentos", "model": [Carreras: Carrera.diccionarioMateriasPorCarrera(carreras), Departamentos: Departamento.getAll(),usuariosKarma:usuarios])
     }
 

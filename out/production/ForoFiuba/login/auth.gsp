@@ -20,7 +20,7 @@
         </g:if>
 
         <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" class="cssform"
-              autocomplete="off">
+              autocomplete="on">
             <p>
                 <label for="username">Email</label>
                 <input type="text" class="form-control" name="${usernameParameter ?: 'username'}" id="username"/>

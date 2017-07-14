@@ -160,7 +160,7 @@
 
                 <g:link action="perfilUsuario"
                         params="${[usuarioId: usuario.username]}">
-                    ${usuario.nombre} <br/>
+                    ${usuario.nombre} , ${usuario.Karma()}  <br/>
 
                 </g:link>
             </g:each>

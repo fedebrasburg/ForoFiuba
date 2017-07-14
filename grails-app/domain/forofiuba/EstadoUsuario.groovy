@@ -7,7 +7,6 @@ class EstadoUsuario {
 
     public  static EstadoEnum  estadoUsuario(Usuario usuario,Materia materia){
         if (!materia.materiaPerteneceACarrerasUsuario(usuario)){
-
             return EstadoEnum.NOESTAENELPLAN;
         }
         if(usuario.opinoSobre(materia)){

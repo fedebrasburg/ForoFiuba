@@ -41,6 +41,7 @@ class RegistroController {
         }
         usuario.karma=new Karma()
         usuario.save(flush:true)
+
         if (usuario.hasErrors()){
             List<String> errorList =new ArrayList<String>();
             usuario.errors.allErrors.each {
@@ -57,7 +58,8 @@ class RegistroController {
         def usuarioRol =new UsuarioRol( user: usuario ,role:role)
         usuarioRol.save(flush:true,failOnError:true)
         springSecurityService.reauthenticate params.username,params.password
-
+        usuario.calcularKarma()
+        usuario.save()
         backhome()
     }
 

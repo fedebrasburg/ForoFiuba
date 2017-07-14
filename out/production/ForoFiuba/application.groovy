@@ -7,7 +7,7 @@ grails.plugin.springsecurity.userLookup.userDomainClassName = 'forofiuba.Usuario
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'forofiuba.UsuarioRol'
 grails.plugin.springsecurity.authority.className = 'forofiuba.Rol'
 grails.plugin.springsecurity.roleHierarchy = '''
-
+  ROLE_KARMA > ROLE_ADMIN
   ROLE_ADMIN > ROLE_USER
 '''
 

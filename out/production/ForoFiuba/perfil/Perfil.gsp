@@ -15,17 +15,22 @@
                 <label>Nombre:</label>
                 <g:field type="text" required="true" name="nombre" value="${usuario.nombre}"/>
                 <br/>
-                <label>Genero:</label>
-                <g:field type="text" name="genero" value="${usuario.genero}"/>
-                <br/>
+                <g:if test="${usuario.genero!=null }">
+                    <label>Genero:</label>
+                    <g:field type="text" name="genero" value="${usuario.genero}"/>
+                    <br/>
+                </g:if>
                 <label>Email:      <td>${usuario.username}</td></label> <br/>
                 <br/>
                 <label>FechaDeNacimiento:</label>
                 <g:datePicker name="fechaDeNacimiento" value="${new Date()}" precision="day"></g:datePicker>
                 <br/>
-                <label>Telefono:</label>
-                <g:field type="number" name="telefono" value="${usuario.telefono}"/>
-                <br/>
+                <g:if test="${usuario.telefono != null}">
+
+                    <label>Telefono:</label>
+                    <g:field type="number" name="telefono" value="${usuario.telefono}"/>
+                    <br/>
+                </g:if>
                 <label>Carreras:</label><br/>
                 <g:each  in="${carreras}" var="carrera">
                     <g:checkBox name="carrerasNombre" value="${carrera.nombre.toString()}" checked="${usuario.carreras.any{carreraUsuario -> return (carreraUsuario == carrera)}}"/>     ${carrera.nombre.toString()}       <br/>
@@ -40,6 +45,7 @@
     <g:else>
         <g:form name="myForm" action="mostrarEditar" params="${[usuarioid: usuario.username]}">
             <label>Nombre:      <td>${usuario.nombre}</td></label> <br/>
+            <label>Karma:      <td>${usuario.karmaCalculado}</td></label> <br/>
             <label>Genero:      <td>${usuario.genero}</td></label> <br/>
             <label>Email:      <td>${usuario.username}</td></label> <br/>
             <label>Fecha de nacimiento:      <g:formatDate date="${usuario.fechaDeNacimiento}"  format="dd-MM-yyyy" /> </label> <br/>
@@ -80,6 +86,13 @@
                         <strong> Materia </strong>
                         <br/>
                         <g:link action="catedras"  controller="home" params="${[materiaId: opinion.curso.catedra.materia.id, materiaNombre: opinion.curso.catedra.materia.nombre]}">${opinion.curso.catedra.materia.nombre}
+                        </g:link>
+                        <br/>
+                        <strong> Catedra </strong>
+                        <g:link action="cursos" controller="home" params="${[ catedraId: opinion.curso.catedra.id]}">
+                            ${opinion.curso.catedra.nombre}</g:link>
+                        <strong> Curso </strong>
+                        <g:link action="opiniones"  controller="home" params="${[cursoId: opinion.curso.id, cursoNombre: opinion.curso.nombre]}">${opinion.curso.nombre}
                         </g:link>
                         <br/>
                     </td>

@@ -15,7 +15,7 @@ class CalificacionOpinion {
     static belongsTo= [Usuario,Opinion]
 
     public  static boolean  calificoOpinion(Usuario usuario,Opinion opinion){
-        usuario.calificaciones.find {CalificacionOpinion c -> c.usuario==usuario }!=null
+        opinion.calificaciones.find {CalificacionOpinion c -> c.usuario==usuario }!=null
     }
     def static createCalificacionOpinion(Usuario usuario,Opinion opinion,boolean meSirvioLaOpinion){
         CalificacionOpinion calificacionOpinion= new CalificacionOpinion()
@@ -23,6 +23,12 @@ class CalificacionOpinion {
         calificacionOpinion.opinion=opinion
         calificacionOpinion.meSirvioLaOpinion=meSirvioLaOpinion
         calificacionOpinion.save(flush:true)
+        usuario.calcularKarma()
+        usuario.save()
+        opinion.usuario.calcularKarma()
+        opinion.usuario.save()
+        List<Usuario> usuarios= Usuario.getTopKarmaUsuarios();
+        UsuarioRol.createKarmaUsuarios(usuarios)
 
     }
 }

@@ -69,6 +69,10 @@ class Opinion {
         o.usuario = user;
         o.fechaPublicacion = fechaPublicacion
         o.save(flush: true,     failOnError: true)
+        user.calcularKarma()
+        user.save()
+        List<Usuario> usuarios= Usuario.getTopKarmaUsuarios();
+        UsuarioRol.createKarmaUsuarios(usuarios)
     }
 
 
