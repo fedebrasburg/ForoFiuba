@@ -15,22 +15,19 @@
                 <label>Nombre:</label>
                 <g:field type="text" required="true" name="nombre" value="${usuario.nombre}"/>
                 <br/>
-                <g:if test="${usuario.genero!=null }">
+                <label>Karma:      <td>${usuario.karmaCalculado}</td></label> <br/>
                     <label>Genero:</label>
                     <g:field type="text" name="genero" value="${usuario.genero}"/>
                     <br/>
-                </g:if>
                 <label>Email:      <td>${usuario.username}</td></label> <br/>
-                <br/>
-                <label>FechaDeNacimiento:</label>
-                <g:datePicker name="fechaDeNacimiento" value="${new Date()}" precision="day"></g:datePicker>
-                <br/>
-                <g:if test="${usuario.telefono != null}">
 
-                    <label>Telefono:</label>
-                    <g:field type="number" name="telefono" value="${usuario.telefono}"/>
-                    <br/>
-                </g:if>
+                <label>FechaDeNacimiento:</label>
+                <g:datePicker name="fechaDeNacimiento" value="${usuario.fechaDeNacimiento}" precision="day"></g:datePicker>
+                <br/>
+
+                <label>Telefono:</label>
+                <g:field type="number" name="telefono" value="${usuario.telefono}"/>
+                <br/>
                 <label>Carreras:</label><br/>
                 <g:each  in="${carreras}" var="carrera">
                     <g:checkBox name="carrerasNombre" value="${carrera.nombre.toString()}" checked="${usuario.carreras.any{carreraUsuario -> return (carreraUsuario == carrera)}}"/>     ${carrera.nombre.toString()}       <br/>
@@ -46,14 +43,23 @@
         <g:form name="myForm" action="mostrarEditar" params="${[usuarioid: usuario.username]}">
             <label>Nombre:      <td>${usuario.nombre}</td></label> <br/>
             <label>Karma:      <td>${usuario.karmaCalculado}</td></label> <br/>
-            <label>Genero:      <td>${usuario.genero}</td></label> <br/>
+            <g:if test="${usuario.genero!=null }">
+                <label>Genero:      <td>${usuario.genero}</td></label> <br/>
+            </g:if>
             <label>Email:      <td>${usuario.username}</td></label> <br/>
             <label>Fecha de nacimiento:      <g:formatDate date="${usuario.fechaDeNacimiento}"  format="dd-MM-yyyy" /> </label> <br/>
-            <label>Telefono:      <td>${usuario.telefono}</td></label> <br/>
+            <g:if test="${usuario.telefono!=null }">
+
+                <label>Telefono:      <td>${usuario.telefono}</td></label> <br/>
+            </g:if>
             <label>Carreras: </label><br/>
             <g:each  in="${carreras}" var="carrera">
                    <td> ${carrera.nombre.toString()}    </td>   <br/>
             </g:each>
+            <g:if test="${carreras.empty() }">
+                <td>No esta anotado en ninguna carrera</td>
+            </g:if>
+            <br/>
             <g:if test="${usuario==usuarioActual}">
                 <g:submitButton class="btn btn-default" name="edit" value="editar">
                 <span class="glyphicons glyphicons-pencil"></span>

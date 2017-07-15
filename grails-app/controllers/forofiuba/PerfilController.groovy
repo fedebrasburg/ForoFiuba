@@ -41,11 +41,15 @@ class PerfilController {
             render(false,usuario.username)
             return
         }
-        usuario.properties=params
+        usuarioActual.properties=params
         def carrerasListNombres =params.list('carrerasNombre')
-        def carrerasList= Carrera.findAllByNombreInList(carrerasListNombres)
-        usuario.carreras=carrerasList
-        usuario.save(failOnError:true)
+        if(carrerasListNombres) {
+            def carrerasList = Carrera.findAllByNombreInList(carrerasListNombres)
+            usuarioActual.carreras = carrerasList
+        }else{
+            usuarioActual.carreras=[]
+        }
+        usuarioActual.save(failOnError:true,flush:true)
         render(false,usuario.username)
     }
     def deleteOpinion() {
