@@ -1,18 +1,18 @@
 package forofiuba
 
-class EstadoUsuario {
+class EstadoAlumnoCurso {
 
     static constraints = {
     }
 
-    public  static EstadoEnum  estadoUsuario(Usuario usuario,Materia materia){
-        if (!materia.materiaPerteneceACarrerasUsuario(usuario)){
+    public  static EstadoEnum estadoAlumnoCurso(Alumno alumno, Materia materia){
+        if (!materia.materiaPerteneceACarrerasAlumno(alumno)){
             return EstadoEnum.NOESTAENELPLAN;
         }
-        if(usuario.opinoSobre(materia)){
-            return EstadoEnum.CURSADO
+        if(alumno.opinoSobre(materia)){
+            return EstadoEnum.CURSADA
         }
-        if(usuario.puedeOpinar(materia)){
+        if(alumno.puedeOpinar(materia)){
             return EstadoEnum.CURSABLE
         }
          return EstadoEnum.FALTANCORRELATIVAS
@@ -20,7 +20,7 @@ class EstadoUsuario {
 
     public static enum  EstadoEnum{
         NOESTAENELPLAN("No esta en tus planes"),
-        CURSADO("Cursada"),
+        CURSADA("Cursada"),
         CURSABLE("Puedo cursar"),
         FALTANCORRELATIVAS("Faltan correlativas");
         private final String estadoMateria;

@@ -13,21 +13,21 @@ class HomeController {
 
     def departamentos() {
         List<Carrera> carreras = Carrera.getAll()
-        List<Usuario> usuarios= Usuario.getTopKarmaUsuarios();
-        render("view": "departamentos", "model": [Carreras: Carrera.diccionarioMateriasPorCarrera(carreras), Departamentos: Departamento.getAll(),usuariosKarma:usuarios])
+        List<Alumno> alumnos= Alumno.getTopKarmaAlumnos();
+        render("view": "departamentos", "model": [Carreras: Carrera.diccionarioMateriasPorCarrera(carreras), Departamentos: Departamento.getAll(), alumnosKarma:alumnos])
     }
 
     def materias() {
-        Usuario usuario = springSecurityService.currentUser
-        render("view": "materias", "model": [Materias: Materia.getMaterias(Departamento.get(params.departamentoId)), hilo: armadorDeHilo.calcularHiloMaterias(params.departamentoId), carreras: Carrera.findAll(), usuarioActual: usuario])
+        Alumno alumno = springSecurityService.currentUser
+        render("view": "materias", "model": [Materias: Materia.getMaterias(Departamento.get(params.departamentoId)), hilo: armadorDeHilo.calcularHiloMaterias(params.departamentoId), carreras: Carrera.findAll(), alumnoActual: alumno])
     }
 
     def login() {
         redirect(controller: 'login', action: 'departamentos')
     }
 
-    def perfilUsuario() {
-        redirect(controller: 'perfil', action: 'index', params: ["usuarioId": "${params.usuarioId}"])
+    def perfilAlumno() {
+        redirect(controller: 'perfil', action: 'index', params: ["alumnoid": "${params.alumnoid}"])
     }
 
     def registrar() {
@@ -49,28 +49,28 @@ class HomeController {
     CreateOpinionCommand createOpinionCommand = new CreateOpinionCommand()
 
     def opiniones() {
-        Usuario usuario = springSecurityService.currentUser
+        Alumno alumno = springSecurityService.currentUser
         Curso curso = Curso.get(params.cursoId)
         def materiasFaltantes = []
         List<Parecido> materiasRecomendades;
-        EstadoUsuario.EstadoEnum estadoDeMateria;
-        if (usuario) {
-            estadoDeMateria = curso.catedra.materia.estadoUsuario(usuario)
-            if (estadoDeMateria == EstadoUsuario.EstadoEnum.FALTANCORRELATIVAS) {
-                materiasFaltantes = usuario.materiasFaltantes(curso)
+        EstadoAlumnoCurso.EstadoEnum estadoDeMateria;
+        if (alumno) {
+            estadoDeMateria = curso.catedra.materia.estadoAlumno(alumno)
+            if (estadoDeMateria == EstadoAlumnoCurso.EstadoEnum.FALTANCORRELATIVAS) {
+                materiasFaltantes = alumno.materiasFaltantes(curso)
             }
-            materiasRecomendades = Materia.obtenerRecomendacionesSegunUsuario(usuario, curso)
+            materiasRecomendades = Materia.obtenerRecomendacionesSegunAlumno(alumno, curso)
         }
-        render("view": "opiniones", "model": [estadoDeMateria: estadoDeMateria, textoDefault: createOpinionCommand, materiasFaltantes: materiasFaltantes, Opiniones: Opinion.getOpinionesByCurso(curso), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: materiasRecomendades, "usuarioActual": usuario])
+        render("view": "opiniones", "model": [estadoDeMateria: estadoDeMateria, textoDefault: createOpinionCommand, materiasFaltantes: materiasFaltantes, Opiniones: Opinion.getOpinionesByCurso(curso), hilo: armadorDeHilo.calcularHiloOpiniones(params.cursoId), materiasParecidas: materiasRecomendades, alumnoActual: alumno])
         createOpinionCommand = new CreateOpinionCommand()
     }
 
     def meSirvioLaOpinion(){
-        Usuario usuario= springSecurityService.currentUser
+        Alumno alumno= springSecurityService.currentUser
         Opinion opinion=Opinion.get(params.opinion)
 
-        if(!CalificacionOpinion.calificoOpinion(usuario,opinion)){
-            CalificacionOpinion.createCalificacionOpinion(usuario,opinion,Boolean.valueOf(params.meSirvioLaOpinion))
+        if(!CalificacionOpinion.calificoOpinion(alumno,opinion)&&(opinion.alumno!=alumno)){
+            CalificacionOpinion.createCalificacionOpinion(alumno,opinion,Boolean.valueOf(params.meSirvioLaOpinion))
         }
         redirect(action: "opiniones",params: [cursoId:opinion.curso.id])
 
@@ -82,13 +82,15 @@ class HomeController {
 
     @Secured(['ROLE_USER'])
     def createOpinion() {
-        Usuario user = springSecurityService.currentUser
-        CreateOpinionCommand com = new CreateOpinionCommand(params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion.toInteger(), params.cuatrimestre, params.year)
-        if (com.validate()) {
-            Opinion.createOpinion(params.cursoId, user, params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion.toInteger(), new Date(), params.year, params.cuatrimestre)
-        } else {
-            println("En create" + com.puntuacion.toString())
-            createOpinionCommand = com
+        Alumno alumno = springSecurityService.currentUser
+        if(EstadoAlumnoCurso.estadoAlumnoCurso(alumno,Curso.findById(params.cursoId).catedra.materia)!=EstadoAlumnoCurso.EstadoEnum.CURSADA){
+            CreateOpinionCommand com = new CreateOpinionCommand(params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion.toInteger(), params.cuatrimestre, params.year)
+            if (com.validate()) {
+                Opinion.createOpinion(params.cursoId, alumno, params.horarios, params.opinionTp, params.opinionParcial, params.opinionFinal, params.opinionTeorica, params.opinionProfesores, params.opinionPractica, params.modalidad, params.profesores, params.puntuacion.toInteger(), new Date(), params.year, params.cuatrimestre)
+            } else {
+                println("En create" + com.puntuacion.toString())
+                createOpinionCommand = com
+            }
         }
         opiniones()
     }

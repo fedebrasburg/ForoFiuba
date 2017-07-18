@@ -51,8 +51,8 @@ class Materia {
     }
 
 
-    public boolean materiaPerteneceACarrerasUsuario(Usuario usuario) {
-        usuario.carreras.collect { carrera ->
+    public boolean materiaPerteneceACarrerasAlumno(Alumno alumno) {
+        alumno.carreras.collect { carrera ->
             carrera.materias
         }.flatten().unique().any { Materia materia ->
             materia.id == this.id
@@ -60,20 +60,20 @@ class Materia {
     }
 
 
-    public EstadoUsuario.EstadoEnum estadoUsuario(Usuario usuario) {
-        EstadoUsuario.EstadoEnum estado = EstadoUsuario.estadoUsuario(usuario, this);
+    public EstadoAlumnoCurso.EstadoEnum estadoAlumno(Alumno alumno) {
+        EstadoAlumnoCurso.EstadoEnum estado = EstadoAlumnoCurso.estadoAlumnoCurso(alumno, this);
         return estado
     }
 
-    def static obtenerMateriasParecidas(Curso curso, Usuario usuario) {
+    def static obtenerMateriasParecidas(Curso curso, Alumno alumno) {
         def listaFinal = []
         def cursosId = []
         curso.opiniones.collect { opinion ->
-            // Todos los usuario que dejaron opinion en el curso actual
-            opinion.usuario
+            // Todos los alumno que dejaron opinion en el curso actual
+            opinion.alumno
         }.unique { a, b -> a.id <=> b.id
         }.collect { usu ->
-            // Todas las opiniones de esos usuarios
+            // Todas las opiniones de esos alumnos
             usu.opiniones
         }.flatten().findAll { opinion ->
             // Saco las opiniones del curso actual
@@ -89,11 +89,11 @@ class Materia {
                 parecido.puntaje = Constantes.PUNTAJE_INICIAL
             }
             //Si el opinador es de la misma carrera, multiplica por X
-            if (!Collections.disjoint(usuario.carreras, op.usuario.carreras)) {
+            if (!Collections.disjoint(alumno.carreras, op.alumno.carreras)) {
                 parecido.puntaje *= Constantes.MISMA_CARRERA
             }
-            //Si el opinador ya curso otra materia con el usuario
-            if (cantidadDeMateriasCursadasIguales(usuario, op.usuario) > 1) {
+            //Si el opinador ya curso otra materia con el alumno
+            if (cantidadDeMateriasCursadasIguales(alumno, op.alumno) > 1) {
                 parecido.puntaje *= Constantes.CURSO_OTRA
             }
             //Si la opinion tiene muchos dislikes vale menos y si es mas valorado suma mas
@@ -114,28 +114,28 @@ class Materia {
             } else {
                 listaFinal.find { Parecido parecidoEnLista ->
                     parecidoEnLista.curso.id = parecido.curso.id
-                }.punraje += parecido.puntaje
+                }.puntaje += parecido.puntaje
             }
         }
         listaFinal
 
     }
 
-    def static obtenerMateriasParecidasCursablesPorUsuario(Curso curso, Usuario usuario) {
-        List<Parecido> parecidas = obtenerMateriasParecidas(curso, usuario)
+    def static obtenerMateriasParecidasCursablesPorAlumno(Curso curso, Alumno alumno) {
+        List<Parecido> parecidas = obtenerMateriasParecidas(curso, alumno)
         parecidas.findAll { Parecido parecida ->
             //Cursable = Correlativas + pertene a la carrera + no la curso
-            (EstadoUsuario.estadoUsuario(usuario, parecida.materia) == EstadoUsuario.EstadoEnum.CURSABLE)
+            (EstadoAlumnoCurso.estadoAlumnoCurso(alumno, parecida.materia) == EstadoAlumnoCurso.EstadoEnum.CURSABLE)
 
         }
     }
 
-    def static cantidadDeMateriasCursadasIguales(Usuario usuarioA, Usuario usuarioB) {
-        List<Curso> listaCursosB = usuarioB.opiniones.collect { Opinion opinion ->
+    def static cantidadDeMateriasCursadasIguales(Alumno alumnoA, Alumno alumnoB) {
+        List<Curso> listaCursosB = alumnoB.opiniones.collect { Opinion opinion ->
             //cursos del B
             opinion.curso
         }
-        List<Curso> listaCursosA = usuarioA.opiniones.collect { Opinion opinion ->
+        List<Curso> listaCursosA = alumnoA.opiniones.collect { Opinion opinion ->
             //cursos del B
             opinion.curso
         }
@@ -154,8 +154,8 @@ class Materia {
         parecido
     }
 
-    def static obtenerRecomendacionesSegunUsuario(Usuario usuario, Curso curso) {
-        obtenerMateriasParecidasCursablesPorUsuario(curso, usuario).collect { Parecido parecido ->
+    def static obtenerRecomendacionesSegunAlumno(Alumno alumno, Curso curso) {
+        obtenerMateriasParecidasCursablesPorAlumno(curso, alumno).collect { Parecido parecido ->
             asignarCategoriaParecido(parecido)
         }
     }

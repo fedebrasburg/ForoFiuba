@@ -6,51 +6,51 @@ import grails.plugin.springsecurity.annotation.Secured
 class PerfilController {
     def springSecurityService
 
-    def render(boolean edit,String usuarioId){
-        Usuario usuario =Usuario.findByUsername(usuarioId)
-        Usuario  usuarioActual = springSecurityService.currentUser
-        def opiniones=Opinion.getOpinionesByUsername(usuario)
+    def render(boolean edit,String alumnoid){
+        Alumno alumno =Alumno.findByUsername(alumnoid)
+        Alumno alumnoActual = springSecurityService.currentUser
+        def opiniones=Opinion.getOpinionesByUsername(alumno)
         def carreras
         if(edit){
             carreras=Carrera.findAll()
         }else {
-            carreras=usuario.carreras
+            carreras=alumno.carreras
         }
-        render(view: "Perfil",model: ["usuario":usuario,"edit":edit,"opiniones":opiniones, "usuarioActual":usuarioActual,"carreras":carreras,CursosCompartidos:usuarioActual.getCompas()])
+        render(view: "Perfil",model: [alumno:alumno, "edit":edit, "opiniones":opiniones, alumnoActual:alumnoActual, "carreras":carreras, CursosCompartidos:alumnoActual.getCompas()])
     }
     def index() {
-        if(!params.usuarioId){
+        if(!params.alumnoid){
             render(false,springSecurityService.currentUser.username)
             return
         }
-        render(false,params.usuarioId)
+        render(false,params.alumnoid)
     }
     def mostrarEditar(){
-        Usuario usuarioActual = springSecurityService.currentUser
-        render(true,usuarioActual.username)
+        Alumno alumnoActual = springSecurityService.currentUser
+        render(true,alumnoActual.username)
     }
 
     def editar(){
-        Usuario usuarioActual = springSecurityService.currentUser
-        if(!params.usuarioid){
-            render(false,usuarioActual.username)
+        Alumno alumnoActual = springSecurityService.currentUser
+        if(!params.alumnoid){
+            render(false,alumnoActual.username)
             return
         }
-        Usuario usuario =Usuario.findByUsername(params.usuarioid)
-        if(usuarioActual!=usuario){
-            render(false,usuario.username)
+        Alumno alumno =Alumno.findByUsername(params.alumnoid)
+        if(alumnoActual!=alumno){
+            render(false,alumno.username)
             return
         }
-        usuarioActual.properties=params
+        alumnoActual.properties=params
         def carrerasListNombres =params.list('carrerasNombre')
         if(carrerasListNombres) {
             def carrerasList = Carrera.findAllByNombreInList(carrerasListNombres)
-            usuarioActual.carreras = carrerasList
+            alumnoActual.carreras = carrerasList
         }else{
-            usuarioActual.carreras=[]
+            alumnoActual.carreras=[]
         }
-        usuarioActual.save(failOnError:true,flush:true)
-        render(false,usuario.username)
+        alumnoActual.save(failOnError:true,flush:true)
+        render(false,alumno.username)
     }
     def deleteOpinion() {
         def o = Opinion.get(params.opinionId)

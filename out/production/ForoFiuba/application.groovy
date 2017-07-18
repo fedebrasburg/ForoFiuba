@@ -3,8 +3,8 @@ grails.plugin.springsecurity.logout.postOnly = false
 grails.plugin.springsecurity.auth.loginFormUrl = '/login/auth'
 grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/home/departamentos'
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'forofiuba.Usuario'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'forofiuba.UsuarioRol'
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'forofiuba.Alumno'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'forofiuba.AlumnoRol'
 grails.plugin.springsecurity.authority.className = 'forofiuba.Rol'
 grails.plugin.springsecurity.roleHierarchy = '''
   ROLE_KARMA > ROLE_ADMIN

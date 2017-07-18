@@ -21,7 +21,7 @@
             <div class="">
             <sec:ifLoggedIn >
 
-                ${materia.estadoUsuario(usuarioActual).toString()}
+                ${materia.estadoAlumno(alumnoActual).toString()}
             </sec:ifLoggedIn>
             </div>
             <sec:ifAllGranted roles="ROLE_ADMIN">

@@ -6,60 +6,60 @@ import grails.plugin.springsecurity.annotation.Secured
 class RegistroController {
 
     def springSecurityService
-    CreateUsuarioCommand createUsuarioCommand = new CreateUsuarioCommand()
+    CreateAlumnoCommand createAlumnoCommand = new CreateAlumnoCommand()
 
     def index() {
         def carreras=Carrera.findAll()
-        render(view: "Registrar",model:["carreras":carreras,"textoDefault":createUsuarioCommand] )
-        createUsuarioCommand = new CreateUsuarioCommand()
+        render(view: "Registrar",model:["carreras":carreras,"textoDefault":createAlumnoCommand] )
+        createAlumnoCommand = new CreateAlumnoCommand()
 
     }
 
-    def crearUsuario() {
+    def crearAlumno() {
         if(params.password!=params.checkpassword){
             List<String> errorList =new ArrayList<String>();
             errorList.add("Contraseñas diferentes")
-            render(view: "Registrar", model: [errorList: errorList,"textoDefault":createUsuarioCommand])
+            render(view: "Registrar", model: [errorList: errorList,"textoDefault":createAlumnoCommand])
             return
         }
 
-        createUsuarioCommand = new CreateUsuarioCommand("nombre" :params.nombre, "password":params.password,"username": params.username,"genero":params.genero,"telefono":params.telefono,"fechaDeNacimiento":  params.fechaDeNacimiento)
-        if (!createUsuarioCommand.validate()){
+        createAlumnoCommand = new CreateAlumnoCommand("nombre" :params.nombre, "password":params.password,"username": params.username,"genero":params.genero,"telefono":params.telefono,"fechaDeNacimiento":  params.fechaDeNacimiento)
+        if (!createAlumnoCommand.validate()){
             List<String> errorList =new ArrayList<String>();
-            createUsuarioCommand.errors.allErrors.each {
+            createAlumnoCommand.errors.allErrors.each {
                 errorList.add(it.toString())
 
             }
-            render(view: "Registrar", model: [errorList: errorList,"textoDefault":createUsuarioCommand])
+            render(view: "Registrar", model: [errorList: errorList,"textoDefault":createAlumnoCommand])
             return
         }
-        def usuario = new Usuario(params)
+        def alumno = new Alumno(params)
         def carrerasListNombres =params.list('carrerasNombre')
         if(carrerasListNombres){
             def carrerasList= Carrera.findAllByNombreInList(carrerasListNombres)
-            usuario.carreras=carrerasList
+            alumno.carreras=carrerasList
         }
-        usuario.karma=new Karma()
-        usuario.save(flush:true)
+        alumno.karma=new Karma()
+        alumno.save(flush:true)
 
-        if (usuario.hasErrors()){
+        if (alumno.hasErrors()){
             List<String> errorList =new ArrayList<String>();
-            usuario.errors.allErrors.each {
+            alumno.errors.allErrors.each {
                 errorList.add(it.toString())
 
             }
-            render(view: "Registrar", model: [errorList: errorList,"textoDefault":createUsuarioCommand])
+            render(view: "Registrar", model: [errorList: errorList,"textoDefault":createAlumnoCommand])
             return
         }
         def role=Rol.findByAuthority("ROLE_USER")
-        if(!role){
-            throw ExceptionMessage("No encuentra el rol de usuario")
-        }
-        def usuarioRol =new UsuarioRol( user: usuario ,role:role)
-        usuarioRol.save(flush:true,failOnError:true)
+        def alumnoRol =new AlumnoRol( alumno: alumno ,role:role)
+        alumnoRol.save(flush:true,failOnError:true)
         springSecurityService.reauthenticate params.username,params.password
-        usuario.calcularKarma()
-        usuario.save()
+        alumno.calcularKarma()
+        alumno.save()
+        List<Alumno> alumnos= Alumno.getTopKarmaAlumnos();
+        AlumnoRol.createKarmaAlumnos(alumnos)
+        alumno.reauthentificateIfInList(alumnos)
         backhome()
     }
 

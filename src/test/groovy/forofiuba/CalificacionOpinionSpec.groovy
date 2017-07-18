@@ -8,15 +8,24 @@ import spock.lang.Specification
  */
 @TestFor(CalificacionOpinion)
 class CalificacionOpinionSpec extends Specification {
-
+    Alumno usuario
+    Opinion opinion
+    CalificacionOpinion calificacionOpinion
     def setup() {
+        usuario=new Alumno()
+        opinion=new Opinion()
+        calificacionOpinion=new CalificacionOpinion(alumno: usuario,opinion: opinion,meSirvioLaOpinion: true)
+        opinion.calificaciones=[calificacionOpinion]
+        usuario.calificaciones=[calificacionOpinion]
     }
 
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "Usuario Califico Opinion"() {
+        when:
+            setup()
+        then:
+            CalificacionOpinion.calificoOpinion(usuario,opinion)
     }
 }

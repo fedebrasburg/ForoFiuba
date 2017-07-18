@@ -1,4 +1,4 @@
-<%@ page import="forofiuba.EstadoUsuario" %>
+<%@ page import="forofiuba.EstadoAlumnoCurso" %>
 <html>
 <head>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -7,50 +7,50 @@
 <body>
 <g:render template="partials/Nav"/>
 <div class="body">
-    <h1>OpinaFiuba - Usuarios</h1>
+    <h1>OpinaFiuba - Alumno</h1>
     <legend>Perfil</legend>
     <g:if test="${edit}">
-        <g:form name="myForm" action="editar"  params="${[usuarioid: usuario.username]}">
+        <g:form name="myForm" action="editar"  params="${[alumnoid: alumno.username]}">
             <fieldset>
                 <label>Nombre:</label>
-                <g:field type="text" required="true" name="nombre" value="${usuario.nombre}"/>
+                <g:field type="text" required="true" name="nombre" value="${alumno.nombre}"/>
                 <br/>
-                <label>Karma:      <td>${usuario.karmaCalculado}</td></label> <br/>
+                <label>Karma:      <td>${alumno.karmaCalculado}</td></label> <br/>
                     <label>Genero:</label>
-                    <g:field type="text" name="genero" value="${usuario.genero}"/>
+                    <g:field type="text" name="genero" value="${alumno.genero}"/>
                     <br/>
-                <label>Email:      <td>${usuario.username}</td></label> <br/>
+                <label>Email:      <td>${alumno.username}</td></label> <br/>
 
                 <label>FechaDeNacimiento:</label>
-                <g:datePicker name="fechaDeNacimiento" value="${usuario.fechaDeNacimiento}" precision="day"></g:datePicker>
+                <g:datePicker name="fechaDeNacimiento" value="${alumno.fechaDeNacimiento}" precision="day"></g:datePicker>
                 <br/>
 
                 <label>Telefono:</label>
-                <g:field type="number" name="telefono" value="${usuario.telefono}"/>
+                <g:field type="number" name="telefono" value="${alumno.telefono}"/>
                 <br/>
                 <label>Carreras:</label><br/>
                 <g:each  in="${carreras}" var="carrera">
-                    <g:checkBox name="carrerasNombre" value="${carrera.nombre.toString()}" checked="${usuario.carreras.any{carreraUsuario -> return (carreraUsuario == carrera)}}"/>     ${carrera.nombre.toString()}       <br/>
+                    <g:checkBox name="carrerasNombre" value="${carrera.nombre.toString()}" checked="${alumno.carreras.any{ carreraAlumno -> return (carreraAlumno == carrera)}}"/>     ${carrera.nombre.toString()}       <br/>
                 </g:each>
                 <br/>
-                <g:if test="${usuario==usuarioActual}">
+                <g:if test="${alumno==alumnoActual}">
                     <g:submitButton class="btn btn-default" name="editar" value="Guardar"/>
                 </g:if>
             </fieldset>
         </g:form>
     </g:if>
     <g:else>
-        <g:form name="myForm" action="mostrarEditar" params="${[usuarioid: usuario.username]}">
-            <label>Nombre:      <td>${usuario.nombre}</td></label> <br/>
-            <label>Karma:      <td>${usuario.karmaCalculado}</td></label> <br/>
-            <g:if test="${usuario.genero!=null }">
-                <label>Genero:      <td>${usuario.genero}</td></label> <br/>
+        <g:form name="myForm" action="mostrarEditar" params="${[alumnoid: alumno.username]}">
+            <label>Nombre:      <td>${alumno.nombre}</td></label> <br/>
+            <label>Karma:      <td>${alumno.karmaCalculado}</td></label> <br/>
+            <g:if test="${alumno.genero!=null }">
+                <label>Genero:      <td>${alumno.genero}</td></label> <br/>
             </g:if>
-            <label>Email:      <td>${usuario.username}</td></label> <br/>
-            <label>Fecha de nacimiento:      <g:formatDate date="${usuario.fechaDeNacimiento}"  format="dd-MM-yyyy" /> </label> <br/>
-            <g:if test="${usuario.telefono!=null }">
+            <label>Email:      <td>${alumno.username}</td></label> <br/>
+            <label>Fecha de nacimiento:      <g:formatDate date="${alumno.fechaDeNacimiento}" format="dd-MM-yyyy" /> </label> <br/>
+            <g:if test="${alumno.telefono!=null }">
 
-                <label>Telefono:      <td>${usuario.telefono}</td></label> <br/>
+                <label>Telefono:      <td>${alumno.telefono}</td></label> <br/>
             </g:if>
             <label>Carreras: </label><br/>
             <g:each  in="${carreras}" var="carrera">
@@ -60,23 +60,23 @@
                 <td>No esta anotado en ninguna carrera</td>
             </g:if>
             <br/>
-            <g:if test="${usuario==usuarioActual}">
+            <g:if test="${alumno==alumnoActual}">
                 <g:submitButton class="btn btn-default" name="edit" value="editar">
                 <span class="glyphicons glyphicons-pencil"></span>
                 </g:submitButton>
             </g:if>
         </g:form>
     </g:else>
-    <g:if test="${!CursosCompartidos.isEmpty() && usuario==usuarioActual}">
+    <g:if test="${!CursosCompartidos.isEmpty() && alumno==alumnoActual}">
         <legend> Compañeros y compañeras:</legend>
         <g:each in="${CursosCompartidos.keySet()}" var="c">
             <h5>En el curso ${c.cursoNombre} ${c.cuatrimestre.cuatrimestre}º ${c.cuatrimestre.anio} cursaste con: </h5>
             <ul>
-                <g:each in="${CursosCompartidos[c]}" var="usuario">
+                <g:each in="${CursosCompartidos[c]}" var="alumno">
                     <g:link controller="perfil"
                             action="index"
-                            params="${[usuarioId: usuario.username]}">
-                        ${usuario.nombre}
+                            params="${[alumnoid: alumno.username]}">
+                        ${alumno.nombre}
 
                     </g:link>
                 </g:each>
@@ -104,16 +104,16 @@
                     </td>
                     <td>
 
-                            <g:if test="${opinion.usuario!=usuarioActual}">
+                            <g:if test="${opinion.alumno!=alumnoActual}">
                                 <strong> Estado  </strong><br/>
                                 <div align="right">
-                                    ${opinion.curso.catedra.materia.estadoUsuario(usuarioActual).toString()}
+                                    ${opinion.curso.catedra.materia.estadoAlumno(alumnoActual).toString()}
                                 </div>
-                                <g:if test="${opinion.curso.catedra.materia.estadoUsuario(usuarioActual)== forofiuba.EstadoUsuario.EstadoEnum.CURSADO  }">
+                                <g:if test="${opinion.curso.catedra.materia.estadoAlumno(alumnoActual)== forofiuba.EstadoAlumnoCurso.EstadoEnum.CURSADA  }">
                                     <strong> Curso conmigo  </strong><br/>
                                     <div align="right">
 
-                                    <g:if test="${usuarioActual.cursoCon(CursosCompartidos,opinion.cuatrimestre,opinion.curso.nombre)  }">
+                                    <g:if test="${alumnoActual.cursoCon(CursosCompartidos,opinion.cuatrimestre,opinion.curso.nombre)  }">
                                         Si
                                     </g:if>
                                     <g:else>
@@ -219,7 +219,7 @@
                         </g:if>
                     </td>
                     <td width="100px" align="center"  valign="center" >
-                        <g:if test="${usuario==usuarioActual}">
+                        <g:if test="${alumno==alumnoActual}">
 
                             <g:link action="deleteOpinion" class="listado"
                                     params="${[opinionId: opinion.id]}" ><span

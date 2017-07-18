@@ -2,8 +2,8 @@ package forofiuba
 
 class Carrera {
     String nombre;
-    static hasMany = [materias: Materia,alumnos: Usuario]
-    static belongsTo = [Usuario]
+    static hasMany = [materias: Materia,alumnos: Alumno]
+    static belongsTo = [Alumno]
     static constraints = {
         nombre nullable: false,unique: true
         materias nullable: false

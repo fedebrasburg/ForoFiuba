@@ -12,7 +12,7 @@
 
 <div id="login">
     <div class="inner">
-        <h4>Ingrese con su usuario</h4>
+        <h4>Ingresar</h4>
 
 
         <g:if test='${flash.message}'>

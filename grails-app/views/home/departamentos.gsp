@@ -155,12 +155,12 @@
     </sec:ifAllGranted>
     <div style="..." align="center">
         <sec:ifLoggedIn>
-            <h2>Usuarios TOP</h2>
-            <g:each var="usuario" in="${usuariosKarma}">
+            <h2>Alumnos TOP</h2>
+            <g:each var="alumno" in="${alumnosKarma}">
 
-                <g:link action="perfilUsuario"
-                        params="${[usuarioId: usuario.username]}">
-                    ${usuario.nombre} , ${usuario.Karma()}  <br/>
+                <g:link action="perfilAlumno"
+                        params="${[alumnoid: alumno.username]}">
+                    ${alumno.nombre} , ${alumno.Karma()}  <br/>
 
                 </g:link>
             </g:each>

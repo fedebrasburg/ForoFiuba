@@ -38,23 +38,23 @@
             <table style="width:90%" class="table">
                 <tr>
                     <td width="100px">
-                        <strong>Usuario</strong>
+                        <strong>Alumno</strong>
                         <br/>
                         <sec:ifNotLoggedIn>
-                            ${opinion.usuario.nombre}
+                            ${opinion.alumno.nombre}
                         </sec:ifNotLoggedIn>
                         <sec:ifLoggedIn>
-                            <g:if test="${opinion.usuario != usuarioActual}">
+                            <g:if test="${opinion.alumno != alumnoActual}">
 
-                                <g:link action="perfilUsuario"
-                                        params="${[usuarioId: opinion.usuario.username]}">
-                                    ${opinion.usuario.nombre}
+                                <g:link action="perfilAlumno"
+                                        params="${[alumnoid: opinion.alumno.username]}">
+                                    ${opinion.alumno.nombre}
 
                                     </span>
                                 </g:link>
                             </g:if>
                             <g:else>
-                                ${opinion.usuario.nombre}
+                                ${opinion.alumno.nombre}
                             </g:else>
                         </sec:ifLoggedIn>
 
@@ -216,7 +216,7 @@
         </div>
     </div>
     <sec:ifAllGranted roles="ROLE_USER">
-        <g:if test="${estadoDeMateria == forofiuba.EstadoUsuario.EstadoEnum.CURSABLE}">
+        <g:if test="${estadoDeMateria == forofiuba.EstadoAlumnoCurso.EstadoEnum.CURSABLE}">
             <g:hasErrors bean="${textoDefault}">
                 <g:eachError bean="${textoDefault}">
                     <p style="color: red;"><g:message error="${it}"/></p>
@@ -328,12 +328,12 @@
             </script>
         </g:if>
         <g:else>
-            <g:if test="${estadoDeMateria == forofiuba.EstadoUsuario.EstadoEnum.NOESTAENELPLAN}">
+            <g:if test="${estadoDeMateria == forofiuba.EstadoAlumnoCurso.EstadoEnum.NOESTAENELPLAN}">
                 <h4 align="center">
                     No podes opinar por que no pertenece a tu plan
                 </h4>
             </g:if>
-            <g:if test="${estadoDeMateria == forofiuba.EstadoUsuario.EstadoEnum.FALTANCORRELATIVAS}">
+            <g:if test="${estadoDeMateria == forofiuba.EstadoAlumnoCurso.EstadoEnum.FALTANCORRELATIVAS}">
 
                 <h4 align="center">
                     No podes opinar por no haber opinado en las correlativas :(

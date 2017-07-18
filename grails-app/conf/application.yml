@@ -35,8 +35,8 @@ grails:
         logout:
           postOnly: false
         userLookup:
-          userDomainClassName: 'forofiuba.Usuario'
-          authorityJoinClassName : 'forofiuba.UsuarioRol'
+          userDomainClassName: 'forofiuba.Alumno'
+          authorityJoinClassName : 'forofiuba.AlumnoRol'
         authority:
           className: 'forofiuba.Rol'
 
@@ -106,8 +106,8 @@ dataSource:
   pooled: true
   jmxExport: true
   driverClassName: org.postgresql.Driver
-  username:  postgres #Poner user name de la BD
-  password:  vacaloca #Ṕass de el user
+  username:  postgres #Poner alumno name de la BD
+  password:  vacaloca #Ṕass de el alumno
 
 environments:
   development:

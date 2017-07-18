@@ -2,7 +2,7 @@ package forofiuba
 
 class Opinion {
     Curso curso
-    Usuario usuario
+    Alumno alumno
     String horarios
     String opinionTp
     String opinionParcial
@@ -18,11 +18,11 @@ class Opinion {
 
     static hasMany = [calificaciones: CalificacionOpinion]
 
-    static belongsTo = [Curso, Usuario]
+    static belongsTo = [Curso, Alumno]
 
     static constraints = {
         curso nullable: false
-        usuario nullable: false
+        alumno nullable: false
         puntuacion range: 1..5, nullable: false
         opinionTp nullable: true
         opinionFinal nullable: true
@@ -52,7 +52,8 @@ class Opinion {
     }
 
 
-    static createOpinion(String cursoId, Usuario user, String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, Integer puntuacion = null, Date fechaPublicacion, String anio, String cuatrimestre) {
+    static createOpinion(String cursoId, Alumno alumno, String horarios = null, String opinionTp = null, String opinionParcial = null, String opinionFinal = null, String opinionTeorica = null, String opinionProfesores = null, String opinionPractica = null, String modalidad = null, String profesores = null, Integer puntuacion = null, Date fechaPublicacion, String anio, String cuatrimestre) {
+
         def o = new Opinion()
         o.horarios = horarios
         o.opinionFinal = opinionFinal
@@ -66,21 +67,22 @@ class Opinion {
         o.cuatrimestre = new Cuatrimestre("cuatrimestre":cuatrimestre,"anio":anio)
         o.puntuacion = puntuacion
         o.curso = Curso.get(cursoId)
-        o.usuario = user;
+        o.alumno = alumno;
         o.fechaPublicacion = fechaPublicacion
         o.save(flush: true,     failOnError: true)
-        user.calcularKarma()
-        user.save()
-        List<Usuario> usuarios= Usuario.getTopKarmaUsuarios();
-        UsuarioRol.createKarmaUsuarios(usuarios)
+        alumno.calcularKarma()
+        alumno.save()
+        List<Alumno> alumnos= Alumno.getTopKarmaAlumnos();
+        AlumnoRol.createKarmaAlumnos(alumnos)
+        alumno.reauthentificateIfInList(alumnos)
     }
 
 
     def static getOpinionesByCurso(Curso curso) {
         curso.opiniones
     }
-    def static getOpinionesByUsername(Usuario usuario) {
-        usuario.opiniones
+    def static getOpinionesByUsername(Alumno alumno) {
+        alumno.opiniones
     }
 
     def getMateria(){

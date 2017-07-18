@@ -1,10 +1,9 @@
 package forofiuba
 
-import forofiuba.Usuario
 import grails.validation.Validateable
 
 
-class   CreateUsuarioCommand implements Validateable{
+class CreateAlumnoCommand implements Validateable{
     String username
     String password
     String nombre
@@ -13,6 +12,6 @@ class   CreateUsuarioCommand implements Validateable{
     Date fechaDeNacimiento
 
     static constraints = {
-        importFrom Usuario
+        importFrom Alumno
     }
 }

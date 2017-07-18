@@ -6,9 +6,9 @@
 <body>
 <g:render template="partials/Nav"/>
 <div class="body">
-    <h1>OpinaFiuba - Usuarios</h1>
+    <h1>OpinaFiuba - Alumnos</h1>
 
-    <g:form name="myForm" action="crearUsuario">
+    <g:form name="myForm" action="crearAlumno">
         <fieldset>
             <legend>Registrar</legend>
             <div class="form-group">

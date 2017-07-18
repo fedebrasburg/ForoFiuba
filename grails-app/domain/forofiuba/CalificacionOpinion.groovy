@@ -1,34 +1,32 @@
 package forofiuba
 
-import groovyx.gpars.extra166y.Ops
-
 class CalificacionOpinion {
 
     static constraints = {
         meSirvioLaOpinion nullable:false
-        usuario nullable: false
+        alumno nullable: false
         opinion nullable: false
     }
     boolean meSirvioLaOpinion;
-    Usuario usuario
+    Alumno alumno
     Opinion opinion
-    static belongsTo= [Usuario,Opinion]
+    static belongsTo= [Alumno, Opinion]
 
-    public  static boolean  calificoOpinion(Usuario usuario,Opinion opinion){
-        opinion.calificaciones.find {CalificacionOpinion c -> c.usuario==usuario }!=null
+    public  static boolean  calificoOpinion(Alumno alumno, Opinion opinion){
+        opinion.calificaciones.find {CalificacionOpinion c -> c.alumno==alumno }!=null
     }
-    def static createCalificacionOpinion(Usuario usuario,Opinion opinion,boolean meSirvioLaOpinion){
+    def static createCalificacionOpinion(Alumno alumno, Opinion opinion, boolean meSirvioLaOpinion){
         CalificacionOpinion calificacionOpinion= new CalificacionOpinion()
-        calificacionOpinion.usuario=usuario
+        calificacionOpinion.alumno=alumno
         calificacionOpinion.opinion=opinion
         calificacionOpinion.meSirvioLaOpinion=meSirvioLaOpinion
         calificacionOpinion.save(flush:true)
-        usuario.calcularKarma()
-        usuario.save()
-        opinion.usuario.calcularKarma()
-        opinion.usuario.save()
-        List<Usuario> usuarios= Usuario.getTopKarmaUsuarios();
-        UsuarioRol.createKarmaUsuarios(usuarios)
-
+        alumno.calcularKarma()
+        alumno.save(flush:true)
+        opinion.alumno.calcularKarma()
+        opinion.alumno.save(flush:true)
+        List<Alumno> alumnos= Alumno.getTopKarmaAlumnos();
+        AlumnoRol.createKarmaAlumnos(alumnos)
+        alumno.reauthentificateIfInList(alumnos)
     }
 }

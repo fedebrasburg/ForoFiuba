@@ -6,7 +6,7 @@ import groovy.transform.ToString
 
 @EqualsAndHashCode(includes = 'username')
 @ToString(includes = 'username', includeNames = true, includePackage = false)
-class Usuario implements Serializable {
+class Alumno implements Serializable {
 
     private static final long serialVersionUID = 1
 
@@ -47,22 +47,27 @@ class Usuario implements Serializable {
     public int Karma(){
         return karmaCalculado
     }
-    private static  List<Usuario>  getKarmaUsuarios(){
-        List<Usuario> usuarios= Usuario.getAll().sort{Usuario usu->-usu.Karma()}
-        usuarios = usuarios.findAll {Usuario usu -> (Rol.rolAlumno() in usu.getAuthorities())}
-        return usuarios
+    private static  List<Alumno> getKarmaAlumnos(){
+        List<Alumno> alumnos= Alumno.getAll().sort{ Alumno usu->-usu.Karma()}
+        alumnos = alumnos.findAll { Alumno usu -> (Rol.rolAlumno() in usu.getAuthorities())}
+        return alumnos
     }
 
-    public static List<Usuario> getTopKarmaUsuarios(){
-        List<Usuario> usuarios= getKarmaUsuarios()
-        if(usuarios.size()>5){usuarios=usuarios.getAt(0..4)}
-        return usuarios
+
+    public static List<Alumno> getTopKarmaAlumnos(){
+        List<Alumno> alumnos= getKarmaAlumnos()
+        if(alumnos.size()>5){alumnos=alumnos.getAt(0..4)}
+        return alumnos
     }
 
     Set<Rol> getAuthorities() {
-        UsuarioRol.findAllByUser(this)*.role
+        AlumnoRol.findAllByAlumno(this)*.role
     }
-
+    public void reauthentificateIfInList(List<Alumno> alumnos){
+        if ((this==springSecurityService.currentUser)&&(this in alumnos)){
+            springSecurityService.reauthenticate this.username,this.password
+        }
+    }
 
     def beforeInsert() {
         encodePassword()
@@ -82,7 +87,7 @@ class Usuario implements Serializable {
 
 
     static mapping = {
-//        table '`Usuario`'
+//        table '`Alumno`'
   //      password column: '`password`'
     }
 
@@ -96,9 +101,9 @@ class Usuario implements Serializable {
         }
     }
 
-    private opinoSobre(Materia materia){
+    boolean opinoSobre(Materia materia){
         opiniones.any{opinion->
-            opinion.materia.id == materia.id
+            opinion.materia == materia
         }
     }
 
@@ -109,11 +114,11 @@ class Usuario implements Serializable {
     }
 
     def getCompas(){
-        Opinion.findAllByUsuario(this).unique { a, b -> a.curso.id <=> b.curso.id }.collectEntries{ opinion ->
+        Opinion.findAllByAlumno(this).unique { a, b -> a.curso.id <=> b.curso.id }.collectEntries{ opinion ->
             def compas = Opinion.findAllByCurso(opinion.curso).findAll{posibleMatch ->
-                (posibleMatch.cuatrimestre == opinion.cuatrimestre &&  posibleMatch.usuario.id != opinion.usuario.id)
+                (posibleMatch.cuatrimestre == opinion.cuatrimestre &&  posibleMatch.alumno.id != opinion.alumno.id)
             }.collect { posibleMatch ->
-                posibleMatch.usuario
+                posibleMatch.alumno
             }
             def cursoCompartido = new CursoCompartido()
             cursoCompartido.cuatrimestre = opinion.cuatrimestre

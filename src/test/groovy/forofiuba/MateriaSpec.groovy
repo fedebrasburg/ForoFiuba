@@ -14,8 +14,8 @@ class MateriaSpec extends Specification {
     Materia materia1
     Materia materia2
     Materia materia3
-    Usuario usuario1
-    Usuario usuario2
+    Alumno usuario1
+    Alumno usuario2
     Curso curso1
     Curso curso2
     Curso curso3
@@ -39,12 +39,12 @@ class MateriaSpec extends Specification {
         catedra2=new Catedra(id:1,nombre: "garea",cursos:[curso3],materia: materia2)
         materia1.catedras=[catedra1]
         materia2.catedras=[catedra2]
-        usuario1= new Usuario(id:1,carreras: [carrera ] )
-        usuario2= new Usuario(id:2,carreras: [carrera ] )
+        usuario1= new Alumno(id:1,carreras: [carrera ] )
+        usuario2= new Alumno(id:2,carreras: [carrera ] )
         carrera.materias=[materia1,materia2,materia3]
-        opinion1 = new Opinion(curso:  curso1,usuario: usuario1)
-        opinion2 = new Opinion(curso:  curso3,usuario: usuario1)
-        opinion3 = new Opinion(curso:  curso1,usuario: usuario2)
+        opinion1 = new Opinion(curso:  curso1, alumno: usuario1)
+        opinion2 = new Opinion(curso:  curso3, alumno: usuario1)
+        opinion3 = new Opinion(curso:  curso1, alumno: usuario2)
         curso1.opiniones=[opinion1,opinion3]
         curso3.opiniones=[opinion2]
         usuario1.opiniones=[opinion1,opinion2]
@@ -57,7 +57,7 @@ class MateriaSpec extends Specification {
         when:
             setup()
         then:
-            (materia1.materiaPerteneceACarrerasUsuario(usuario1) && materia2.materiaPerteneceACarrerasUsuario(usuario1) && materia3.materiaPerteneceACarrerasUsuario(usuario1))
+            (materia1.materiaPerteneceACarrerasAlumno(usuario1) && materia2.materiaPerteneceACarrerasAlumno(usuario1) && materia3.materiaPerteneceACarrerasAlumno(usuario1))
     }
     void "Probar obtenerMateriasSegunNombre vacio"() {
         when:
@@ -91,7 +91,7 @@ class MateriaSpec extends Specification {
             Parecido parecido=parecidos[0]
 
         then:
-            parecido.cursoNombre=="echarri"
+            parecido.curso.nombre=="echarri"
 
     }/**
     void "Probar obtenerMateriasParecidas"() {
