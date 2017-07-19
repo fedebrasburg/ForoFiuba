@@ -26,8 +26,20 @@ class Cuatrimestre implements Comparable  {
     }
     int distancia(Cuatrimestre otroCuatrimestre){
         int distancia=0
-        distancia=Math.abs(this.anio-otroCuatrimestre.anio+1)
-        distancia+=Math.abs(this.cuatrimestre-otroCuatrimestre.cuatrimestre)
+        Cuatrimestre cuatrimestre1
+        Cuatrimestre cuatrimestre2
+        if(this.anio>otroCuatrimestre.anio){
+            cuatrimestre1=this
+            cuatrimestre2=otroCuatrimestre
+        }else{
+            cuatrimestre1=otroCuatrimestre
+            cuatrimestre2=this
+        }
+        distancia=2*(cuatrimestre1.anio-cuatrimestre2.anio)
+        distancia+=cuatrimestre1.cuatrimestre-cuatrimestre2.cuatrimestre
+        if(distancia<=0){
+            distancia=1
+        }
         return distancia
     }
 }

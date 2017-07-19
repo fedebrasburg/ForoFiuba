@@ -181,7 +181,7 @@
                             <div align="right">
                                 <button class="btn btn-success" disabled="true" ><span class="glyphicon glyphicon-thumbs-up"></span></button>
                                  ${opinion.getCalificacionesPositivas()}
-                                <button class="btn btn-danger" disabled="true" ><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                                <button class="btn btn-danger" disabled="true" ><span class="gla phicon glyphicon-thumbs-down"></span></button>
                                  ${opinion.getCalificacionesNegativas()}
                             </div>
                         </sec:ifNotLoggedIn>

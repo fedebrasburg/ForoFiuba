@@ -14,7 +14,7 @@ class AlumnoRol implements Serializable {
     Alumno alumno
     Rol role
 
-    public static void createKarmaAlumnos(List<Alumno> alumnosKarma){
+        public static void createKarmaAlumnos(List<Alumno> alumnosKarma){
         Rol rolKarma=Rol.findByAuthority("ROLE_KARMA")
         List<AlumnoRol> listAlumnosKarma= AlumnoRol.findAllByRole(rolKarma)
         if(!listAlumnosKarma.containsAll(alumnosKarma)){

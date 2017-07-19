@@ -55,7 +55,10 @@ class Materia {
         alumno.carreras.collect { carrera ->
             carrera.materias
         }.flatten().unique().any { Materia materia ->
-            materia.id == this.id
+            if(materia.id){
+                return materia.id == this.id
+            }
+            return materia==this
         }
     }
 
