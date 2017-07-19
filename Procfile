@@ -1,1 +1,2 @@
-web: cd build/libs ; java $JAVA_OPTS -Dgrails.env=prod *.war
+web: cd build/libs ; java -Dgrails.env=prod -jar build/libs/*.war
+
