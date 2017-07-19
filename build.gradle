@@ -44,7 +44,7 @@ dependencies {
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
     runtime "com.h2database:h2"
-    runtime "org.postgresql:postgresql:9.4.1208.jre7"
+    runtime "org.postgresql:pos	tgresql:9.4.1208.jre7"
     testCompile "org.grails:grails-plugin-testing"
     compile 'org.grails.plugins:spring-security-core:3.1.1'
     testCompile "org.grails.plugins:geb"
@@ -78,3 +78,12 @@ tasks.stage.doLast() {
     delete fileTree(dir: "build/libs", exclude: "*.war")
 }
 war.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configurations.compile) {
+        include "webapp-runner*"
+    }
+}
+
+stage.dependsOn(copyToLib)
