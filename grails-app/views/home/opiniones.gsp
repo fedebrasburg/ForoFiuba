@@ -187,7 +187,17 @@
                         </sec:ifNotLoggedIn>
 
 
-                    </td>
+                    <g:if test="${opinion.alumno==alumnoActual}">
+
+                        <td width="10px" align="right"  valign="right" >
+
+                            <g:link action="deleteOpinion" class="listado"
+                                    params="${[opinionId: opinion.id]}" ><span
+                                    class="glyphicon glyphicon-remove"></span>
+                            </g:link>
+                        </td>
+                    </g:if>
+
                 </tr>
             </table>
             <br/>

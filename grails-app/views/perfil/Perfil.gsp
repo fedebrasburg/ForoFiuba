@@ -36,6 +36,7 @@
                 <g:if test="${alumno==alumnoActual}">
                     <g:submitButton class="btn btn-default" name="editar" value="Guardar"/>
                 </g:if>
+                <br/>
             </fieldset>
         </g:form>
     </g:if>

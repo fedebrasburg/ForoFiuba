@@ -7,7 +7,7 @@ class Curso {
     static hasMany = [opiniones: Opinion]
     static constraints = {
         catedra nullable: false
-        nombre nullable: false, blank: false
+        nombre nullable: false, blank: false,unique:true
         opiniones nullable: true
         email email: true, nullable: true
     }

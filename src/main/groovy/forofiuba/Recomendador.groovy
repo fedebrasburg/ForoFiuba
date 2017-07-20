@@ -53,7 +53,7 @@ class Recomendador {
                 listaFinal << parecido
             } else {
                 listaFinal.find { Parecido parecidoEnLista ->
-                    parecidoEnLista.curso.nombre = parecido.curso.nombre
+                    parecidoEnLista.curso.nombre == parecido.curso.nombre
                 }.puntaje += parecido.puntaje
             }
         }

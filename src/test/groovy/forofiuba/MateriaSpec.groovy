@@ -194,7 +194,7 @@ class MateriaSpec extends Specification {
         List<Parecido> parecidos= Materia.obtenerRecomendacionesSegunAlumno(alumno2,curso2)
         parecidos[0].categoria==Constantes.NO_PROBABLE
     }
-    void "Recomienda Materia , puntaje  "(){
+    void "Recomienda Materia , Recomendable  "(){
         when:
             setup()
 
@@ -215,7 +215,25 @@ class MateriaSpec extends Specification {
 
         then:
             List<Parecido> parecidos= Materia.obtenerRecomendacionesSegunAlumno(alumno2,curso1)
-            parecidos[0].categoria==Constantes.NO_PROBABLE
+            parecidos[0].categoria==Constantes.RECOMENDABLE
     }
+    void "Recomienda Materia ,  "(){
+        when:
+        setup()
 
+        Alumno alumno4= new Alumno(id:2,carreras: [carrera ],username: "Alumno4" )
+        Opinion opinion44 = new Opinion(curso:  curso4, alumno: alumno4 , puntuacion: 3,calificaciones: [calificacionOpinion1,calificacionOpinion3,calificacionOpinion4,calificacionOpinion5,calificacionOpinion6,calificacionOpinion7])
+        Opinion opinion14 = new Opinion(curso:  curso1, alumno: alumno4 , puntuacion: 3,calificaciones: [])
+        alumno4.opiniones=[opinion14,opinion44]
+        Alumno alumno5= new Alumno(id:2,carreras: [carrera ],username: "Alumno5" )
+        Opinion opinion45 = new Opinion(curso:  curso4, alumno: alumno5 , puntuacion: 3,calificaciones: [calificacionOpinion1,calificacionOpinion3,calificacionOpinion4,calificacionOpinion5,calificacionOpinion6,calificacionOpinion7])
+        Opinion opinion15 = new Opinion(curso:  curso1, alumno: alumno5 , puntuacion: 3,calificaciones: [])
+        alumno5.opiniones=[opinion45,opinion15]
+        curso1.opiniones.addAll([opinion14,opinion15])
+        curso4.opiniones.addAll([opinion44,opinion45])
+
+        then:
+        List<Parecido> parecidos= Materia.obtenerRecomendacionesSegunAlumno(alumno2,curso1)
+        parecidos[0].categoria==Constantes.PROBABLE
+    }
 }
