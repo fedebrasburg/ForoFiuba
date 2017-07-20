@@ -58,7 +58,7 @@ class Materia {
             if(materia.id){
                 return materia.id == this.id
             }
-            return materia==this
+            return materia.nombre==this.nombre
         }
     }
 

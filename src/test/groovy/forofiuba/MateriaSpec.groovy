@@ -33,7 +33,7 @@ class MateriaSpec extends Specification {
     Catedra catedra3
     Catedra catedra4
     Catedra catedra5
-    Opinion opinion12,opinion11,opinion23,opinion13
+    Opinion opinion12,opinion11,opinion23,opinion63,opinion21,opinion31,opinion41
     CalificacionOpinion calificacionOpinion1,calificacionOpinion2
 
     def setup() {
@@ -46,7 +46,7 @@ class MateriaSpec extends Specification {
 
 
         materia1=new Materia(id: 1,nombre: "Fisica I",departamento: dep1, carreras: [carrera])
-        materia2=new Materia(id: 2,nombre: "Fisica II",departamento: dep1,correlativas: [materia1],carreras: [carrera])
+        materia2=new Materia(id: 2,nombre: "Fisica II",departamento: dep1,correlativas: [materia1,materia3],carreras: [carrera])
         materia3=new Materia(id: 3,nombre: "Analisis II",departamento: dep2 , carreras: [carrera])
         materia4=new Materia(id: 4,nombre: "Algoritmos I",departamento: dep3 , carreras: [carrera])
         materia5=new Materia(id: 4,nombre: "cosas indus",departamento: dep3 , carreras: [carrera])
@@ -70,9 +70,9 @@ class MateriaSpec extends Specification {
         materia4.catedras=[catedra4]
         materia5.catedras=[catedra5]
 
-        alumno1= new Alumno(id:1,carreras: [carrera ] )
-        alumno2= new Alumno(id:2,carreras: [carrera ] )
-        alumno3= new Alumno(id:3,carreras: [carrera2 ] )
+        alumno1= new Alumno(id:1,carreras: [carrera ],username: "Alumno1" )
+        alumno2= new Alumno(id:2,carreras: [carrera ],username: "Alumno2" )
+        alumno3= new Alumno(id:3,carreras: [carrera2 ],username: "Alumno3" )
 
         carrera.materias=[materia1,materia2,materia3,materia4]
         carrera2.materias=[materia1,materia2,materia3,materia5]
@@ -82,19 +82,22 @@ class MateriaSpec extends Specification {
 
         opinion11 = new Opinion(curso:  curso1, alumno: alumno1 , puntuacion: 3,calificaciones: [])
         opinion12 = new Opinion(curso:  curso1, alumno: alumno2 , puntuacion: 3,calificaciones: [])
-        opinion13 = new Opinion(curso:  curso2, alumno: alumno3 , puntuacion: 3,calificaciones: [])
+        opinion21 = new Opinion(curso:  curso2, alumno: alumno1 , puntuacion: 3,calificaciones: [])
         opinion23 = new Opinion(curso:  curso2, alumno: alumno3 , puntuacion: 3,calificaciones: [])
+        opinion31 = new Opinion(curso:  curso3, alumno: alumno1 , puntuacion: 3,calificaciones: [])
+        opinion41 = new Opinion(curso:  curso4, alumno: alumno1 , puntuacion: 3,calificaciones: [])
+        opinion63 = new Opinion(curso:  curso6, alumno: alumno3 , puntuacion: 3,calificaciones: [])
 
-        curso1.opiniones=[opinion11,opinion12,opinion13]
-        curso2.opiniones=[opinion23]
-        curso3.opiniones=[]
-        curso4.opiniones=[]
+        curso1.opiniones=[opinion11,opinion12]
+        curso2.opiniones=[opinion23,opinion21]
+        curso3.opiniones=[opinion31]
+        curso4.opiniones=[opinion41]
         curso5.opiniones=[]
-        curso6.opiniones=[]
+        curso6.opiniones=[opinion63]
 
-        alumno1.opiniones=[opinion11]
+        alumno1.opiniones=[opinion11,opinion21,opinion31,opinion41]
         alumno2.opiniones=[opinion12]
-        alumno3.opiniones=[opinion23,opinion13]
+        alumno3.opiniones=[opinion23,opinion63]
 
     }
 
@@ -142,13 +145,30 @@ class MateriaSpec extends Specification {
 
     }
 
-    void "Recomendar Materia"(){
+    void "No recomienda Materia que no esta en su plan"(){
         when:
             setup()
         then:
-            materia1.obtenerRecomendacionesSegunAlumno(alumno2,curso1)==[]
+         !(curso6 in materia1.obtenerRecomendacionesSegunAlumno(alumno2,curso2).collect{Parecido parecido-> parecido.curso})
+    }
+    void "No recomienda Materia que no el alumno no tiene correlativas"(){
+        when:
+        setup()
+        then:
+        !(curso3 in materia1.obtenerRecomendacionesSegunAlumno(alumno2,curso2).collect{Parecido parecido-> parecido.curso})
+    }
+    void "No recomienda Materia que no curso"(){
+        when:
+        setup()
+        then:
+        !(curso1 in materia1.obtenerRecomendacionesSegunAlumno(alumno2,curso2).collect{Parecido parecido-> parecido.curso})
+    }
 
-
+    void "Recomienda Materia que tiene las correlativas y no curso"(){
+        when:
+        setup()
+        then:
+          (curso4 in materia1.obtenerRecomendacionesSegunAlumno(alumno2,curso2).collect{Parecido parecido-> parecido.curso})
     }
 
 }

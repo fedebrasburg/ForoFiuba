@@ -11,13 +11,13 @@ class Recomendador {
         curso.opiniones.collect { opinion ->
             // Todos los alumno que dejaron opinion en el curso actual
             opinion.alumno
-        }.unique { a, b -> a.id <=> b.id
+        }.unique { a, b -> a.username <=> b.username
         }.collect { usu ->
             // Todas las opiniones de esos alumnos
             usu.opiniones
         }.flatten().findAll { opinion ->
             // Saco las opiniones del curso actual
-            opinion.curso.id != curso.id
+            opinion.curso != curso
         }.collect { Opinion op ->
             Parecido parecido = new Parecido()
             parecido.curso = op.curso
@@ -48,12 +48,12 @@ class Recomendador {
             }
             parecido
         }.each { Parecido parecido ->
-            if (!(parecido.curso.id in cursosId)) {
-                cursosId << parecido.curso.id
+            if (!(parecido.curso in cursosId)) {
+                cursosId << parecido.curso
                 listaFinal << parecido
             } else {
                 listaFinal.find { Parecido parecidoEnLista ->
-                    parecidoEnLista.curso.id = parecido.curso.id
+                    parecidoEnLista.curso = parecido.curso
                 }.puntaje += parecido.puntaje
             }
         }
