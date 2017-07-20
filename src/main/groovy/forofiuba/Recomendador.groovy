@@ -48,12 +48,12 @@ class Recomendador {
             }
             parecido
         }.each { Parecido parecido ->
-            if (!(parecido.curso in cursosId)) {
-                cursosId << parecido.curso
+            if (!(parecido.curso.nombre in cursosId)) {
+                cursosId << parecido.curso.nombre
                 listaFinal << parecido
             } else {
                 listaFinal.find { Parecido parecidoEnLista ->
-                    parecidoEnLista.curso = parecido.curso
+                    parecidoEnLista.curso.nombre = parecido.curso.nombre
                 }.puntaje += parecido.puntaje
             }
         }
