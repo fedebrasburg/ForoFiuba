@@ -33,7 +33,7 @@ class Recomendador {
                 parecido.puntaje *= Constantes.MISMA_CARRERA
             }
             //Si el opinador ya curso otra materia con el alumno
-            if (cantidadDeMateriasCursadasIguales(alumno, op.alumno) > 1) {
+            if (cantidadDeMateriasCursadasIguales(alumno, op.alumno) >= 1) {
                 parecido.puntaje *= Constantes.CURSO_OTRA
             }
             //Si la opinion tiene muchos dislikes vale menos y si es mas valorado suma mas
@@ -73,11 +73,11 @@ class Recomendador {
     def private static cantidadDeMateriasCursadasIguales(Alumno alumnoA, Alumno alumnoB) {
         List<Curso> listaCursosB = alumnoB.opiniones.collect { Opinion opinion ->
             //cursos del B
-            opinion.curso
+            opinion.curso.nombre
         }
         List<Curso> listaCursosA = alumnoA.opiniones.collect { Opinion opinion ->
             //cursos del A
-            opinion.curso
+            opinion.curso.nombre
         }
         return listaCursosA.intersect(listaCursosB).size()
 
